@@ -1,0 +1,26 @@
+.card {
+    text-align: center;
+    width: 272px;
+    position: relative;
+}
+
+.counter {
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #4C4CFF;
+    border-radius: 16px;
+
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    right: 0px;
+    top: 0px;
+}

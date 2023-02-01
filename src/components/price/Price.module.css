@@ -1,0 +1,23 @@
+.price {
+    margin: 4px 0;
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.price svg {
+    margin-left: 9px;
+}
+
+/* .price {
+    height: 48px;
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+} */

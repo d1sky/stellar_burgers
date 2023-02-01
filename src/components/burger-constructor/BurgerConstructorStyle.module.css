@@ -1,0 +1,70 @@
+.container {
+    /* padding-top: 40px; */
+
+    /* border: 2px solid #4C4CFF; */
+    /* margin-top: 100px; */
+    padding: 100px 16px 0 16px;
+}
+
+.block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.scroll {
+    height: 464px;
+    overflow-y: scroll;
+}
+
+.ingredient {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px 0 24px;
+    height: 80px;
+    background: #1C1C21;
+    border-radius: 40px;
+    flex-grow: 1;
+
+}
+
+.illustration img {
+    width: 80px;
+    height: 40px;
+}
+
+.name {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 11px;
+}
+
+.bottom {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.button {
+    margin-left: 48px;
+}
+
+.price {
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 36px;
+    /* margin-right: 40px; */
+}
+
+.price svg {
+    width: 33px;
+    height: 33px;
+}

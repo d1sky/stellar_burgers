@@ -1,0 +1,40 @@
+.container {
+    padding-top: 40px;
+}
+
+.title {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+}
+
+.tabs {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.tab {
+    width: 100%;
+    text-align: center;
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 16px 0;
+    box-shadow: inset 0px -1px 0px #2F2F37;
+}
+
+.tab_active {
+    composes: tab;
+    box-shadow: inset 0px -2px 0px #4C4CFF;
+}
+
+.box {
+    height: 716px;
+    overflow-y: scroll;
+}

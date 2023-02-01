@@ -1,0 +1,56 @@
+.header {
+  height: 88px;
+  margin: 40px 40px 0 40px;
+  background: #1C1C21;
+  /* border: 2px solid #4C4CFF; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  min-width: 1280px;
+}
+
+.logo {
+  position: absolute;
+}
+
+.navigation {
+  display: flex;
+  gap: 8px;
+}
+
+.navigation_link {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  /* border: 1px dashed #4C4CFF; */
+  border-radius: 40px;
+  color: #8585AD;
+}
+
+.navigation_link svg {
+  fill: #8585AD;
+}
+
+.navigation_link_active {
+  composes: navigation_link;
+  color: #F2F2F3;
+}
+
+.navigation_link_active svg {
+  fill: #F2F2F3;
+}
+
+.name {
+  font-family: 'Jet Brains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  padding-left: 11px;
+}
