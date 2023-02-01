@@ -22,10 +22,6 @@
   gap: 8px;
 }
 
-.navigation_link a {
-  all: unset;
-}
-
 .navigation_link {
   display: flex;
   align-items: center;
@@ -33,8 +29,8 @@
   padding: 0 16px;
   border-radius: 40px;
   color: #8585AD;
+  text-decoration: none !important;
 }
-
 
 .navigation_link svg {
   fill: #8585AD;
