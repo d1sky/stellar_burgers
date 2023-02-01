@@ -27,6 +27,17 @@
 
 }
 
+.block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.mover {
+    width: 24px;
+}
+
 .illustration img {
     width: 80px;
     height: 40px;
