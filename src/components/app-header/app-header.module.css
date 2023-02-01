@@ -2,7 +2,6 @@
   height: 88px;
   margin: 40px 40px 0 40px;
   background: #1C1C21;
-  /* border: 2px solid #4C4CFF; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,15 +22,19 @@
   gap: 8px;
 }
 
+.navigation_link a {
+  all: unset;
+}
+
 .navigation_link {
   display: flex;
   align-items: center;
   height: 56px;
   padding: 0 16px;
-  /* border: 1px dashed #4C4CFF; */
   border-radius: 40px;
   color: #8585AD;
 }
+
 
 .navigation_link svg {
   fill: #8585AD;

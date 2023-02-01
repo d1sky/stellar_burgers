@@ -1,28 +1,30 @@
 
-import React from 'react';
+import Price from '../price/Price';
 import CardStyle from './Card.module.css';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import Price from '../price/Price'
+import { ingredientTypes } from '../../model/ingrediaents'
 
-
-//todo присвоить значение count для отрисовки counter
-const Card = ({ card }) => {
+const Card = ({ ingredient }) => {
 
     return (
         <div className={CardStyle.card}>
-            {card.count && (
+            {ingredient.count && (
                 <div className={CardStyle.counter}>
-                    {card.count}
+                    {ingredient.count}
                 </div>)}
             <div className={CardStyle.card_image}>
-                <img src={card.image} alt='card pic' />
+                <img src={ingredient.image} alt='card pic' />
             </div>
-            <Price price={card.price} />
+            <Price price={ingredient.price} />
             <div className={CardStyle.card_name}>
-                {card.name}
+                {ingredient.name}
             </div>
         </div>
     )
 }
+
+Card.propTypes = {
+    ingredient: ingredientTypes.isRequired,
+};
+
 
 export default Card
