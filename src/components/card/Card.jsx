@@ -6,7 +6,6 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
 const Card = ({ ingredient, onClick }) => {
-
     return (
         <div className={styles.card} onClick={() => onClick(ingredient)}>
             {ingredient.count && (
