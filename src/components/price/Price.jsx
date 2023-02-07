@@ -1,14 +1,11 @@
 
-import React from 'react';
-import PriceStyle from './Price.module.css';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from "prop-types";
+import styles from './price.module.css';
 
-//todo присвоить значение count для отрисовки counter
 const Price = ({ price, additionalStyle }) => {
-
     return (
-        <div className={PriceStyle.price + ' ' + additionalStyle}>
+        <div className={styles.price + ' ' + additionalStyle}>
             {price}
             <CurrencyIcon type="primary" />
         </div>

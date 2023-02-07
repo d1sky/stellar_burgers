@@ -1,0 +1,34 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+
+.open {
+    visibility: visible;
+}
+
+.container {
+    width: 720px;
+    background: #1C1C21;
+    border: 1px solid rgba(76, 76, 255, 0.2);
+    border-radius: 40px;
+
+    position: fixed;
+    z-index: 1;
+}
+
+.closeButton {
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    z-index: 2;
+    cursor: pointer;
+}

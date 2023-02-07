@@ -1,31 +1,39 @@
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from "prop-types";
+import { useState } from 'react';
 import { ingredientTypes } from '../../model/ingrediaents';
-import Price from '../price/Price';
-import BurgerConstructorStyle from './burger-constructor.module.css';
+import Modal from '../modal/modal';
+import OrderDetailst from '../order-details/order-details';
+import Price from '../price/price';
+import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = ({ order }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const handleOpenModal = () => setIsModalOpen(true)
+    const handleCloseModal = () => setIsModalOpen(false)
+
     return (
-        <section className={BurgerConstructorStyle.container}>
+        <section className={styles.container}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div className={BurgerConstructorStyle.block} >
-                    <div className={BurgerConstructorStyle.mover}>
+                <div className={styles.block} >
+                    <div className={styles.mover}>
                     </div>
                     <ConstructorElement
                         type="top"
                         isLocked={true}
                         text="Краторная булка N-200i (верх)"
                         price={200}
-                        thumbnail={order[0].image}
+                        thumbnail={order[0]?.image}
                     />
                 </div>
                 <div
-                    className={`custom_scroll ${BurgerConstructorStyle.scroll}`}
+                    className={`custom_scroll ${styles.scroll}`}
                     style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {order?.map((product, index) =>
                         (index !== 0 && index !== (order.length - 1)) &&
-                        <div className={BurgerConstructorStyle.block} >
-                            <div className={BurgerConstructorStyle.mover}>
+                        <div className={styles.block} >
+                            <div className={styles.mover}>
                                 <DragIcon type="primary" />
                             </div>
                             <ConstructorElement
@@ -38,22 +46,26 @@ const BurgerConstructor = ({ order }) => {
 
                     )}
                 </div>
-                <div className={BurgerConstructorStyle.block} >
-                    <div className={BurgerConstructorStyle.mover}>
+                <div className={styles.block} >
+                    <div className={styles.mover}>
                     </div>
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
                         text="Краторная булка N-200i (низ)"
                         price={200}
-                        thumbnail={order[order.length - 1].image}
+                        thumbnail={order[0]?.image}
                     />
                 </div>
             </div>
-            <div className={BurgerConstructorStyle.bottom}>
-                <Price additionalStyle={BurgerConstructorStyle.price} price={3400} />
-                <Button htmlType='button'>Оформить заказ</Button>
+            <div className={styles.bottom}>
+                <Price additionalStyle={styles.price} price={3400} />
+                <Button htmlType='button' onClick={handleOpenModal}>Оформить заказ</Button>
             </div>
+            <Modal
+                open={isModalOpen}
+                handleClose={handleCloseModal}
+                children={<OrderDetailst ingredientsList />} />
         </section >
     );
 }

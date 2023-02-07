@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 import { useState } from 'react';
 import { ingredientTypes } from '../../model/ingrediaents';
 import IngredientBlock from '../ingredient-block/ingredient-block';
-import BurgerIngredientsStyle from './burger-ingredients.module.css';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
+import styles from './burger-ingredients.module.css';
 
 const ingredientsCategoryList = [
     {
@@ -25,10 +27,20 @@ const ingredientsCategoryList = [
 
 const BurgerIngredients = ({ ingredientsList }) => {
     const [current, setCurrent] = useState(ingredientsCategoryList[0].name);
+    const [ingredient, setIngredient] = useState({})
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const handleOpenModal = () => setIsModalOpen(true)
+    const handleCloseModal = () => setIsModalOpen(false)
+
+    const handleIngredientClick = (e) => {
+        setIngredient(e)
+        handleOpenModal()
+    }
 
     return (
-        <section className={BurgerIngredientsStyle.container}>
-            <div className={BurgerIngredientsStyle.title}>
+        <section className={styles.container}>
+            <div className={styles.title}>
                 Соберите бургер
             </div>
             <div style={{ display: 'flex' }}>
@@ -42,15 +54,20 @@ const BurgerIngredients = ({ ingredientsList }) => {
                     </Tab>
                 )}
             </div>
-            <div className={BurgerIngredientsStyle.box + ' custom_scroll'}>
+            <div className={styles.box + ' custom_scroll'}>
                 {ingredientsCategoryList.map(category =>
                     <IngredientBlock
                         key={category.type}
                         name={category.name}
+                        handleIngredientClick={handleIngredientClick}
                         ingredientList={ingredientsList.filter(ingredient =>
                             ingredient.type === category.type)} />
                 )}
             </div>
+            <Modal
+                open={isModalOpen}
+                handleClose={handleCloseModal}
+                children={<IngredientDetails ingredient={ingredient} />} />
         </section>
     );
 }

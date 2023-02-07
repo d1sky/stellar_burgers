@@ -1,0 +1,37 @@
+.modal {
+    height: 539px;
+    width: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    line-height: 40px;
+}
+
+.image img {
+    width: 480px;
+    height: 240px;
+}
+
+.composition ul {
+    margin: 0;
+    padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 520px;
+}
+
+.composition li {
+    list-style-type: none;
+}
+
+.composition li div {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
