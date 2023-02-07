@@ -22,7 +22,8 @@ const IngredientBlock = ({ name, ingredientList, handleIngredientClick }) => {
 
 IngredientBlock.propTypes = {
     ingredientList: PropTypes.arrayOf(ingredientTypes.isRequired).isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    handleIngredientClick: PropTypes.func
 };
 
 

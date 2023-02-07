@@ -8,7 +8,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import styles from './burger-ingredients.module.css';
 
-const ingredientsCategoryList = [
+const CATEGORY_LIST = [
     {
         name: 'Булки',
         type: 'bun'
@@ -24,9 +24,8 @@ const ingredientsCategoryList = [
 ]
 
 
-
 const BurgerIngredients = ({ ingredientsList }) => {
-    const [current, setCurrent] = useState(ingredientsCategoryList[0].name);
+    const [current, setCurrent] = useState(CATEGORY_LIST[0].name);
     const [ingredient, setIngredient] = useState({})
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -44,7 +43,7 @@ const BurgerIngredients = ({ ingredientsList }) => {
                 Соберите бургер
             </div>
             <div style={{ display: 'flex' }}>
-                {ingredientsCategoryList.map(ingredient =>
+                {CATEGORY_LIST.map(ingredient =>
                     <Tab
                         value={ingredient.name}
                         key={ingredient.type}
@@ -55,7 +54,7 @@ const BurgerIngredients = ({ ingredientsList }) => {
                 )}
             </div>
             <div className={styles.box + ' custom_scroll'}>
-                {ingredientsCategoryList.map(category =>
+                {CATEGORY_LIST.map(category =>
                     <IngredientBlock
                         key={category.type}
                         name={category.name}
@@ -65,6 +64,7 @@ const BurgerIngredients = ({ ingredientsList }) => {
                 )}
             </div>
             <Modal
+                title={'Детали ингридиента'}
                 open={isModalOpen}
                 handleClose={handleCloseModal}
                 children={<IngredientDetails ingredient={ingredient} />} />

@@ -32,7 +32,7 @@ const BurgerConstructor = ({ order }) => {
                     style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {order?.map((product, index) =>
                         (index !== 0 && index !== (order.length - 1)) &&
-                        <div className={styles.block} >
+                        <div className={styles.block} key={index}>
                             <div className={styles.mover}>
                                 <DragIcon type="primary" />
                             </div>
@@ -43,7 +43,6 @@ const BurgerConstructor = ({ order }) => {
                                 thumbnail={product.image}
                             />
                         </div>
-
                     )}
                 </div>
                 <div className={styles.block} >

@@ -25,10 +25,12 @@
     z-index: 1;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .closeButton {
-    position: absolute;
-    top: 60px;
-    right: 40px;
-    z-index: 2;
     cursor: pointer;
 }

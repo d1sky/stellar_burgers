@@ -1,5 +1,4 @@
 .modal {
-    height: 539px;
     width: 720px;
     display: flex;
     flex-direction: column;
@@ -8,6 +7,8 @@
 
 .title {
     line-height: 40px;
+    width: 520px;
+    text-align: center;
 }
 
 .image img {
