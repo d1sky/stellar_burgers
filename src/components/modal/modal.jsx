@@ -9,17 +9,21 @@ import styles from './modal.module.css';
 const modalRoot = document.getElementById('modal');
 
 const Modal = ({ title, children, open, handleClose }) => {
+
   useEffect(() => {
-    document.addEventListener("keydown", handleClose, false);
+    const handleESCclose = (key) => key.keyCode === 27 && handleClose();
+    document.addEventListener("keydown", handleESCclose);
+
+    return () => document.removeEventListener("keydown", handleESCclose);
   }, [handleClose])
 
   return createPortal(
     < div className={`${styles.modal} ${open && styles.open}`}>
       <div className={`${styles.container}`}>
-        <div className={`ml-10 mt-10 mr-10 ${styles.header}`}>
-          <div className={`text text_type_main-large text_color_primary  ${styles.title}`}>{title}</div>
+        <div className={` mt-10 ${styles.header}`}>
+          <div className={`ml-10 text text_type_main-large text_color_primary  ${styles.title}`}>{title}</div>
           <div
-            className={`${styles.closeButton}`}
+            className={`mr-10  ${styles.closeButton}`}
             onClick={handleClose}
           >
             <CloseIcon type='primary' />

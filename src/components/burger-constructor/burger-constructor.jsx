@@ -15,7 +15,7 @@ const BurgerConstructor = ({ order }) => {
 
     return (
         <section className={styles.container}>
-            <div className={styles.} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div className={styles.orderIngredients}>
                 <div className={styles.block} >
                     <div className={styles.mover}>
                     </div>

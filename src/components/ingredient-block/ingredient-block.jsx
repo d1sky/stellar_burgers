@@ -8,7 +8,7 @@ import styles from './ingredient-block.module.css';
 const IngredientBlock = ({ name, ingredientList, handleIngredientClick }) => {
     return (
         <div className={styles.block}>
-            <div className={styles.block_title}>{name}</div>
+            <h2 className={styles.block_title}>{name}</h2>
             <div className={styles.block_container}>
                 {ingredientList.map((ingredient, index) =>
                     <Card

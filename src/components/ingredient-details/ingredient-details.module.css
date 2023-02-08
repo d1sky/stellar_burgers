@@ -1,5 +1,5 @@
 .modal {
-    width: 720px;
+    width: 520px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,6 +14,18 @@
 .image img {
     width: 480px;
     height: 240px;
+}
+
+.composition {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.composition div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
 .composition ul {

@@ -3,6 +3,7 @@ import Price from '../price/price';
 import styles from './card.module.css';
 import { ingredientTypes } from '../../model/ingrediaents'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
+import PropTypes from "prop-types";
 
 
 const Card = ({ ingredient, onClick }) => {
@@ -23,6 +24,7 @@ const Card = ({ ingredient, onClick }) => {
 
 Card.propTypes = {
     ingredient: ingredientTypes.isRequired,
+    onClick: PropTypes.func
 };
 
 

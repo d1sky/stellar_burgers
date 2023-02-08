@@ -26,14 +26,14 @@ const CATEGORY_LIST = [
 
 const BurgerIngredients = ({ ingredientsList }) => {
     const [current, setCurrent] = useState(CATEGORY_LIST[0].name);
-    const [ingredient, setIngredient] = useState({})
+    const [ingredient, setIngredient] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const handleOpenModal = () => setIsModalOpen(true)
     const handleCloseModal = () => setIsModalOpen(false)
 
-    const handleIngredientClick = (e) => {
-        setIngredient(e)
+    const handleIngredientClick = (ingredient) => {
+        setIngredient(ingredient)
         handleOpenModal()
     }
 
