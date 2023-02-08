@@ -9,9 +9,18 @@
     margin-bottom: 16px;
 }
 
+.orderIngredients {
+    display: 'flex';
+    flex-direction: 'column';
+    gap: '10px';
+}
+
 .scroll {
     height: 464px;
     overflow-y: scroll;
+    display: 'flex';
+    flex-direction: 'column';
+    gap: '10px';
 }
 
 .ingredient {

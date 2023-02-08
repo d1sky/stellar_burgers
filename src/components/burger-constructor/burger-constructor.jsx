@@ -15,7 +15,7 @@ const BurgerConstructor = ({ order }) => {
 
     return (
         <section className={styles.container}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div className={styles.} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div className={styles.block} >
                     <div className={styles.mover}>
                     </div>
@@ -28,8 +28,7 @@ const BurgerConstructor = ({ order }) => {
                     />
                 </div>
                 <div
-                    className={`custom_scroll ${styles.scroll}`}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    className={`custom_scroll ${styles.scroll}`}>
                     {order?.map((product, index) =>
                         (index !== 0 && index !== (order.length - 1)) &&
                         <div className={styles.block} key={index}>
