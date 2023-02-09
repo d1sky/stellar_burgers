@@ -60,10 +60,14 @@ const BurgerConstructor = ({ order }) => {
                 <Price additionalStyle={styles.price} price={3400} />
                 <Button htmlType='button' onClick={handleOpenModal}>Оформить заказ</Button>
             </div>
-            <Modal
-                open={isModalOpen}
-                handleClose={handleCloseModal}
-                children={<OrderDetailst ingredientsList />} />
+            {isModalOpen &&
+                <Modal
+                    open={isModalOpen}
+                    handleClose={handleCloseModal}
+                >
+                    <OrderDetailst ingredientsList />
+                </Modal>
+            }
         </section >
     );
 }

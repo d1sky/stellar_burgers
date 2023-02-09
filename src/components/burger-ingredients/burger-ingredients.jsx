@@ -42,7 +42,7 @@ const BurgerIngredients = ({ ingredientsList }) => {
             <div className={styles.title}>
                 Соберите бургер
             </div>
-            <div style={{ display: 'flex' }}>
+            <div className={styles.tabs}>
                 {CATEGORY_LIST.map(ingredient =>
                     <Tab
                         value={ingredient.name}
@@ -63,11 +63,15 @@ const BurgerIngredients = ({ ingredientsList }) => {
                             ingredient.type === category.type)} />
                 )}
             </div>
-            <Modal
-                title={'Детали ингридиента'}
-                open={isModalOpen}
-                handleClose={handleCloseModal}
-                children={<IngredientDetails ingredient={ingredient} />} />
+            {isModalOpen &&
+                <Modal
+                    title={'Детали ингридиента'}
+                    handleClose={handleCloseModal}
+                >
+                    <IngredientDetails ingredient={ingredient} />
+                </Modal>
+            }
+
         </section>
     );
 }

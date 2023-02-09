@@ -6,19 +6,21 @@ import { createPortal } from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 
+const ESC_KEYCODE = 27;
+
 const modalRoot = document.getElementById('modal');
 
-const Modal = ({ title, children, open, handleClose }) => {
+const Modal = ({ title, children, handleClose }) => {
 
   useEffect(() => {
-    const handleESCclose = (key) => key.keyCode === 27 && handleClose();
+    const handleESCclose = (key) => key.keyCode === ESC_KEYCODE && handleClose();
     document.addEventListener("keydown", handleESCclose);
 
     return () => document.removeEventListener("keydown", handleESCclose);
   }, [handleClose])
 
   return createPortal(
-    < div className={`${styles.modal} ${open && styles.open}`}>
+    < div className={`${styles.modal}`}>
       <div className={`${styles.container}`}>
         <div className={` mt-10 ${styles.header}`}>
           <div className={`ml-10 text text_type_main-large text_color_primary  ${styles.title}`}>{title}</div>
@@ -39,7 +41,6 @@ const Modal = ({ title, children, open, handleClose }) => {
 Modal.propTypes = {
   title: PropTypes.string,
   children: PropTypes.element.isRequired,
-  open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired
 };
 
