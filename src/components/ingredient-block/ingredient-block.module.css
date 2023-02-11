@@ -1,0 +1,26 @@
+.block {
+    margin-top: 40px;
+}
+
+.block_title {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.block_container {
+    margin-top: 24px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-left: 16px;
+}
+
+.block_card {
+    text-align: center;
+    width: 272px;
+    margin-left: 16px;
+}
