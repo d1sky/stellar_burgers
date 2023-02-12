@@ -1,17 +1,39 @@
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from "prop-types";
-import { useState } from 'react';
-import { ingredientTypes } from '../../model/ingrediaents';
+import { useContext, useEffect, useState } from 'react';
+import { placeOrder } from '../../api/burger-api';
+import { IngredientsContext, OrderContext, TotalPriceContext } from '../../services/appContext';
 import Modal from '../modal/modal';
 import OrderDetailst from '../order-details/order-details';
 import Price from '../price/price';
 import styles from './burger-constructor.module.css';
 
-const BurgerConstructor = ({ order }) => {
+
+const BurgerConstructor = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const { ingredientsList } = useContext(IngredientsContext);
+    const { setTotalPrice, totalPrice } = useContext(TotalPriceContext);
+    const { orederDetailsDispatcher } = useContext(OrderContext);
+
+    useEffect(
+        () => {
+            let total = 0;
+            ingredientsList.map(item => (total += item.price));
+            setTotalPrice(total);
+        },
+        [ingredientsList, setTotalPrice]
+    );
 
     const handleOpenModal = () => setIsModalOpen(true)
     const handleCloseModal = () => setIsModalOpen(false)
+
+    const handlePlaceOrder = () => {
+        let ingredientIdList = ingredientsList.map(ingredient => ingredient._id)
+
+        placeOrder(ingredientIdList).then(data => {
+            orederDetailsDispatcher({ type: 'add', payload: data })
+            handleOpenModal()
+        })
+    }
 
     return (
         <section className={styles.container}>
@@ -24,13 +46,13 @@ const BurgerConstructor = ({ order }) => {
                         isLocked={true}
                         text="Краторная булка N-200i (верх)"
                         price={200}
-                        thumbnail={order[0]?.image}
+                        thumbnail={ingredientsList[0]?.image}
                     />
                 </div>
                 <div
                     className={`custom_scroll ${styles.scroll}`}>
-                    {order?.map((product, index) =>
-                        (index !== 0 && index !== (order.length - 1)) &&
+                    {ingredientsList?.map((product, index) =>
+                        (index !== 0 && index !== (ingredientsList.length - 1)) &&
                         <div className={styles.block} key={index}>
                             <div className={styles.mover}>
                                 <DragIcon type="primary" />
@@ -38,7 +60,7 @@ const BurgerConstructor = ({ order }) => {
                             <ConstructorElement
                                 key={index}
                                 text={product.name}
-                                price={50}
+                                price={product.price}
                                 thumbnail={product.image}
                             />
                         </div>
@@ -52,29 +74,24 @@ const BurgerConstructor = ({ order }) => {
                         isLocked={true}
                         text="Краторная булка N-200i (низ)"
                         price={200}
-                        thumbnail={order[0]?.image}
+                        thumbnail={ingredientsList[0]?.image}
                     />
                 </div>
             </div>
             <div className={styles.bottom}>
-                <Price additionalStyle={styles.price} price={3400} />
-                <Button htmlType='button' onClick={handleOpenModal}>Оформить заказ</Button>
+                <Price additionalStyle={styles.price} price={totalPrice} />
+                <Button htmlType='button' onClick={handlePlaceOrder}>Оформить заказ</Button>
             </div>
             {isModalOpen &&
                 <Modal
                     open={isModalOpen}
                     handleClose={handleCloseModal}
                 >
-                    <OrderDetailst ingredientsList />
+                    <OrderDetailst />
                 </Modal>
             }
         </section >
     );
 }
-
-
-BurgerConstructor.propTypes = {
-    order: PropTypes.arrayOf(ingredientTypes.isRequired).isRequired
-};
 
 export default BurgerConstructor 

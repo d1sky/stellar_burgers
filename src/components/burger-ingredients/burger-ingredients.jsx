@@ -1,12 +1,11 @@
-
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from "prop-types";
-import { useState } from 'react';
-import { ingredientTypes } from '../../model/ingrediaents';
+import { useContext, useState } from 'react';
+import { IngredientsContext } from '../../services/appContext';
 import IngredientBlock from '../ingredient-block/ingredient-block';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import styles from './burger-ingredients.module.css';
+
 
 const CATEGORY_LIST = [
     {
@@ -24,10 +23,11 @@ const CATEGORY_LIST = [
 ]
 
 
-const BurgerIngredients = ({ ingredientsList }) => {
+const BurgerIngredients = () => {
     const [current, setCurrent] = useState(CATEGORY_LIST[0].name);
     const [ingredient, setIngredient] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const { ingredientsList } = useContext(IngredientsContext);
 
     const handleOpenModal = () => setIsModalOpen(true)
     const handleCloseModal = () => setIsModalOpen(false)
@@ -76,9 +76,5 @@ const BurgerIngredients = ({ ingredientsList }) => {
     );
 }
 
-
-BurgerIngredients.propTypes = {
-    ingredientsList: PropTypes.arrayOf(ingredientTypes.isRequired).isRequired
-};
 
 export default BurgerIngredients 
