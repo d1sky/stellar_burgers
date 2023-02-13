@@ -34,7 +34,7 @@ const BurgerIngredients = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const { ingredientsList } = useContext(IngredientsContext);
 
-    const buneSetRef = useRef(null);
+    const bunSetRef = useRef(null);
     const sauceSetRef = useRef(null);
     const mainSetRef = useRef(null);
 
@@ -58,7 +58,7 @@ const BurgerIngredients = () => {
     useEffect(() => {
         switch (currentCategory.type) {
             case ('bun'):
-                buneSetRef.current?.scrollIntoView(options);
+                bunSetRef.current?.scrollIntoView(options);
                 break;
             case ('sauce'):
                 sauceSetRef.current?.scrollIntoView(options);
@@ -92,7 +92,7 @@ const BurgerIngredients = () => {
             </div>
             <div className={styles.box + ' custom_scroll'}>
                 <IngredientBlock
-                    ref={buneSetRef}
+                    ref={bunSetRef}
                     key={'bun'}
                     name={'Булки'}
                     handleIngredientClick={handleIngredientClick}

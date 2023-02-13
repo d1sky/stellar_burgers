@@ -6,10 +6,12 @@ import Modal from '../modal/modal';
 import OrderDetailst from '../order-details/order-details';
 import Price from '../price/price';
 import styles from './burger-constructor.module.css';
+import { randomElementsFromArray } from '../../utils/random';
 
 
 const BurgerConstructor = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [orderIngredients, setOrderIngredients] = useState([])
     const { ingredientsList } = useContext(IngredientsContext);
     const { setTotalPrice, totalPrice } = useContext(TotalPriceContext);
     const { orederDetailsDispatcher } = useContext(OrderContext);
@@ -17,19 +19,26 @@ const BurgerConstructor = () => {
     useEffect(
         () => {
             let total = 0;
-            ingredientsList.map(item => (total += item.price));
-            setTotalPrice(total);
+            orderIngredients.map(item => (total += item.price));
+            // хардкод булки
+            setTotalPrice(total + 400);
         },
-        [ingredientsList, setTotalPrice]
+        [orderIngredients, setTotalPrice]
+    );
+
+    useEffect(
+        () => {
+            if (ingredientsList.length > 0)
+                setOrderIngredients(randomElementsFromArray(ingredientsList).filter(ingredient => ingredient.type !== 'bun'))
+        },
+        [ingredientsList]
     );
 
     const handleOpenModal = () => setIsModalOpen(true)
     const handleCloseModal = () => setIsModalOpen(false)
 
     const handlePlaceOrder = () => {
-        const ingredientIdList = ingredientsList.map(ingredient => ingredient._id)
-
-        placeOrder(ingredientIdList).then(data => {
+        placeOrder(orderIngredients.map(ingredient => ingredient._id)).then(data => {
             orederDetailsDispatcher({ type: 'add', payload: data })
             handleOpenModal()
         })
@@ -51,8 +60,7 @@ const BurgerConstructor = () => {
                 </div>
                 <div
                     className={`custom_scroll ${styles.scroll}`}>
-                    {ingredientsList?.map((product, index) =>
-                        (index !== 0 && index !== (ingredientsList.length - 1)) &&
+                    {orderIngredients?.map((product, index) =>
                         <div className={styles.block} key={index}>
                             <div className={styles.mover}>
                                 <DragIcon type="primary" />
