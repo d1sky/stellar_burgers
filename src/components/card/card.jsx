@@ -12,7 +12,7 @@ const Card = ({ ingredient, onClick }) => {
             {ingredient.count && (
                 <Counter count={ingredient.count} size="default" extraClass="m-1" />)}
             <div className={styles.card_image}>
-                <img src={ingredient.image} alt='card pic' />
+                <img src={ingredient.image} alt={ingredient.name} />
             </div>
             <Price price={ingredient.price} />
             <div className={styles.card_name}>

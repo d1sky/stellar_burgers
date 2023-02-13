@@ -27,7 +27,7 @@ const BurgerConstructor = () => {
     const handleCloseModal = () => setIsModalOpen(false)
 
     const handlePlaceOrder = () => {
-        let ingredientIdList = ingredientsList.map(ingredient => ingredient._id)
+        const ingredientIdList = ingredientsList.map(ingredient => ingredient._id)
 
         placeOrder(ingredientIdList).then(data => {
             orederDetailsDispatcher({ type: 'add', payload: data })
@@ -58,7 +58,7 @@ const BurgerConstructor = () => {
                                 <DragIcon type="primary" />
                             </div>
                             <ConstructorElement
-                                key={index}
+                                key={product._id}
                                 text={product.name}
                                 price={product.price}
                                 thumbnail={product.image}

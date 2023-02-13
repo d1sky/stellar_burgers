@@ -56,7 +56,7 @@ const BurgerIngredients = () => {
             <div className={styles.box + ' custom_scroll'}>
                 {CATEGORY_LIST.map(category =>
                     <IngredientBlock
-                        key={category.type}
+                        key={category._id}
                         name={category.name}
                         handleIngredientClick={handleIngredientClick}
                         ingredientList={ingredientsList.filter(ingredient =>

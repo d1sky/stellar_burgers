@@ -21,7 +21,7 @@ function reducer(state, action) {
 }
 
 const App = () => {
-  let [ingredientsList, setIngredientsList] = useState([]);
+  const [ingredientsList, setIngredientsList] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderDetails, orederDetailsDispatcher] = useReducer(reducer, orderInitialState, undefined);
 

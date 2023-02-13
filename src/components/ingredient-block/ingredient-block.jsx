@@ -10,10 +10,10 @@ const IngredientBlock = ({ name, ingredientList, handleIngredientClick }) => {
         <div className={styles.block}>
             <h2 className={styles.block_title}>{name}</h2>
             <div className={styles.block_container}>
-                {ingredientList.map((ingredient, index) =>
+                {ingredientList.map((ingredient) =>
                     <Card
                         onClick={handleIngredientClick}
-                        key={index}
+                        key={ingredient._id}
                         ingredient={ingredient} />)}
             </div>
         </div>
