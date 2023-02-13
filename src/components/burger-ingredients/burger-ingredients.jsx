@@ -1,5 +1,5 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { IngredientsContext } from '../../services/appContext';
 import IngredientBlock from '../ingredient-block/ingredient-block';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -22,12 +22,30 @@ const CATEGORY_LIST = [
     }
 ]
 
+const options = {
+    behavior: "smooth",
+    block: "start",
+}
+
 
 const BurgerIngredients = () => {
-    const [current, setCurrent] = useState(CATEGORY_LIST[0].name);
+    const [currentCategory, setCurrentCategory] = useState(CATEGORY_LIST[0]);
     const [ingredient, setIngredient] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const { ingredientsList } = useContext(IngredientsContext);
+
+    const buneSetRef = useRef(null);
+    const sauceSetRef = useRef(null);
+    const mainSetRef = useRef(null);
+
+    const bunIngredientsList = useMemo(() => ingredientsList.filter(ingredient =>
+        ingredient.type === 'bun'), [ingredientsList]);
+
+    const sauceIngredientsList = useMemo(() => ingredientsList.filter(ingredient =>
+        ingredient.type === 'sauce'), [ingredientsList]);
+
+    const mainIngredientsList = useMemo(() => ingredientsList.filter(ingredient =>
+        ingredient.type === 'main'), [ingredientsList]);
 
     const handleOpenModal = () => setIsModalOpen(true)
     const handleCloseModal = () => setIsModalOpen(false)
@@ -35,6 +53,25 @@ const BurgerIngredients = () => {
     const handleIngredientClick = (ingredient) => {
         setIngredient(ingredient)
         handleOpenModal()
+    }
+
+    useEffect(() => {
+        switch (currentCategory.type) {
+            case ('bun'):
+                buneSetRef.current?.scrollIntoView(options);
+                break;
+            case ('sauce'):
+                sauceSetRef.current?.scrollIntoView(options);
+                break;
+            case ('main'):
+                mainSetRef.current?.scrollIntoView(options);
+                break;
+            default: return;
+        }
+    }, [currentCategory])
+
+    const handleTypeClick = (category) => {
+        setCurrentCategory(category)
     }
 
     return (
@@ -47,21 +84,31 @@ const BurgerIngredients = () => {
                     <Tab
                         value={ingredient.name}
                         key={ingredient.type}
-                        active={current === ingredient.name}
-                        onClick={setCurrent} >
+                        active={currentCategory.name === ingredient.name}
+                        onClick={() => handleTypeClick(ingredient)} >
                         {ingredient.name}
                     </Tab>
                 )}
             </div>
             <div className={styles.box + ' custom_scroll'}>
-                {CATEGORY_LIST.map(category =>
-                    <IngredientBlock
-                        key={category._id}
-                        name={category.name}
-                        handleIngredientClick={handleIngredientClick}
-                        ingredientList={ingredientsList.filter(ingredient =>
-                            ingredient.type === category.type)} />
-                )}
+                <IngredientBlock
+                    ref={buneSetRef}
+                    key={'bun'}
+                    name={'Булки'}
+                    handleIngredientClick={handleIngredientClick}
+                    ingredientList={bunIngredientsList} />
+                <IngredientBlock
+                    ref={sauceSetRef}
+                    key={'sauce'}
+                    name={'Соусы'}
+                    handleIngredientClick={handleIngredientClick}
+                    ingredientList={sauceIngredientsList} />
+                <IngredientBlock
+                    ref={mainSetRef}
+                    key={'main'}
+                    name={'Начинки'}
+                    handleIngredientClick={handleIngredientClick}
+                    ingredientList={mainIngredientsList} />
             </div>
             {isModalOpen &&
                 <Modal
