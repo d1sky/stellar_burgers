@@ -6,7 +6,7 @@ import styles from './ingredient-details.module.css';
 const IngredientDetails = ({ ingredient }) => {
   return (
     <div className={`${styles.modal}`}>
-      <p className={` ${styles.image}`}><img src={ingredient?.image} alt='card pic' /></p>
+      <p className={` ${styles.image}`}><img src={ingredient?.image} alt={ingredient.name} /></p>
       <p className={`text  text_type_main-medium text_type_main-medium mt-4 ${styles.title}`}>{ingredient?.name}</p>
       <div className={`text  text_type_main-default text_color_inactive mt-8 mb-15 ${styles?.composition}`}>
         <div>
