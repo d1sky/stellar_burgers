@@ -1,12 +1,18 @@
 
-import { ingredientTypes } from '../../model/ingrediaents';
+import { useSelector } from 'react-redux';
+import { getActiveIngredient } from '../../services/activeIngredientSlice';
 import styles from './ingredient-details.module.css';
 
 
-const IngredientDetails = ({ ingredient }) => {
+const IngredientDetails = () => {
+  // const dispatch = useDispatch();
+  const ingredient = useSelector(getActiveIngredient)
+
+  // useEffect(() => { return dispatch(remove) }, [dispatch])
+
   return (
     <div className={`${styles.modal}`}>
-      <p className={` ${styles.image}`}><img src={ingredient?.image} alt={ingredient.name} /></p>
+      <p className={` ${styles.image}`}><img src={ingredient?.image} alt={ingredient?.name} /></p>
       <p className={`text  text_type_main-medium text_type_main-medium mt-4 ${styles.title}`}>{ingredient?.name}</p>
       <div className={`text  text_type_main-default text_color_inactive mt-8 mb-15 ${styles?.composition}`}>
         <div>
@@ -30,8 +36,5 @@ const IngredientDetails = ({ ingredient }) => {
   );
 }
 
-IngredientDetails.propTypes = {
-  ingredient: ingredientTypes
-};
 
 export default IngredientDetails;

@@ -1,50 +1,27 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchIngredientListAsync } from '../../services/ingredientListSlice';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
-import { getIngredients } from '../../api/burger-api'
-import { IngredientsContext, TotalPriceContext, OrderContext } from '../../services/appContext';
 
-const orderInitialState = [];
-
-function reducer(state, action) {
-  let orderDetails = null
-
-  switch (action.type) {
-    case "add":
-      orderDetails = action.payload
-      return orderDetails;
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
 
 const App = () => {
-  const [ingredientsList, setIngredientsList] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [orderDetails, orederDetailsDispatcher] = useReducer(reducer, orderInitialState, undefined);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getIngredients().then(ingredients => {
-      setIngredientsList(ingredients)
-    })
-  }, [])
+    dispatch(fetchIngredientListAsync())
+  }, [dispatch])
 
   return (
-    <IngredientsContext.Provider value={{ ingredientsList, setIngredientsList }}>
-      <OrderContext.Provider value={{ orderDetails, orederDetailsDispatcher }}>
-        <div className="App">
-          <AppHeader />
-          <main className={styles.main}>
-            <BurgerIngredients />
-            <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
-              <BurgerConstructor />
-            </TotalPriceContext.Provider>
-          </main>
-        </div>
-      </OrderContext.Provider >
-    </IngredientsContext.Provider >
+    <div className="App">
+      <AppHeader />
+      <main className={styles.main}>
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </main>
+    </div>
   );
 }
 

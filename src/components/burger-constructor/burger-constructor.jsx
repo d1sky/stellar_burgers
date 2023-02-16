@@ -1,47 +1,49 @@
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useContext, useEffect, useState } from 'react';
-import { placeOrder } from '../../api/burger-api';
-import { IngredientsContext, OrderContext, TotalPriceContext } from '../../services/appContext';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPlaceOrderAsync, getOrderTotalPrice, setTotalPrice } from '../../services/orderDetailsSlice';
+import { getIngredientList } from '../../services/ingredientListSlice';
+import { randomElementsFromArray } from '../../utils/random';
 import Modal from '../modal/modal';
 import OrderDetailst from '../order-details/order-details';
 import Price from '../price/price';
 import styles from './burger-constructor.module.css';
-import { randomElementsFromArray } from '../../utils/random';
 
 
 const BurgerConstructor = () => {
+    const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [orderIngredients, setOrderIngredients] = useState([])
-    const { ingredientsList } = useContext(IngredientsContext);
-    const { setTotalPrice, totalPrice } = useContext(TotalPriceContext);
-    const { orederDetailsDispatcher } = useContext(OrderContext);
+    const ingredientList = useSelector(getIngredientList);
+    const totalPrice = useSelector(getOrderTotalPrice);
+
 
     useEffect(
         () => {
             let total = 0;
             orderIngredients.map(item => (total += item.price));
             // хардкод булки
-            setTotalPrice(total + 400);
+            dispatch(setTotalPrice(total + 400));
         },
-        [orderIngredients, setTotalPrice]
+        [dispatch, orderIngredients]
     );
 
     useEffect(
         () => {
-            if (ingredientsList.length > 0)
-                setOrderIngredients(randomElementsFromArray(ingredientsList).filter(ingredient => ingredient.type !== 'bun'))
+            if (ingredientList.length > 0)
+                setOrderIngredients(randomElementsFromArray(ingredientList).filter(ingredient => ingredient.type !== 'bun'))
         },
-        [ingredientsList]
+        [ingredientList]
     );
 
     const handleOpenModal = () => setIsModalOpen(true)
     const handleCloseModal = () => setIsModalOpen(false)
 
     const handlePlaceOrder = () => {
-        placeOrder(orderIngredients.map(ingredient => ingredient._id)).then(data => {
-            orederDetailsDispatcher({ type: 'add', payload: data })
-            handleOpenModal()
-        })
+        dispatch(fetchPlaceOrderAsync(orderIngredients.map(ingredient => ingredient._id)))
+            .then(() => {
+                handleOpenModal()
+            })
     }
 
     return (
@@ -55,7 +57,7 @@ const BurgerConstructor = () => {
                         isLocked={true}
                         text="Краторная булка N-200i (верх)"
                         price={200}
-                        thumbnail={ingredientsList[0]?.image}
+                        thumbnail={ingredientList[0]?.image}
                     />
                 </div>
                 <div
@@ -82,7 +84,7 @@ const BurgerConstructor = () => {
                         isLocked={true}
                         text="Краторная булка N-200i (низ)"
                         price={200}
-                        thumbnail={ingredientsList[0]?.image}
+                        thumbnail={ingredientList[0]?.image}
                     />
                 </div>
             </div>

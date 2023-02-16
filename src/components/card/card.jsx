@@ -10,13 +10,13 @@ const Card = ({ ingredient, onClick }) => {
     return (
         <div className={styles.card} onClick={() => onClick(ingredient)}>
             {ingredient.count && (
-                <Counter count={ingredient.count} size="default" extraClass="m-1" />)}
+                <Counter count={ingredient?.count} size="default" extraClass="m-1" />)}
             <div className={styles.card_image}>
-                <img src={ingredient.image} alt={ingredient.name} />
+                <img src={ingredient?.image} alt={ingredient?.name} />
             </div>
-            <Price price={ingredient.price} />
+            <Price price={ingredient?.price} />
             <div className={styles.card_name}>
-                {ingredient.name}
+                {ingredient?.name}
             </div>
         </div>
     )

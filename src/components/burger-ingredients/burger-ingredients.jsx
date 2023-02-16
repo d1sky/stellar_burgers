@@ -1,6 +1,8 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { IngredientsContext } from '../../services/appContext';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { remove } from '../../services/activeIngredientSlice';
+import { getIngredientList } from '../../services/ingredientListSlice';
 import IngredientBlock from '../ingredient-block/ingredient-block';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
@@ -29,30 +31,28 @@ const options = {
 
 
 const BurgerIngredients = () => {
+    const dispatch = useDispatch();
     const [currentCategory, setCurrentCategory] = useState(CATEGORY_LIST[0]);
-    const [ingredient, setIngredient] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const { ingredientsList } = useContext(IngredientsContext);
+    const ingredientList = useSelector(getIngredientList);
 
     const bunSetRef = useRef(null);
     const sauceSetRef = useRef(null);
     const mainSetRef = useRef(null);
 
-    const bunIngredientsList = useMemo(() => ingredientsList.filter(ingredient =>
-        ingredient.type === 'bun'), [ingredientsList]);
+    const bunIngredientsList = useMemo(() => ingredientList?.filter(ingredient =>
+        ingredient.type === 'bun'), [ingredientList]);
 
-    const sauceIngredientsList = useMemo(() => ingredientsList.filter(ingredient =>
-        ingredient.type === 'sauce'), [ingredientsList]);
+    const sauceIngredientsList = useMemo(() => ingredientList?.filter(ingredient =>
+        ingredient.type === 'sauce'), [ingredientList]);
 
-    const mainIngredientsList = useMemo(() => ingredientsList.filter(ingredient =>
-        ingredient.type === 'main'), [ingredientsList]);
+    const mainIngredientsList = useMemo(() => ingredientList?.filter(ingredient =>
+        ingredient.type === 'main'), [ingredientList]);
 
     const handleOpenModal = () => setIsModalOpen(true)
-    const handleCloseModal = () => setIsModalOpen(false)
-
-    const handleIngredientClick = (ingredient) => {
-        setIngredient(ingredient)
-        handleOpenModal()
+    const handleCloseModal = () => {
+        dispatch(remove())
+        setIsModalOpen(false)
     }
 
     useEffect(() => {
@@ -95,19 +95,19 @@ const BurgerIngredients = () => {
                     ref={bunSetRef}
                     key={'bun'}
                     name={'Булки'}
-                    handleIngredientClick={handleIngredientClick}
+                    handleOpenModal={handleOpenModal}
                     ingredientList={bunIngredientsList} />
                 <IngredientBlock
                     ref={sauceSetRef}
                     key={'sauce'}
                     name={'Соусы'}
-                    handleIngredientClick={handleIngredientClick}
+                    handleOpenModal={handleOpenModal}
                     ingredientList={sauceIngredientsList} />
                 <IngredientBlock
                     ref={mainSetRef}
                     key={'main'}
                     name={'Начинки'}
-                    handleIngredientClick={handleIngredientClick}
+                    handleOpenModal={handleOpenModal}
                     ingredientList={mainIngredientsList} />
             </div>
             {isModalOpen &&
@@ -115,7 +115,7 @@ const BurgerIngredients = () => {
                     title={'Детали ингридиента'}
                     handleClose={handleCloseModal}
                 >
-                    <IngredientDetails ingredient={ingredient} />
+                    <IngredientDetails />
                 </Modal>
             }
 
