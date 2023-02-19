@@ -19,7 +19,6 @@ export const activeIngredientSlice = createSlice({
         },
         remove: (state) => {
             state.ingredient = ingredientInitialState
-
         }
     },
 })

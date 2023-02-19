@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { v4 as uuid } from 'uuid';
 import { getIngredients } from '../api/burger-api';
 
 // cписок всех полученных ингредиентов
@@ -12,26 +13,42 @@ export const fetchIngredientListAsync = createAsyncThunk(
     }
 );
 
-export const ingredientListSlice = createSlice({
-    name: 'ingredientList',
-    initialState: {
-        entities: [],
-        status: 'idle',
-    },
+const initialState = {
+    entities: [],
+    status: 'idle',
+}
+
+export const burgerIngredientListSlice = createSlice({
+    name: 'burgerIngredientList',
+    initialState,
     reducers: {
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(fetchIngredientListAsync.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchIngredientListAsync.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.entities = action.payload;
-            });
-    },
+        setIngredientList: (state, action) => {
+            state.entities = action.payload
+        },
+        addIngredient: (state, action) => {
+            state.entities = [...state.entities, { ...action.payload, id: uuid() }]
+        },
+        removeIndgredient: (state, action) => {
+            console.log();
+            state.entities = state.entities.filter(it => it.id !== action.payload)
+        },
+        swapIngredients: (state, action) => {
+            console.log(action.payload);
+
+            let array = state.entities.slice()
+
+            array[action.payload.dragIndex] = array.splice(action.payload.hoverIndex, 1, array[action.payload.dragIndex])[0];
+
+            state.entities = array
+        }
+    }
 })
 
-export const getIngredientList = (state) => state.ingredientList.entities;
+export const getBurgerIngredientList = (state) => {
+    console.log('getBurgerIngredientList', state.burgerIngredientList.entities);
 
-export default ingredientListSlice.reducer
+    return state.burgerIngredientList.entities;
+}
+export const { swapIngredients, addIngredient, removeIndgredient } = burgerIngredientListSlice.actions
+
+export default burgerIngredientListSlice.reducer

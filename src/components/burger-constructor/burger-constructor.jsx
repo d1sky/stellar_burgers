@@ -1,9 +1,11 @@
-import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPlaceOrderAsync, getOrderTotalPrice, setTotalPrice } from '../../services/orderDetailsSlice';
+import { addIngredient, getBurgerIngredientList, removeIndgredient, swapIngredients } from '../../services/burgerIngredientListSlice';
 import { getIngredientList } from '../../services/ingredientListSlice';
+import { fetchPlaceOrderAsync, getOrderTotalPrice, setTotalPrice } from '../../services/orderDetailsSlice';
 import { randomElementsFromArray } from '../../utils/random';
+import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
 import Modal from '../modal/modal';
 import OrderDetailst from '../order-details/order-details';
 import Price from '../price/price';
@@ -16,24 +18,30 @@ const BurgerConstructor = () => {
     const [orderIngredients, setOrderIngredients] = useState([])
     const ingredientList = useSelector(getIngredientList);
     const totalPrice = useSelector(getOrderTotalPrice);
+    const burgerIngredientList = useSelector(getBurgerIngredientList);
 
 
     useEffect(
         () => {
             let total = 0;
-            orderIngredients.map(item => (total += item.price));
+            burgerIngredientList.map(item => (total += item.price));
+            setOrderIngredients(burgerIngredientList)
             // хардкод булки
             dispatch(setTotalPrice(total + 400));
         },
-        [dispatch, orderIngredients]
+        [dispatch, burgerIngredientList]
     );
 
     useEffect(
         () => {
-            if (ingredientList.length > 0)
-                setOrderIngredients(randomElementsFromArray(ingredientList).filter(ingredient => ingredient.type !== 'bun'))
+            if (ingredientList.length > 0) {
+                console.log('useEffect ingredientList');
+                randomElementsFromArray(ingredientList).filter(ingredient => ingredient.type !== 'bun').map(ingredient => {
+                    dispatch(addIngredient(ingredient))
+                })
+            }
         },
-        [ingredientList]
+        [dispatch, ingredientList]
     );
 
     const handleOpenModal = () => setIsModalOpen(true)
@@ -46,6 +54,27 @@ const BurgerConstructor = () => {
             })
     }
 
+    const moveElement = ({ dragIndex, hoverIndex }) => {
+        dispatch(swapIngredients({ dragIndex, hoverIndex }))
+    }
+
+    const renderElement = useCallback((element, index) => {
+        return (
+            <ConstructorIngredient
+                key={index}
+                index={index}
+                id={element.id}
+                product={element}
+                moveElement={moveElement}
+                handleClose={() => handleClose(element.id)}
+            />
+        )
+    }, [])
+
+    const handleClose = (id) => {
+        dispatch(removeIndgredient(id))
+    }
+
     return (
         <section className={styles.container}>
             <div className={styles.orderIngredients}>
@@ -53,6 +82,7 @@ const BurgerConstructor = () => {
                     <div className={styles.mover}>
                     </div>
                     <ConstructorElement
+                        key={'000'}
                         type="top"
                         isLocked={true}
                         text="Краторная булка N-200i (верх)"
@@ -62,24 +92,15 @@ const BurgerConstructor = () => {
                 </div>
                 <div
                     className={`custom_scroll ${styles.scroll}`}>
-                    {orderIngredients?.map((product, index) =>
-                        <div className={styles.block} key={index}>
-                            <div className={styles.mover}>
-                                <DragIcon type="primary" />
-                            </div>
-                            <ConstructorElement
-                                key={product._id}
-                                text={product.name}
-                                price={product.price}
-                                thumbnail={product.image}
-                            />
-                        </div>
+                    {burgerIngredientList?.map((product, index) =>
+                        renderElement(product, index)
                     )}
                 </div>
                 <div className={styles.block} >
                     <div className={styles.mover}>
                     </div>
                     <ConstructorElement
+                        key={'111'}
                         type="bottom"
                         isLocked={true}
                         text="Краторная булка N-200i (низ)"

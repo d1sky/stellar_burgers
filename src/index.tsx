@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import ingredientListSlice from './services/ingredientListSlice';
 import orderDetailsSlice from './services/orderDetailsSlice';
 import activeIngredientSlice from './services/activeIngredientSlice';
+import burgerIngredientListSlice from './services/burgerIngredientListSlice';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,7 +18,8 @@ const store = configureStore({
   reducer: {
     ingredientList: ingredientListSlice,
     orderDetails: orderDetailsSlice,
-    activeIngredient: activeIngredientSlice
+    activeIngredient: activeIngredientSlice,
+    burgerIngredientList: burgerIngredientListSlice
   },
   devTools: process.env.NODE_ENV !== 'production',
 })
@@ -31,4 +33,4 @@ root.render(
   </React.StrictMode>
 );
 
-reportWebVitals();
+// reportWebVitals();
