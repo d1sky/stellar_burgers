@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBurgerIngredientList, removeIndgredient, swapIngredients } from '../../services/burgerIngredientListSlice';
-import { decrement, getIngredientList } from '../../services/ingredientListSlice';
 import { fetchPlaceOrderAsync, getOrderTotalPrice, setTotalPrice } from '../../services/orderDetailsSlice';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
 import Modal from '../modal/modal';
@@ -15,7 +14,6 @@ import styles from './burger-constructor.module.css';
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const ingredientList = useSelector(getIngredientList);
     const totalPrice = useSelector(getOrderTotalPrice);
     const burgerIngredientList = useSelector(getBurgerIngredientList);
     const [bun, setBun] = useState()
@@ -29,8 +27,7 @@ const BurgerConstructor = () => {
         () => {
             let total = 0;
             burgerIngredientList.map(({ type, price }) =>
-
-                (total += type === 'bun' ? price * 2 : price));
+                (total += price));
             dispatch(setTotalPrice(total));
         },
         [dispatch, burgerIngredientList]
@@ -74,8 +71,7 @@ const BurgerConstructor = () => {
     }, [])
 
     const handleClose = (element) => {
-        dispatch(decrement({ id: element._id }))
-        dispatch(removeIndgredient(element.id))
+        dispatch(removeIndgredient(element))
     }
 
     return (
@@ -97,8 +93,11 @@ const BurgerConstructor = () => {
                     }
                     <div
                         className={`custom_scroll ${styles.scroll}`}>
-                        {burgerIngredientList.filter(({ type }) => type !== 'bun')?.map((product, index) =>
-                            renderElement(product, index)
+                        {burgerIngredientList.map((product, index) => {
+                            if (product.type !== 'bun')
+                                return renderElement(product, index)
+                            return null
+                        }
                         )}
                     </div>
                     {bun && <div className={styles.block} >

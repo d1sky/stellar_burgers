@@ -1,13 +1,12 @@
 
+import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from "prop-types";
+import { useDrag } from 'react-dnd';
+import { useDispatch } from 'react-redux';
+import { ingredientTypes } from '../../model/ingrediaents';
+import { addIngredient } from '../../services/burgerIngredientListSlice';
 import Price from '../price/price';
 import styles from './card.module.css';
-import { ingredientTypes } from '../../model/ingrediaents'
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from "prop-types";
-import { useDrag } from 'react-dnd'
-import { useDispatch } from 'react-redux';
-import { addIngredient } from '../../services/burgerIngredientListSlice';
-import { increment } from '../../services/ingredientListSlice';
 
 
 const Card = ({ ingredient, onClick }) => {
@@ -19,7 +18,6 @@ const Card = ({ ingredient, onClick }) => {
             const dropResult = monitor.getDropResult()
             if (item && dropResult) {
                 dispatch(addIngredient(item))
-                dispatch(increment({ id: item._id }))
             }
         },
     }))

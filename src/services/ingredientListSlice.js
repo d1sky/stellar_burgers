@@ -1,8 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getIngredients } from '../api/burger-api';
+import { addIngredient, removeIndgredient } from './burgerIngredientListSlice';
 
-// cписок всех полученных ингредиентов
-// const ingredientList = (state = [], action) => { return state }
 
 export const fetchIngredientListAsync = createAsyncThunk(
     'ingredientList/fetchIngredientListAsync',
@@ -18,14 +17,6 @@ export const ingredientListSlice = createSlice({
         entities: [],
         status: 'idle',
     },
-    reducers: {
-        increment: (state, action) => {
-            state.entities = state.entities.map(ingredient => ingredient._id === action.payload.id ? { ...ingredient, count: ingredient?.count + 1 } : ingredient)
-        },
-        decrement: (state, action) => {
-            state.entities = state.entities.map(ingredient => ingredient._id === action.payload.id ? { ...ingredient, count: ingredient?.count - 1 } : ingredient)
-        },
-    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchIngredientListAsync.pending, (state) => {
@@ -34,11 +25,30 @@ export const ingredientListSlice = createSlice({
             .addCase(fetchIngredientListAsync.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.entities = action.payload;
-            });
+            })
+            .addCase(addIngredient, (state, action) => {
+                // Увеличение счетчика ингредиентов c логикой проверки наличия булок
+                if (action.payload.type === 'bun') {
+                    state.entities = state.entities.map(ingredient => {
+                        if (ingredient.type === 'bun') {
+                            return (ingredient._id === action.payload._id) ? { ...ingredient, count: 2 } : { ...ingredient, count: 0 }
+                        } else {
+                            return ingredient
+                        }
+                    })
+                } else {
+                    state.entities = state.entities.map(ingredient =>
+                        ingredient._id === action.payload._id ? { ...ingredient, count: ingredient?.count + 1 } : ingredient)
+                }
+            })
+            .addCase(removeIndgredient, (state, action) => {
+                state.entities = state.entities.map(ingredient => ingredient._id === action.payload._id ? { ...ingredient, count: ingredient?.count - 1 } : ingredient)
+            })
+
+
     },
 })
 
 export const getIngredientList = (state) => state.ingredientList.entities;
-export const { increment, decrement } = ingredientListSlice.actions
 
 export default ingredientListSlice.reducer

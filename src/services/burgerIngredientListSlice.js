@@ -1,43 +1,32 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { v4 as uuid } from 'uuid';
-import { getIngredients } from '../api/burger-api';
-import ingredientListSlice from './ingredientListSlice';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
-
-export const fetchIngredientListAsync = createAsyncThunk(
-    'ingredientList/fetchIngredientListAsync',
-    async () => {
-        const data = await getIngredients()
-        return data
-    }
-);
 
 const initialState = {
     entities: [],
-    status: 'idle',
 }
 
 export const burgerIngredientListSlice = createSlice({
     name: 'burgerIngredientList',
     initialState,
     reducers: {
-        setIngredientList: (state, action) => {
-            state.entities = action.payload
-        },
         addIngredient: (state, action) => {
-            state.entities = [...state.entities, { ...action.payload, id: uuid() }]
+            if (action.payload.type === 'bun' && state.entities.find(ingredient => ingredient.type === 'bun')) {
+                state.entities = state.entities.map(ingredient => (ingredient.type === 'bun') ? action.payload : ingredient)
+            } else {
+                state.entities = action.payload.type === 'bun' ?
+                    [...state.entities, { ...action.payload, id: nanoid() }, { ...action.payload, id: nanoid() }] :
+                    [...state.entities, { ...action.payload, id: nanoid() }]
+            }
         },
         removeIndgredient: (state, action) => {
-            state.entities = state.entities.filter(it => it.id !== action.payload)
+            state.entities = state.entities.filter(it => it.id !== action.payload.id)
         },
         swapIngredients: (state, action) => {
             let array = state.entities.slice()
-
             array[action.payload.dragIndex] = array.splice(action.payload.hoverIndex, 1, array[action.payload.dragIndex])[0];
-
             state.entities = array
         }
-    }
+    },
 })
 
 export const getBurgerIngredientList = (state) => state.burgerIngredientList.entities;

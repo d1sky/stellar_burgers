@@ -5,10 +5,8 @@ import styles from './ingredient-details.module.css';
 
 
 const IngredientDetails = () => {
-  // const dispatch = useDispatch();
   const ingredient = useSelector(getActiveIngredient)
 
-  // useEffect(() => { return dispatch(remove) }, [dispatch])
 
   return (
     <div className={`${styles.modal}`}>
