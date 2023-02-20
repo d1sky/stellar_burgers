@@ -1,10 +1,12 @@
+import { nanoid } from '@reduxjs/toolkit';
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBurgerIngredientList, removeIndgredient, swapIngredients } from '../../services/burgerIngredientListSlice';
-import { fetchPlaceOrderAsync, getOrderTotalPrice, setTotalPrice } from '../../services/orderDetailsSlice';
+import { getBurgerIngredientList, removeIndgredient, resetIndgredient, swapIngredients } from '../../services/burgerIngredientListSlice';
+import { fetchPlaceOrderAsync, getOrderTotalPrice, setTotalPrice, getOrderDetailsStatus } from '../../services/orderDetailsSlice';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
+import Loader from '../loader/loader';
 import Modal from '../modal/modal';
 import OrderDetailst from '../order-details/order-details';
 import Price from '../price/price';
@@ -15,8 +17,9 @@ const BurgerConstructor = () => {
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false)
     const totalPrice = useSelector(getOrderTotalPrice);
+    const orderStatus = useSelector(getOrderDetailsStatus);
     const burgerIngredientList = useSelector(getBurgerIngredientList);
-    const [bun, setBun] = useState()
+    const [bun, setBun] = useState(null)
 
     const [, drop] = useDrop(() => ({
         accept: 'ingredient',
@@ -49,6 +52,8 @@ const BurgerConstructor = () => {
         dispatch(fetchPlaceOrderAsync(burgerIngredientList.map(ingredient => ingredient._id)))
             .then(() => {
                 handleOpenModal()
+                dispatch(resetIndgredient())
+                setBun(null)
             })
     }
 
@@ -59,7 +64,7 @@ const BurgerConstructor = () => {
     const renderElement = useCallback((element, index) => {
         return (
             <ConstructorIngredient
-                key={index}
+                key={nanoid()}
                 index={index}
                 id={element.id}
                 product={element}
@@ -85,7 +90,7 @@ const BurgerConstructor = () => {
                             key={'top'}
                             type="top"
                             isLocked={true}
-                            text={bun.name}
+                            text={bun.name + ' (верх)'}
                             price={bun.price}
                             thumbnail={bun.image}
                         />
@@ -107,7 +112,7 @@ const BurgerConstructor = () => {
                             key={'bottom'}
                             type="bottom"
                             isLocked={true}
-                            text={bun.name}
+                            text={bun.name + ' (низ)'}
                             price={bun.price}
                             thumbnail={bun.image}
                         />
@@ -123,7 +128,7 @@ const BurgerConstructor = () => {
 
             <div className={styles.bottom}>
                 <Price additionalStyle={styles.price} price={totalPrice} />
-                <Button htmlType='button' onClick={handlePlaceOrder}>Оформить заказ</Button>
+                {bun && <Button htmlType='button' onClick={handlePlaceOrder}>Оформить заказ</Button>}
             </div>
             {isModalOpen &&
                 <Modal
@@ -133,6 +138,7 @@ const BurgerConstructor = () => {
                     <OrderDetailst />
                 </Modal>
             }
+            {orderStatus === 'loading' && <Loader />}
         </section >
     );
 }

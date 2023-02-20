@@ -1,14 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getIngredients } from '../api/burger-api';
-import { addIngredient, removeIndgredient } from './burgerIngredientListSlice';
+import { addIngredient, removeIndgredient, resetIndgredient } from './burgerIngredientListSlice';
 
 
 export const fetchIngredientListAsync = createAsyncThunk(
-    'ingredientList/fetchIngredientListAsync',
-    async () => {
-        const data = await getIngredients()
-        return data
-    }
+    "ingredientList/fetchIngredientListAsync",
+    getIngredients
 );
 
 export const ingredientListSlice = createSlice({
@@ -43,6 +40,9 @@ export const ingredientListSlice = createSlice({
             })
             .addCase(removeIndgredient, (state, action) => {
                 state.entities = state.entities.map(ingredient => ingredient._id === action.payload._id ? { ...ingredient, count: ingredient?.count - 1 } : ingredient)
+            })
+            .addCase(resetIndgredient, (state, action) => {
+                state.entities = state.entities.map(ingredient => ({ ...ingredient, count: 0 }))
             })
 
 

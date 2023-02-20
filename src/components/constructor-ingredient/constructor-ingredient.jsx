@@ -73,7 +73,7 @@ const ConstructorIngredient = ({ product, id, index, moveElement, handleClose })
                 <DragIcon type="primary" />
             </div>
             <ConstructorElement
-                key={product._id}
+                key={product.id}
                 text={product.name}
                 price={product.price}
                 thumbnail={product.image}

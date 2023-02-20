@@ -1,12 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { placeOrder } from '../api/burger-api';
 
+
 export const fetchPlaceOrderAsync = createAsyncThunk(
-    'orderDetails/fetchPlaceOrderAsync',
-    async (ingredients) => {
-        const data = await placeOrder(ingredients)
-        return data
-    }
+    "orderDetails/fetchPlaceOrderAsync",
+    placeOrder
 );
 
 const orderDetailsInitialState = {
@@ -39,6 +37,7 @@ export const orderDetailsSlice = createSlice({
 export const { setTotalPrice } = orderDetailsSlice.actions;
 
 export const getOrderDetailsList = (state) => state.orderDetails;
+export const getOrderDetailsStatus = (state) => state.orderDetails.status;
 export const getOrderTotalPrice = (state) => state.orderDetails.totalPrice;
 
 export default orderDetailsSlice.reducer

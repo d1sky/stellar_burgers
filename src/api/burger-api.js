@@ -7,12 +7,8 @@ const config = {
     },
 }
 
-async function request({ url, options }) {
-    const res = await fetch(NORMA_API + url, { ...config, ...options })
-        .catch((error) => {
-            console.log(error)
-        });
-    return checkResponse(res)
+function request({ url, options }) {
+    return fetch(NORMA_API + url, { ...config, ...options }).then(checkResponse);
 }
 
 const checkResponse = res => {
