@@ -1,5 +1,5 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { remove } from '../../services/activeIngredientSlice';
 import { getIngredientList } from '../../services/ingredientListSlice';
@@ -23,12 +23,6 @@ const CATEGORY_LIST = [
         type: 'main'
     }
 ]
-
-const options = {
-    behavior: "smooth",
-    block: "start",
-}
-
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch();
@@ -56,23 +50,22 @@ const BurgerIngredients = () => {
         setIsModalOpen(false)
     }
 
-    useEffect(() => {
-        switch (currentCategory.type) {
-            case ('bun'):
-                bunSetRef.current?.scrollIntoView(options);
-                break;
-            case ('sauce'):
-                sauceSetRef.current?.scrollIntoView(options);
-                break;
-            case ('main'):
-                mainSetRef.current?.scrollIntoView(options);
-                break;
-            default: return;
-        }
-    }, [currentCategory])
+    const onScroll = () => {
+        let arr = [
+            { type: 'bun', top: Math.abs(bunSetRef.current.getClientRects()[0].top) },
+            { type: 'sauce', top: Math.abs(sauceSetRef.current.getClientRects()[0].top) },
+            { type: 'main', top: Math.abs(mainSetRef.current.getClientRects()[0].top) }
+        ]
 
-    const handleTypeClick = (category) => {
-        setCurrentCategory(category)
+        var min = arr.reduce(function (prev, current) {
+            if (+current.top < +prev.top) {
+                return current;
+            } else {
+                return prev;
+            }
+        });
+
+        setCurrentCategory(CATEGORY_LIST.find(it => it.type === min.type))
     }
 
     return (
@@ -85,13 +78,13 @@ const BurgerIngredients = () => {
                     <Tab
                         value={ingredient.name}
                         key={ingredient.type}
-                        active={currentCategory.name === ingredient.name}
-                        onClick={() => handleTypeClick(ingredient)} >
+                        active={currentCategory?.name === ingredient?.name}
+                    >
                         {ingredient.name}
                     </Tab>
                 )}
             </div>
-            <div className={styles.box + ' custom_scroll'}>
+            <div className={styles.box + ' custom_scroll'} onScroll={onScroll}>
                 <IngredientBlock
                     ref={bunSetRef}
                     key={'bun'}
