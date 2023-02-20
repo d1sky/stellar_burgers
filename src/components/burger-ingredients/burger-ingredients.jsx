@@ -36,6 +36,7 @@ const BurgerIngredients = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const ingredientList = useSelector(getIngredientList);
 
+
     const bunSetRef = useRef(null);
     const sauceSetRef = useRef(null);
     const mainSetRef = useRef(null);

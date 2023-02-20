@@ -19,6 +19,12 @@ export const ingredientListSlice = createSlice({
         status: 'idle',
     },
     reducers: {
+        increment: (state, action) => {
+            state.entities = state.entities.map(ingredient => ingredient._id === action.payload.id ? { ...ingredient, count: ingredient?.count + 1 } : ingredient)
+        },
+        decrement: (state, action) => {
+            state.entities = state.entities.map(ingredient => ingredient._id === action.payload.id ? { ...ingredient, count: ingredient?.count - 1 } : ingredient)
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -33,5 +39,6 @@ export const ingredientListSlice = createSlice({
 })
 
 export const getIngredientList = (state) => state.ingredientList.entities;
+export const { increment, decrement } = ingredientListSlice.actions
 
 export default ingredientListSlice.reducer

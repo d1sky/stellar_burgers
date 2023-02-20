@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import { getIngredients } from '../api/burger-api';
+import ingredientListSlice from './ingredientListSlice';
 
-// cписок всех полученных ингредиентов
-// const ingredientList = (state = [], action) => { return state }
 
 export const fetchIngredientListAsync = createAsyncThunk(
     'ingredientList/fetchIngredientListAsync',
@@ -29,12 +28,9 @@ export const burgerIngredientListSlice = createSlice({
             state.entities = [...state.entities, { ...action.payload, id: uuid() }]
         },
         removeIndgredient: (state, action) => {
-            console.log();
             state.entities = state.entities.filter(it => it.id !== action.payload)
         },
         swapIngredients: (state, action) => {
-            console.log(action.payload);
-
             let array = state.entities.slice()
 
             array[action.payload.dragIndex] = array.splice(action.payload.hoverIndex, 1, array[action.payload.dragIndex])[0];
@@ -44,11 +40,7 @@ export const burgerIngredientListSlice = createSlice({
     }
 })
 
-export const getBurgerIngredientList = (state) => {
-    console.log('getBurgerIngredientList', state.burgerIngredientList.entities);
-
-    return state.burgerIngredientList.entities;
-}
+export const getBurgerIngredientList = (state) => state.burgerIngredientList.entities;
 export const { swapIngredients, addIngredient, removeIndgredient } = burgerIngredientListSlice.actions
 
 export default burgerIngredientListSlice.reducer

@@ -20,7 +20,7 @@ const checkResponse = res => {
 };
 
 export function getIngredients() {
-    return request({ url: '/ingredients' }).then(res => res.data);
+    return request({ url: '/ingredients' }).then(res => res.data.map(it => ({ ...it, count: 0 })));
 }
 
 export function placeOrder(ingredients) {

@@ -12,13 +12,16 @@ const IngredientBlock = forwardRef((props, ref) => {
     const dispatch = useDispatch();
     const { name, ingredientList, handleOpenModal } = props;
 
+
     const handleIngredientClick = (ingredient) => {
         dispatch(setActiveIngredient(ingredient))
         handleOpenModal()
     }
 
+
+
     return (
-        <div className={styles.block}>
+        <div className={styles.block} >
             <h2 className={styles.block_title} ref={ref}>{name}</h2>
             <div className={styles.block_container}>
                 {ingredientList?.map((ingredient) =>

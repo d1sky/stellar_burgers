@@ -9,6 +9,10 @@
     margin-bottom: 16px;
 }
 
+.drag {
+    opacity: 0.5;
+}
+
 .orderIngredients {
     display: 'flex';
     flex-direction: 'column';

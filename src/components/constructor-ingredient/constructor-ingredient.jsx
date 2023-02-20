@@ -8,7 +8,7 @@ import styles from './constructor-ingredient.module.css';
 const ConstructorIngredient = ({ product, id, index, moveElement, handleClose }) => {
     const ref = useRef(null)
     const [{ handlerId }, drop] = useDrop({
-        accept: 'element',
+        accept: 'constructorIngredient',
         collect(monitor) {
             return {
                 handlerId: monitor.getHandlerId(),
@@ -54,7 +54,7 @@ const ConstructorIngredient = ({ product, id, index, moveElement, handleClose })
         },
     })
     const [{ isDragging }, drag] = useDrag({
-        type: 'element',
+        type: 'constructorIngredient',
         item: () => {
             return { id, index }
         },
@@ -68,7 +68,7 @@ const ConstructorIngredient = ({ product, id, index, moveElement, handleClose })
         <div
             ref={ref}
             data-handler-id={handlerId}
-            className={styles.block} key={index}>
+            className={`${styles.block} ${isDragging && styles.drag}`} key={index}>
             <div className={styles.mover}>
                 <DragIcon type="primary" />
             </div>
