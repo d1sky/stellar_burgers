@@ -64,11 +64,12 @@ const ConstructorIngredient = ({ product, id, index, moveElement, handleClose })
     })
 
     drag(drop(ref))
+
     return (
         <div
             ref={ref}
             data-handler-id={handlerId}
-            className={`${styles.block} ${isDragging && styles.drag}`} key={index}>
+            className={`${styles.block} ${isDragging && styles.drag}`}>
             <div className={styles.mover}>
                 <DragIcon type="primary" />
             </div>

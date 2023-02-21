@@ -1,10 +1,9 @@
-import { nanoid } from '@reduxjs/toolkit';
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBurgerIngredientList, removeIndgredient, resetIndgredient, swapIngredients } from '../../services/burgerIngredientListSlice';
-import { fetchPlaceOrderAsync, getOrderTotalPrice, setTotalPrice, getOrderDetailsStatus } from '../../services/orderDetailsSlice';
+import { fetchPlaceOrderAsync, getOrderDetailsStatus, getOrderTotalPrice, setTotalPrice } from '../../services/orderDetailsSlice';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
 import Loader from '../loader/loader';
 import Modal from '../modal/modal';
@@ -64,7 +63,7 @@ const BurgerConstructor = () => {
     const renderElement = useCallback((element, index) => {
         return (
             <ConstructorIngredient
-                key={nanoid()}
+                key={element.id}
                 index={index}
                 id={element.id}
                 product={element}
