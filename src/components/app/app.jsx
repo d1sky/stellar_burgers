@@ -1,27 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchIngredientListAsync } from '../../services/ingredientListSlice';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
-import { getIngredients } from '../../api/burger-api'
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 
 const App = () => {
-  let [ingredientsList, setIngredientsList] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getIngredients().then(ingredients => {
-      setIngredientsList(ingredients)
-    })
-  }, [])
+    dispatch(fetchIngredientListAsync())
+  }, [dispatch])
 
   return (
     <div className="App">
       <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients ingredientsList={ingredientsList} />
-        <BurgerConstructor order={ingredientsList} />
-      </main>
+      <DndProvider backend={HTML5Backend}>
+        <main className={styles.main}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </main>
+      </DndProvider>
     </div>
   );
 }

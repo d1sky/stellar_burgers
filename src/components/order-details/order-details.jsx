@@ -1,15 +1,18 @@
 
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
 import { ReactComponent as Vector1 } from '../../images/Vector1.svg';
 import { ReactComponent as Vector2 } from '../../images/Vector2.svg';
 import { ReactComponent as Vector3 } from '../../images/Vector3.svg';
+import { getOrderDetailsList } from '../../services/orderDetailsSlice';
 import styles from './order-details.module.css';
 
-
 const OrderDetails = () => {
+  const orderDetails = useSelector(getOrderDetailsList);
+
   return (
     <div className={`mt-4 mb-30 ${styles.modal}`}>
-      <p className={`text text_type_digits-large text_color_primary ${styles.id}`}>034536</p>
+      <p className={`text text_type_digits-large text_color_primary ${styles.id}`}>{orderDetails?.number}</p>
       <p className={`text  text_type_main-medium mt-8 ${styles.title}`}>идентификатор заказа</p>
       <div className={`text  text_type_main-default mt-15 ${styles.icon}`}>
         <div className={`${styles.check}`}><CheckMarkIcon type='primary' /></div>
@@ -23,5 +26,6 @@ const OrderDetails = () => {
     </div>
   );
 }
+
 
 export default OrderDetails;
