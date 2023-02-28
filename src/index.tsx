@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import './index.css';

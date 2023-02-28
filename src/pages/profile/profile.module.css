@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* flex-direction: column; */
+  width: 1280px;
+  margin: 0 auto;
+  margin-top: 120px;
+  color: #8585ad;
+}
+
+.menu {
+  width: 320px;
+}
+
+.menu ul {
+  margin-left: 0; /* Отступ слева в браузере IE и Opera */
+  padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+}
+
+.menuItem {
+  height: 64px;
+  list-style-type: none;
+}
+
+.menuItemActive {
+    color: #F2F2F3;
+}
+
+.link {
+  color: #4c4cff;
+  text-decoration: none;
+}
+
+.info {
+  color: #8585ad;
+  opacity: 0.4;
+}
