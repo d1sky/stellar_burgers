@@ -6,8 +6,19 @@ export function login(data) {
     return request({ url: AUTH_API + '/login', options: { method: 'POST', body: JSON.stringify({ data }) } })
 }
 
+
+// {
+//     "email": "test-data@yandex.ru",
+//         "password": "password",
+//             "name": "Username"
+// }
+
 export function register(data) {
-    return request({ url: AUTH_API + '/register', options: { method: 'POST', body: JSON.stringify({ data }) } })
+    return request({
+        url: AUTH_API + '/register', options: {
+            method: 'POST', body: JSON.stringify(data)
+        }
+    })
 }
 
 export function logout(data) {
@@ -24,6 +35,12 @@ export function token(data) {
 export function passwordReset(data) {
     return request({ url: 'password-reset', options: { method: 'POST', body: JSON.stringify({ data }) } })
 }
+
+export function passwordRes(data) {
+    return request({ url: 'password-reset\reset', options: { method: 'POST', body: JSON.stringify({ data }) } })
+}
+
+
 
 // https://norma.nomoreparties.space/api/password-reset.
 // POST https://norma.nomoreparties.space/api/auth/login - эндпоинт для авторизации.

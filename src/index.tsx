@@ -10,6 +10,7 @@ import ingredientListSlice from './services/ingredientListSlice';
 import orderDetailsSlice from './services/orderDetailsSlice';
 import activeIngredientSlice from './services/activeIngredientSlice';
 import burgerIngredientListSlice from './services/burgerIngredientListSlice';
+import userSlice from './services/userSlice';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,7 +21,8 @@ const store = configureStore({
     ingredientList: ingredientListSlice,
     orderDetails: orderDetailsSlice,
     activeIngredient: activeIngredientSlice,
-    burgerIngredientList: burgerIngredientListSlice
+    burgerIngredientList: burgerIngredientListSlice,
+    user: userSlice
   },
   devTools: process.env.NODE_ENV !== 'production',
 })

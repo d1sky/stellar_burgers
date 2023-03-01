@@ -1,6 +1,8 @@
-import { useNavigate } from 'react-router-dom';
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { fetchRegisterAsync } from "../../services/userSlice";
 import styles from './register.module.css';
 
 const INITIAL_STATE = {
@@ -11,12 +13,18 @@ const INITIAL_STATE = {
 const Register = () => {
   const [formValue, setFormValue] = useState(INITIAL_STATE)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleFormChange = e => setFormValue({ ...formValue, [e.target.name]: e.target.value })
 
   const handleLoginClick = e => {
     e.preventDefault()
     navigate('/login')
+  }
+  const handleRegisterClick = e => {
+    dispatch(fetchRegisterAsync(formValue)).then(() => {
+      console.log('ok');
+    })
   }
 
   return (
@@ -47,11 +55,11 @@ const Register = () => {
           extraClass={`mt-6`}
         />
       </form>
-      <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`}>
+      <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`} onClick={() => handleRegisterClick()}>
         Зарегистрироваться
       </Button>
       <p className="text text_type_main-small mt-20">
-        Уже зарегистрированы? <a className={styles.link} href="#" onClick={handleLoginClick}>Войти</a>
+        Уже зарегистрированы? <a className={styles.link} href="/" onClick={handleLoginClick}>Войти</a>
       </p>
     </div>
   );
