@@ -1,4 +1,4 @@
-import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import styles from './reset-password.module.css';
 
@@ -37,7 +37,7 @@ const ResetPassword = () => {
       <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`}>
         Сохранить
       </Button>
-      <p className="text text_type_main-small mt-20">Вспомнили пароль? <a className={styles.link} href="#">Войти</a></p>
+      <p className="text text_type_main-small mt-20">Вспомнили пароль? <a className={styles.link} href="/">Войти</a></p>
     </div>
   );
 }

@@ -21,7 +21,13 @@
 .menuItem {
   height: 64px;
   list-style-type: none;
+  cursor: pointer;
 }
+
+.menuItem:hover {
+  color: #a7a7a7;
+}
+
 
 .menuItemActive {
     color: #F2F2F3;

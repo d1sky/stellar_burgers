@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import styles from './forgot-password.module.css';
 
 const INITIAL_STATE = {
@@ -36,7 +36,7 @@ const ForgotPassword = () => {
         Восстановить
       </Button>
       <p className="text text_type_main-small mt-20">
-        Вспомнили пароль? <a className={styles.link} href="" onClick={handleLoginClick}>Войти</a>
+        Вспомнили пароль? <a className={styles.link} href="/" onClick={handleLoginClick}>Войти</a>
       </p>
     </div>
   );

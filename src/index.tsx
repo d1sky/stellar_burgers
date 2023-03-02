@@ -10,7 +10,7 @@ import ingredientListSlice from './services/ingredientListSlice';
 import orderDetailsSlice from './services/orderDetailsSlice';
 import activeIngredientSlice from './services/activeIngredientSlice';
 import burgerIngredientListSlice from './services/burgerIngredientListSlice';
-import userSlice from './services/userSlice';
+import authSlice from './services/authSlice';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,7 +22,7 @@ const store = configureStore({
     orderDetails: orderDetailsSlice,
     activeIngredient: activeIngredientSlice,
     burgerIngredientList: burgerIngredientListSlice,
-    user: userSlice
+    auth: authSlice
   },
   devTools: process.env.NODE_ENV !== 'production',
 })

@@ -1,6 +1,10 @@
-import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import styles from './profile.module.css';
+import userSlice, { fetchLogoutAsync, getLoginStatus, getUser } from "../../services/authSlice";
+import Loader from "../../components/loader/loader";
 
 const INITIAL_STATE = {
   name: '',
@@ -9,9 +13,23 @@ const INITIAL_STATE = {
 }
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const loginStatus = useSelector(getLoginStatus);
+  const user = useSelector(getUser);
+  const navigate = useNavigate();
   const [formValue, setFormValue] = useState(INITIAL_STATE)
 
   const handleFormChange = e => setFormValue({ ...formValue, [e.target.name]: e.target.value })
+
+  const handleLogoutClick = e => {
+    dispatch(fetchLogoutAsync()).then(() => {
+      navigate('/')
+    })
+  }
+
+  console.log(user);
+
+  if (!user?.email) return <Navigate to='/login' />
 
   return (
     <div className={styles.container}>
@@ -19,7 +37,7 @@ const Profile = () => {
         <ul className="text text_type_main-medium">
           <li className={`${styles.menuItem} ${styles.menuItemActive}`}>Профиль</li>
           <li className={`${styles.menuItem}`}>История заказов</li>
-          <li className={`${styles.menuItem}`}>Выход</li>
+          <li className={`${styles.menuItem}`} onClick={() => handleLogoutClick()}>Выход</li>
         </ul>
         <p className={`mt-20 ${styles.info}`}>В этом разделе вы можете изменить свои персональные данные</p>
       </div>
@@ -53,6 +71,7 @@ const Profile = () => {
           />
         </form>
       </div>
+      {loginStatus === 'loading' && <Loader />}
     </div>
   );
 }

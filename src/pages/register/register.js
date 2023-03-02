@@ -2,7 +2,7 @@ import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-de
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchRegisterAsync } from "../../services/userSlice";
+import { fetchRegisterAsync } from "../../services/authSlice";
 import styles from './register.module.css';
 
 const INITIAL_STATE = {
@@ -21,6 +21,7 @@ const Register = () => {
     e.preventDefault()
     navigate('/login')
   }
+
   const handleRegisterClick = e => {
     dispatch(fetchRegisterAsync(formValue)).then(() => {
       console.log('ok');

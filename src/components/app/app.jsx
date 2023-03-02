@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ForgotPassword from '../../pages/forgot-password/forgot-password';
 import Home from '../../pages/home/home';
@@ -21,8 +22,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <AppHeader />
       <BrowserRouter>
+      <AppHeader />
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
