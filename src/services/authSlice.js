@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { login, logout, register, passwordReset, passwordRes } from '../api/auth-api';
+import { login, logout, register, passwordReset, passwordResetConfirm, getUserData } from '../api/auth-api';
 import { setCookie, getCookie, deleteCookie } from '../utils/coockie';
 
 
@@ -25,9 +25,14 @@ export const fetchForgotPasswordAsync = createAsyncThunk(
 
 export const fetchResetPasswordAsync = createAsyncThunk(
     "auth/fetchResetPasswordAsync",
-    passwordRes
+    passwordResetConfirm
 );
 
+
+export const fetchGetUserDataAsync = createAsyncThunk(
+    "auth/fetchGetUserDataAsync",
+    getUserData
+);
 
 const userInitialState = {
     user: {
@@ -46,6 +51,9 @@ export const userSlice = createSlice({
             .addCase(fetchRegisterAsync.pending, (state) => {
                 state.status = 'loading';
             })
+            .addCase(fetchRegisterAsync.rejected, (state) => {
+                state.status = 'idle';
+            })
             .addCase(fetchRegisterAsync.fulfilled, (state, action) => {
                 state.status = 'idle';
 
@@ -60,6 +68,9 @@ export const userSlice = createSlice({
             .addCase(fetchLogoutAsync.pending, (state) => {
                 state.status = 'loading';
             })
+            .addCase(fetchLogoutAsync.rejected, (state) => {
+                state.status = 'idle';
+            })
             .addCase(fetchLogoutAsync.fulfilled, (state, action) => {
                 state.status = 'idle';
 
@@ -71,8 +82,19 @@ export const userSlice = createSlice({
                     // state.user.name = null;
                 }
             })
+            .addCase(fetchGetUserDataAsync.fulfilled, (state, action) => {
+                state.status = 'idle';
+
+                if (action.payload.success) {
+                    state.user.email = action.payload.user.email;
+                    state.user.name = action.payload.user.name;
+                }
+            })
             .addCase(fetchLoginAsync.pending, (state) => {
                 state.status = 'loading';
+            })
+            .addCase(fetchLoginAsync.rejected, (state) => {
+                state.status = 'idle';
             })
             .addCase(fetchLoginAsync.fulfilled, (state, action) => {
                 state.status = 'idle';

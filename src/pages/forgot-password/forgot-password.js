@@ -1,6 +1,8 @@
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import { fetchForgotPasswordAsync } from "../../services/authSlice";
 import styles from './forgot-password.module.css';
 
 const INITIAL_STATE = {
@@ -9,14 +11,26 @@ const INITIAL_STATE = {
 }
 
 const ForgotPassword = () => {
-  const [formValue, setFormValue] = useState(INITIAL_STATE)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [formValue, setFormValue] = useState(INITIAL_STATE)
+  const [error, setError] = useState(false)
 
   const handleFormChange = e => setFormValue({ ...formValue, [e.target.name]: e.target.value })
 
   const handleLoginClick = e => {
     e.preventDefault()
     navigate('/login')
+  }
+
+  const handleForgotPasswordClick = e => {
+    dispatch(fetchForgotPasswordAsync(formValue)).then((data) => {
+      if (data?.payload?.success) {
+        navigate('/reset-password')
+      } else {
+        setError(true)
+      }
+    })
   }
 
   return (
@@ -30,9 +44,10 @@ const ForgotPassword = () => {
           name={'email'}
           isIcon={false}
           extraClass={`mt-6`}
+          error={error}
         />
       </form>
-      <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`}>
+      <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`} onClick={handleForgotPasswordClick}>
         Восстановить
       </Button>
       <p className="text text_type_main-small mt-20">

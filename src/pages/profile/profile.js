@@ -1,10 +1,10 @@
 import { Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useState } from "react";
-import styles from './profile.module.css';
-import userSlice, { fetchLogoutAsync, getLoginStatus, getUser } from "../../services/authSlice";
 import Loader from "../../components/loader/loader";
+import { fetchLogoutAsync, getLoginStatus, getUser } from "../../services/authSlice";
+import styles from './profile.module.css';
 
 const INITIAL_STATE = {
   name: '',
@@ -20,6 +20,10 @@ const Profile = () => {
   const [formValue, setFormValue] = useState(INITIAL_STATE)
 
   const handleFormChange = e => setFormValue({ ...formValue, [e.target.name]: e.target.value })
+
+  useEffect(() => {
+    setFormValue(user)
+  }, [])
 
   const handleLogoutClick = e => {
     dispatch(fetchLogoutAsync()).then(() => {

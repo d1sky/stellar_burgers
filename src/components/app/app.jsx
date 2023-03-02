@@ -9,6 +9,7 @@ import Login from '../../pages/login/login';
 import Profile from '../../pages/profile/profile';
 import Register from '../../pages/register/register';
 import ResetPassword from '../../pages/reset-password/reset-password';
+import { fetchGetUserDataAsync } from '../../services/authSlice';
 import { fetchIngredientListAsync } from '../../services/ingredientListSlice';
 import AppHeader from '../app-header/app-header';
 
@@ -18,6 +19,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredientListAsync())
+    dispatch(fetchGetUserDataAsync())
   }, [dispatch])
 
   return (

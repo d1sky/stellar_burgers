@@ -23,15 +23,27 @@ export function token(data) {
     return request({ url: AUTH_API + '/token', options: { method: 'POST', body: JSON.stringify({ ...data }) } })
 }
 
+// user
+
+// GET https://norma.nomoreparties.space/api/auth/user - эндпоинт получения данных о пользователе.
+// PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
+
+export function getUserData() {
+    return request({ url: AUTH_API + '/user' + '?authorization=' + getCookie('refreshToken'), options: { method: 'GET' }})
+}
+
+export function updateUserData(data) {
+    return request({ url: AUTH_API + '/user', options: { method: 'POST', body: JSON.stringify({authorization: getCookie('token'),  ...data }) } })
+}
 
 // password
 
 export function passwordReset(data) {
-    return request({ url: 'password-reset', options: { method: 'POST', body: JSON.stringify({ ...data }) } })
+    return request({ url: '/password-reset', options: { method: 'POST', body: JSON.stringify({ ...data }) } })
 }
 
-export function passwordRes(data) {
-    return request({ url: 'password-reset\reset', options: { method: 'POST', body: JSON.stringify({ ...data }) } })
+export function passwordResetConfirm(data) {
+    return request({ url: '/password-reset/reset', options: { method: 'POST', body: JSON.stringify({ ...data, token: data.code }) } } )
 }
 
 
