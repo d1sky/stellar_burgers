@@ -23,17 +23,13 @@ const Profile = () => {
 
   useEffect(() => {
     setFormValue(user)
-  }, [])
+  }, [user])
 
   const handleLogoutClick = e => {
     dispatch(fetchLogoutAsync()).then(() => {
       navigate('/')
     })
   }
-
-  console.log(user);
-
-  if (!user?.email) return <Navigate to='/login' />
 
   return (
     <div className={styles.container}>
