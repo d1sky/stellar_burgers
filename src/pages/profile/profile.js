@@ -1,4 +1,4 @@
-import { Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -74,6 +74,13 @@ const Profile = () => {
             icon={'EditIcon'}
           />
         </form>
+        <div className={`mt-6`}>
+        <Button extraClass={`mr-6`}>Сохранить</Button>
+        <Button >Отмена</Button>
+        </div>
+      </div>
+      <div>
+        
       </div>
       {loginStatus === 'loading' && <Loader />}
     </div>

@@ -48,7 +48,7 @@ export function passwordResetConfirm(data) {
 
 
 
-// https://norma.nomoreparties.space/api/password-reset.
+// https://norma.nomoreparties.space/api/password-reset
 // POST https://norma.nomoreparties.space/api/auth/login - эндпоинт для авторизации.
 // POST https://norma.nomoreparties.space/api/auth/register - эндпоинт для регистрации пользователя.
 // POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
