@@ -16,7 +16,7 @@ export function register(userData) {
 }
 
 export function logout(data) {
-    return request({ url: AUTH_API + '/logout', options: { method: 'POST', body: JSON.stringify({token: getCookie('refreshToken')}) } })
+    return request({ url: AUTH_API + '/logout', options: { method: 'POST', body: JSON.stringify({ token: getCookie('refreshToken') }) } })
 }
 
 export function token(data) {
@@ -29,11 +29,11 @@ export function token(data) {
 // PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
 
 export function getUserData() {
-    return request({ url: AUTH_API + '/user' + '?authorization=' + getCookie('refreshToken'), options: { method: 'GET' }})
+    return request({ url: AUTH_API + '/user', options: { method: 'GET', headers: { authorization: 'Bearer ' + getCookie('token') } } })
 }
 
 export function updateUserData(data) {
-    return request({ url: AUTH_API + '/user', options: { method: 'POST', body: JSON.stringify({authorization: getCookie('token'),  ...data }) } })
+    return request({ url: AUTH_API + '/user', options: { method: 'POST', body: JSON.stringify({ authorization: getCookie('token'), ...data }) } })
 }
 
 // password
@@ -43,7 +43,7 @@ export function passwordReset(data) {
 }
 
 export function passwordResetConfirm(data) {
-    return request({ url: '/password-reset/reset', options: { method: 'POST', body: JSON.stringify({ ...data, token: data.code }) } } )
+    return request({ url: '/password-reset/reset', options: { method: 'POST', body: JSON.stringify({ ...data, token: data.code }) } })
 }
 
 

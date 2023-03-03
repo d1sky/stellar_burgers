@@ -12,6 +12,7 @@ import ResetPassword from '../../pages/reset-password/reset-password';
 import { fetchGetUserDataAsync } from '../../services/authSlice';
 import { fetchIngredientListAsync } from '../../services/ingredientListSlice';
 import AppHeader from '../app-header/app-header';
+import { ProtectedRouteElement } from '../protected-route';
 
 
 const App = () => {
@@ -25,18 +26,18 @@ const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
-      <AppHeader />
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register/>} />
-        <Route path="/forgot-password" element={<ForgotPassword/>} />
-        <Route path="/reset-password" element={<ResetPassword/>} />
-        <Route path="/profile" element={<Profile/>} />
-        <Route path="/ingredients/:id" element={<Ingredient/>} />
-        {/* <Route path="*" element={<NotFound404 />} /> */}
-      </Routes>
-    </BrowserRouter>
+        <AppHeader />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} />} />
+          <Route path="/ingredients/:id" element={<Ingredient />} />
+          {/* <Route path="*" element={<NotFound404 />} /> */}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
