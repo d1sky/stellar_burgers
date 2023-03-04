@@ -79,8 +79,8 @@ const Profile = () => {
           />
         </form>
         <div className={`mt-6`}>
-        <Button extraClass={`mr-6`} onClick={handleSaveClick}>Сохранить</Button>
-        <Button >Отмена</Button>
+        <Button htmlType="button" type="primary" extraClass={`mr-6`} onClick={handleSaveClick}>Сохранить</Button>
+        <Button htmlType="button" type="primary">Отмена</Button>
         </div>
       </div>
       <div>
