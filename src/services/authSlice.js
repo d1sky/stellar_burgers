@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { login, logout, register, passwordReset, passwordResetConfirm, getUserData } from '../api/auth-api';
-import { setCookie, getCookie, deleteCookie } from '../utils/coockie';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getUserData, updateUserData, login, logout, passwordReset, passwordResetConfirm, register } from '../api/auth-api';
+import { deleteCookie, setCookie } from '../utils/coockie';
 
 
 export const fetchLoginAsync = createAsyncThunk(
@@ -28,10 +28,14 @@ export const fetchResetPasswordAsync = createAsyncThunk(
     passwordResetConfirm
 );
 
-
 export const fetchGetUserDataAsync = createAsyncThunk(
     "auth/fetchGetUserDataAsync",
     getUserData
+);
+
+export const fetchUpdateUserDataAsync = createAsyncThunk(
+    "auth/fetchUpdateUserDataAsync",
+    updateUserData
 );
 
 const userInitialState = {
@@ -106,7 +110,22 @@ export const userSlice = createSlice({
                     state.user.email = action.payload.user.email;
                     state.user.name = action.payload.user.name;
                 }
-            });
+            })
+            .addCase(fetchUpdateUserDataAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchUpdateUserDataAsync.rejected, (state) => {
+                state.status = 'idle';
+            })
+            .addCase(fetchUpdateUserDataAsync.fulfilled, (state, action) => {
+                state.status = 'idle';
+
+                if (action.payload.success) {
+                    state.user.email = action.payload.user.email;
+                    state.user.name = action.payload.user.name;
+                }
+            })
+            ;
     },
 })
 

@@ -1,9 +1,9 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/loader/loader";
-import { fetchLogoutAsync, getLoginStatus, getUser } from "../../services/authSlice";
+import { fetchLogoutAsync, fetchUpdateUserDataAsync, getLoginStatus, getUser } from "../../services/authSlice";
 import styles from './profile.module.css';
 
 const INITIAL_STATE = {
@@ -29,6 +29,14 @@ const Profile = () => {
     dispatch(fetchLogoutAsync()).then(() => {
       navigate('/')
     })
+  }
+
+  const handleSaveClick = e => {
+    dispatch(fetchUpdateUserDataAsync(formValue))
+  }
+
+  const handleCancelClick = e => {
+    console.log('cancel');
   }
 
   return (
@@ -71,7 +79,7 @@ const Profile = () => {
           />
         </form>
         <div className={`mt-6`}>
-        <Button extraClass={`mr-6`}>Сохранить</Button>
+        <Button extraClass={`mr-6`} onClick={handleSaveClick}>Сохранить</Button>
         <Button >Отмена</Button>
         </div>
       </div>

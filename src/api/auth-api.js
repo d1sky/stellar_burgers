@@ -33,7 +33,14 @@ export function getUserData() {
 }
 
 export function updateUserData(data) {
-    return request({ url: AUTH_API + '/user', options: { method: 'POST', body: JSON.stringify({ authorization: getCookie('token'), ...data }) } })
+    return request({
+        url: AUTH_API + '/user',
+        options: {
+            method: 'PATCH',
+            headers: { authorization: 'Bearer ' + getCookie('token') },
+            body: JSON.stringify(data)
+        }
+    })
 }
 
 // password

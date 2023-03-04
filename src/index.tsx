@@ -1,16 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
+import activeIngredientSlice from './services/activeIngredientSlice';
+import authSlice from './services/authSlice';
+import burgerIngredientListSlice from './services/burgerIngredientListSlice';
 import ingredientListSlice from './services/ingredientListSlice';
 import orderDetailsSlice from './services/orderDetailsSlice';
-import activeIngredientSlice from './services/activeIngredientSlice';
-import burgerIngredientListSlice from './services/burgerIngredientListSlice';
-import authSlice from './services/authSlice';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
