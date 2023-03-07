@@ -45,11 +45,15 @@ export async function updateUserData(userData) {
         url: AUTH_API + '/user',
         options: {
             method: 'PATCH',
-            headers: { authorization: 'Bearer ' + getCookie('accessToken') },
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                authorization: 'Bearer ' + getCookie('accessToken')
+            },
             body: JSON.stringify(userData)
         }
     }).catch((err) => {
         if (err.message === 'jwt expired' && getCookie('refreshToken')) {
+
             return updateToken(getCookie('refreshToken')).then(() => updateUserData(userData))
         }
 
