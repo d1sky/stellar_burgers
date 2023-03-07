@@ -1,11 +1,8 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useMemo, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { remove } from '../../services/activeIngredientSlice';
+import { useSelector } from 'react-redux';
 import { getIngredientList } from '../../services/ingredientListSlice';
 import IngredientBlock from '../ingredient-block/ingredient-block';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
 import styles from './burger-ingredients.module.css';
 
 
@@ -25,11 +22,8 @@ const CATEGORY_LIST = [
 ]
 
 const BurgerIngredients = () => {
-    const dispatch = useDispatch();
     const [currentCategory, setCurrentCategory] = useState(CATEGORY_LIST[0]);
-    const [isModalOpen, setIsModalOpen] = useState(false)
     const ingredientList = useSelector(getIngredientList);
-
 
     const bunSetRef = useRef(null);
     const sauceSetRef = useRef(null);
@@ -43,12 +37,6 @@ const BurgerIngredients = () => {
 
     const mainIngredientsList = useMemo(() => ingredientList?.filter(ingredient =>
         ingredient.type === 'main'), [ingredientList]);
-
-    const handleOpenModal = () => setIsModalOpen(true)
-    const handleCloseModal = () => {
-        dispatch(remove())
-        setIsModalOpen(false)
-    }
 
     const onScroll = () => {
         let arr = [
@@ -89,30 +77,18 @@ const BurgerIngredients = () => {
                     ref={bunSetRef}
                     key={'bun'}
                     name={'Булки'}
-                    handleOpenModal={handleOpenModal}
                     ingredientList={bunIngredientsList} />
                 <IngredientBlock
                     ref={sauceSetRef}
                     key={'sauce'}
                     name={'Соусы'}
-                    handleOpenModal={handleOpenModal}
                     ingredientList={sauceIngredientsList} />
                 <IngredientBlock
                     ref={mainSetRef}
                     key={'main'}
                     name={'Начинки'}
-                    handleOpenModal={handleOpenModal}
                     ingredientList={mainIngredientsList} />
             </div>
-            {isModalOpen &&
-                <Modal
-                    title={'Детали ингридиента'}
-                    handleClose={handleCloseModal}
-                >
-                    <IngredientDetails />
-                </Modal>
-            }
-
         </section>
     );
 }

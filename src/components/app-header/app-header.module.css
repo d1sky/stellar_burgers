@@ -37,7 +37,6 @@
 }
 
 .navigation_link_active {
-  composes: navigation_link;
   color: #F2F2F3;
 }
 
