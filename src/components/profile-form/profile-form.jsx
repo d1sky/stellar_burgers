@@ -12,7 +12,6 @@ const INITIAL_STATE = {
 }
 
 const ProfileForm = () => {
-    console.log('ProfileForm');
     const dispatch = useDispatch();
     const user = useSelector(getUser);
     const [formValue, setFormValue] = useState(INITIAL_STATE)

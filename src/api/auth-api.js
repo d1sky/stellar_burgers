@@ -30,7 +30,6 @@ export function updateToken(token) {
 // user
 
 export async function getUserData() {
-    console.log('getUserData');
     return await request({ url: AUTH_API + '/user', options: { method: 'GET', headers: { authorization: 'Bearer ' + getCookie('accessToken') } } })
         .catch((err) => {
             if (err.message === 'jwt expired' && getCookie('refreshToken')) {

@@ -5,7 +5,6 @@ import { fetchLogoutAsync } from "../../services/authSlice";
 import styles from './profile.module.css';
 
 const Profile = () => {
-  console.log('Profile');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
