@@ -16,8 +16,6 @@ const AppHeader = () => {
         navigate('/profile')
     }
 
-
-
     return (
         <header className={styles.header}>
             <nav className={styles.content}>
@@ -31,7 +29,7 @@ const AppHeader = () => {
                         <span className={styles.name}>Лента заказов</span>
                     </a>
                 </div>
-                <a href="/#" className={`${styles.navigation} ${styles.navigation_link} ${pathname === '/profile' && styles.navigation_link_active}`} onClick={handleProfileClick}>
+                <a href="/#" className={`${styles.navigation} ${styles.navigation_link} ${pathname.includes('/profile') && styles.navigation_link_active}`} onClick={handleProfileClick}>
                     <ProfileIcon type="primary" className={styles.icon} />
                     <span className={styles.name}>Личный кабинет</span>
                 </a>

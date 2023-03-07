@@ -1,92 +1,30 @@
-import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import Loader from "../../components/loader/loader";
-import { fetchLogoutAsync, fetchUpdateUserDataAsync, getLoginStatus, getUser } from "../../services/authSlice";
+import { useDispatch } from 'react-redux';
+import { useNavigate, useLocation, Outlet } from 'react-router-dom';
+import { fetchLogoutAsync } from "../../services/authSlice";
 import styles from './profile.module.css';
-
-const INITIAL_STATE = {
-  name: '',
-  email: '',
-  password: ''
-}
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const loginStatus = useSelector(getLoginStatus);
-  const user = useSelector(getUser);
   const navigate = useNavigate();
-  const [formValue, setFormValue] = useState(INITIAL_STATE)
-
-  const handleFormChange = e => setFormValue({ ...formValue, [e.target.name]: e.target.value })
-
-  useEffect(() => {
-    setFormValue(user)
-  }, [user])
+  const { pathname } = useLocation();
 
   const handleLogoutClick = e => {
     dispatch(fetchLogoutAsync()).then(() => {
-      navigate('/')
+      navigate('/login')
     })
-  }
-
-  const handleSaveClick = e => {
-    dispatch(fetchUpdateUserDataAsync(formValue))
-  }
-
-  const handleCancelClick = e => {
-    console.log('cancel');
   }
 
   return (
     <div className={styles.container}>
       <div className={`mr-15 ${styles.menu}`}>
         <ul className="text text_type_main-medium">
-          <li className={`${styles.menuItem} ${styles.menuItemActive}`}>Профиль</li>
-          <li className={`${styles.menuItem}`}>История заказов</li>
+          <li className={`${styles.menuItem} ${pathname === ('/profile') && styles.menuItemActive}`} onClick={() => { navigate('/profile') }}>Профиль</li>
+          <li className={`${styles.menuItem} ${pathname === ('/profile/orders') && styles.menuItemActive}`} onClick={() => { navigate('/profile/orders') }}>История заказов</li>
           <li className={`${styles.menuItem}`} onClick={() => handleLogoutClick()}>Выход</li>
         </ul>
         <p className={`mt-20 ${styles.info}`}>В этом разделе вы можете изменить свои персональные данные</p>
       </div>
-      <div>
-        <form>
-          <Input
-            type={'text'}
-            placeholder={'Имя'}
-            onChange={handleFormChange}
-            value={formValue.name}
-            name={'name'}
-            size={'default'}
-            icon={'EditIcon'}
-          />
-          <Input
-            type={'text'}
-            placeholder={'Логин'}
-            onChange={handleFormChange}
-            value={formValue.email}
-            name={'email'}
-            size={'default'}
-            extraClass="mt-6"
-            icon={'EditIcon'}
-          />
-          <PasswordInput
-            onChange={handleFormChange}
-            value={formValue.password}
-            name={'password'}
-            extraClass={`mt-6`}
-            icon={'EditIcon'}
-          />
-        </form>
-        <div className={`mt-6`}>
-        <Button htmlType="button" type="primary" extraClass={`mr-6`} onClick={handleSaveClick}>Сохранить</Button>
-        <Button htmlType="button" type="primary">Отмена</Button>
-        </div>
-      </div>
-      <div>
-        
-      </div>
-      {loginStatus === 'loading' && <Loader />}
+      <Outlet />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { fetchForgotPasswordAsync } from "../../services/authSlice";
+import { Link } from 'react-router-dom'
 import styles from './forgot-password.module.css';
 
 const INITIAL_STATE = {
@@ -26,7 +27,7 @@ const ForgotPassword = () => {
   const handleForgotPasswordClick = e => {
     dispatch(fetchForgotPasswordAsync(formValue)).then((data) => {
       if (data?.payload?.success) {
-        navigate('/reset-password')
+        navigate('/reset-password', { state: { reset: true } })
       } else {
         setError(true)
       }
@@ -47,9 +48,11 @@ const ForgotPassword = () => {
           error={error}
         />
       </form>
-      <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`} onClick={handleForgotPasswordClick}>
-        Восстановить
-      </Button>
+      <Link to={{ pathname: '/reset-password', state: {} }}>
+        <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`} onClick={handleForgotPasswordClick}>
+          Восстановить
+        </Button>
+      </Link>
       <p className="text text_type_main-small mt-20">
         Вспомнили пароль? <a className={styles.link} href="/" onClick={handleLoginClick}>Войти</a>
       </p>

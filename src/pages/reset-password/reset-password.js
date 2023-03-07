@@ -1,7 +1,7 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { fetchResetPasswordAsync } from "../../services/authSlice";
 import styles from './reset-password.module.css';
 
@@ -13,8 +13,16 @@ const INITIAL_STATE = {
 const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation()
   const [formValue, setFormValue] = useState(INITIAL_STATE)
   const [error, setError] = useState(false)
+  const reset = location.state?.reset
+
+  useEffect(() => {
+    if (!reset) {
+      navigate('/login')
+    }
+  }, [reset, navigate])
 
   const handleFormChange = e => setFormValue({ ...formValue, [e.target.name]: e.target.value })
 

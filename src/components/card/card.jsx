@@ -7,10 +7,13 @@ import { ingredientTypes } from '../../model/ingrediaents';
 import { addIngredient } from '../../services/burgerIngredientListSlice';
 import Price from '../price/price';
 import styles from './card.module.css';
+import { useLocation, Link } from 'react-router-dom'
 
 
 const Card = ({ ingredient, onClick }) => {
+    const location = useLocation();
     const dispatch = useDispatch();
+
     const [, drag] = useDrag(() => ({
         type: 'ingredient',
         item: { ...ingredient },
@@ -23,17 +26,27 @@ const Card = ({ ingredient, onClick }) => {
     }))
 
     return (
-        <div ref={drag} className={styles.card} onClick={() => onClick(ingredient)}>
-            {ingredient.count > 0 && (
-                <Counter count={ingredient?.count} size="default" extraClass="m-1" />)}
-            <div className={styles.card_image}>
-                <img src={ingredient?.image} alt={ingredient?.name} />
-            </div>
-            <Price price={ingredient?.price} />
-            <div className={styles.card_name}>
-                {ingredient?.name}
-            </div>
-        </div>
+        <div
+            ref={drag}
+            className={styles.card}
+            onClick={() => onClick(ingredient)}
+        >
+            <Link to={`/ingredients/${ingredient._id}`}
+                state={{ background: location }}
+            >
+                {ingredient.count > 0 && (
+                    <Counter count={ingredient?.count} size="default" extraClass="m-1" />)}
+                <div className={styles.card_image}>
+                    <img src={ingredient?.image} alt={ingredient?.name} />
+                </div>
+                <Price price={ingredient?.price} />
+                <div className={styles.card_name}>
+                    {ingredient?.name}
+                </div>
+            </Link>
+        </div >
+
+
     )
 }
 

@@ -10,15 +10,11 @@ import styles from './ingredient-block.module.css';
 
 const IngredientBlock = forwardRef((props, ref) => {
     const dispatch = useDispatch();
-    const { name, ingredientList, handleOpenModal } = props;
-
+    const { name, ingredientList } = props;
 
     const handleIngredientClick = (ingredient) => {
         dispatch(setActiveIngredient(ingredient))
-        handleOpenModal()
     }
-
-
 
     return (
         <div className={styles.block} >

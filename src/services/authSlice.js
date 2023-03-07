@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getUserData, updateUserData, login, logout, passwordReset, passwordResetConfirm, register } from '../api/auth-api';
-import { deleteCookie, setCookie } from '../utils/coockie';
+import { getUserData, updateUserData, login, logout, passwordReset, passwordResetConfirm, register, updateToken } from '../api/auth-api';
+import { deleteCookie, getCookie, setCookie } from '../utils/coockie';
 
 
 export const fetchLoginAsync = createAsyncThunk(
@@ -38,6 +38,11 @@ export const fetchUpdateUserDataAsync = createAsyncThunk(
     updateUserData
 );
 
+// export const fetchUpdateTokenAsync = createAsyncThunk(
+//     "auth/fetchUpdateTokenAsync",
+//     updateToken
+// );
+
 const userInitialState = {
     user: {
         email: '',
@@ -52,6 +57,7 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // register
             .addCase(fetchRegisterAsync.pending, (state) => {
                 state.status = 'loading';
             })
@@ -62,38 +68,14 @@ export const userSlice = createSlice({
                 state.status = 'idle';
 
                 if (action.payload.success) {
-                    setCookie('token', action.payload.accessToken.split('Bearer ')[1]);
+                    setCookie('accessToken', action.payload.accessToken.split('Bearer ')[1]);
                     setCookie('refreshToken', action.payload.refreshToken)
 
                     state.user.email = action.payload.user.email;
                     state.user.name = action.payload.user.name;
                 }
             })
-            .addCase(fetchLogoutAsync.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchLogoutAsync.rejected, (state) => {
-                state.status = 'idle';
-            })
-            .addCase(fetchLogoutAsync.fulfilled, (state, action) => {
-                state.status = 'idle';
-
-                if (action.payload.success) {
-                    deleteCookie('token');
-                    deleteCookie('refreshToken')
-
-                    state.user = {...state, user: userInitialState}
-                    // state.user.name = null;
-                }
-            })
-            .addCase(fetchGetUserDataAsync.fulfilled, (state, action) => {
-                state.status = 'idle';
-
-                if (action.payload.success) {
-                    state.user.email = action.payload.user.email;
-                    state.user.name = action.payload.user.name;
-                }
-            })
+            // login
             .addCase(fetchLoginAsync.pending, (state) => {
                 state.status = 'loading';
             })
@@ -104,13 +86,54 @@ export const userSlice = createSlice({
                 state.status = 'idle';
 
                 if (action.payload.success) {
-                    setCookie('token', action.payload.accessToken.split('Bearer ')[1]);
+                    setCookie('accessToken', action.payload.accessToken.split('Bearer ')[1]);
                     setCookie('refreshToken', action.payload.refreshToken)
 
                     state.user.email = action.payload.user.email;
                     state.user.name = action.payload.user.name;
                 }
             })
+            // logout
+            .addCase(fetchLogoutAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchLogoutAsync.rejected, (state) => {
+                state.status = 'idle';
+            })
+            .addCase(fetchLogoutAsync.fulfilled, (state, action) => {
+                state.status = 'idle';
+
+                if (action.payload.success) {
+                    deleteCookie('accessToken');
+                    deleteCookie('refreshToken')
+
+                    state.user = { ...state, user: userInitialState }
+                }
+            })
+            // get user data
+            .addCase(fetchGetUserDataAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchGetUserDataAsync.rejected, (state) => {
+                state.status = 'idle';
+            })
+            .addCase(fetchGetUserDataAsync.fulfilled, (state, action) => {
+                state.status = 'idle';
+
+                if (action.payload.success) {
+                    state.user.email = action.payload.user.email;
+                    state.user.name = action.payload.user.name;
+                } else {
+                    if (getCookie('refreshToken')) {
+                        updateToken(getCookie('refreshToken')).then(data => {
+                            setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
+
+                        })
+                    }
+                    state.user = userInitialState
+                }
+            })
+            // update user data
             .addCase(fetchUpdateUserDataAsync.pending, (state) => {
                 state.status = 'loading';
             })
