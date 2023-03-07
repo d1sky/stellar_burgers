@@ -23,9 +23,7 @@ const Register = () => {
   }
 
   const handleRegisterClick = e => {
-    dispatch(fetchRegisterAsync(formValue)).then(() => {
-      console.log('ok');
-    })
+    dispatch(fetchRegisterAsync(formValue))
   }
 
   return (
