@@ -1,6 +1,7 @@
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { MAIN_ROUTE, PROFILE_ROUTE } from '../../route';
 
 const AppHeader = () => {
     const { pathname } = useLocation();
@@ -13,14 +14,14 @@ const AppHeader = () => {
 
     const handleProfileClick = e => {
         e.preventDefault()
-        navigate('/profile')
+        navigate(PROFILE_ROUTE)
     }
 
     return (
         <header className={styles.header}>
             <nav className={styles.content}>
                 <div className={styles.navigation}>
-                    <a href="/#" className={` ${styles.navigation_link} ${pathname === '/' && styles.navigation_link_active}`} onClick={handleConstructorClick}>
+                    <a href="/#" className={` ${styles.navigation_link} ${pathname === MAIN_ROUTE && styles.navigation_link_active}`} onClick={handleConstructorClick}>
                         <BurgerIcon type="primary" />
                         <span className={styles.name}>Конструктор</span>
                     </a>
@@ -29,7 +30,7 @@ const AppHeader = () => {
                         <span className={styles.name}>Лента заказов</span>
                     </a>
                 </div>
-                <a href="/#" className={`${styles.navigation} ${styles.navigation_link} ${pathname.includes('/profile') && styles.navigation_link_active}`} onClick={handleProfileClick}>
+                <a href="/#" className={`${styles.navigation} ${styles.navigation_link} ${pathname.includes(PROFILE_ROUTE) && styles.navigation_link_active}`} onClick={handleProfileClick}>
                     <ProfileIcon type="primary" className={styles.icon} />
                     <span className={styles.name}>Личный кабинет</span>
                 </a>

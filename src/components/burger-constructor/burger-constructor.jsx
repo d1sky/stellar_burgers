@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { LOGIN_ROUTE } from '../../route';
 import { getUser } from '../../services/authSlice';
 import { getBurgerIngredientList, removeIndgredient, resetIndgredient, swapIngredients } from '../../services/burgerIngredientListSlice';
 import { fetchPlaceOrderAsync, getOrderDetailsStatus, getOrderTotalPrice, setTotalPrice } from '../../services/orderDetailsSlice';
@@ -54,13 +55,13 @@ const BurgerConstructor = () => {
     const handlePlaceOrder = () => {
         if (user.email) {
             dispatch(fetchPlaceOrderAsync(burgerIngredientList.map(ingredient => ingredient._id)))
-            .then(() => {
-                handleOpenModal()
-                dispatch(resetIndgredient())
-                setBun(null)
-            })
+                .then(() => {
+                    handleOpenModal()
+                    dispatch(resetIndgredient())
+                    setBun(null)
+                })
         } else {
-            navigate('/login')
+            navigate(LOGIN_ROUTE)
         }
 
     }

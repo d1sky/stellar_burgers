@@ -2,8 +2,7 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from "../../components/loader/loader";
-import { fetchUpdateUserDataAsync, getLoginStatus, getUser } from "../../services/authSlice";
+import { fetchUpdateUserDataAsync, getUser } from "../../services/authSlice";
 import styles from './profile-form.module.css';
 
 const INITIAL_STATE = {
@@ -13,10 +12,11 @@ const INITIAL_STATE = {
 }
 
 const ProfileForm = () => {
+    console.log('ProfileForm');
     const dispatch = useDispatch();
     const user = useSelector(getUser);
     const [formValue, setFormValue] = useState(INITIAL_STATE)
-    const loginStatus = useSelector(getLoginStatus);
+    const [isEdit, setEdit] = useState(false)
 
     useEffect(() => {
         setFormValue(user)
@@ -24,13 +24,25 @@ const ProfileForm = () => {
 
     const handleCancelClick = () => {
         setFormValue(user)
+        setEdit(false)
     }
 
-    const handleFormChange = e => setFormValue({ ...formValue, [e.target.name]: e.target.value })
+    const handleFormChange = e => {
+        setEdit(true)
+        setFormValue({ ...formValue, [e.target.name]: e.target.value })
+    }
+
+    const handleOnFormSubmit = e => {
+        e.preventDefault()
+        dispatch(fetchUpdateUserDataAsync({ ...formValue }))
+        setEdit(false)
+    }
 
     return (
         <div className={styles.container}>
-            <form onSubmit={() => dispatch(fetchUpdateUserDataAsync(formValue))} >
+            <form
+                onSubmit={handleOnFormSubmit}
+            >
                 <Input
                     type={'text'}
                     placeholder={'Имя'}
@@ -57,12 +69,12 @@ const ProfileForm = () => {
                     extraClass={`mt-6`}
                     icon={'EditIcon'}
                 />
-                <div className={`mt-6`}>
-                    <Button htmlType="submit" type="primary" extraClass={`mr-6`} >Сохранить</Button>
-                    <Button htmlType="reset" type="primary" onClick={handleCancelClick}>Отмена</Button>
-                </div>
+                {isEdit &&
+                    <div className={`mt-6`}>
+                        <Button htmlType="submit" type="primary" extraClass={`mr-6`} >Сохранить</Button>
+                        <Button htmlType="reset" type="primary" onClick={handleCancelClick}>Отмена</Button>
+                    </div>}
             </form>
-            {loginStatus === 'loading' && <Loader />}
         </div>
     )
 }

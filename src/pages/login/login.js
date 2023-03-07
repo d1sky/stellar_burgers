@@ -1,9 +1,9 @@
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Loader from "../../components/loader/loader";
-import { fetchLoginAsync, getLoginStatus } from "../../services/authSlice";
+import { FORGOT_PASSWORD_ROUTE, REGISTER_ROUTE } from "../../route";
+import { fetchLoginAsync } from "../../services/authSlice";
 import styles from './login.module.css';
 
 const INITIAL_STATE = {
@@ -16,7 +16,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const [formValue, setFormValue] = useState(INITIAL_STATE);
   const [error, setError] = useState(false)
-  const loginStatus = useSelector(getLoginStatus);
 
   const handleFormChange = e => {
     setError(false)
@@ -25,15 +24,15 @@ const Login = () => {
 
   const handleRegisterClick = e => {
     e.preventDefault()
-    navigate('/register')
+    navigate(REGISTER_ROUTE)
   }
 
   const handleForgotPasswordClick = e => {
     e.preventDefault()
-    navigate('/forgot-password')
+    navigate(FORGOT_PASSWORD_ROUTE)
   }
 
-  const handleLoginClick = e => {
+  const handleOnFormSubmit = (e) => {
     e.preventDefault()
     dispatch(fetchLoginAsync(formValue)).then((data) => {
       if (data?.payload?.success) {
@@ -48,7 +47,7 @@ const Login = () => {
   return (
     <div className={styles.container}>
       <h2 className={'text_type_main-medium'}>Вход</h2>
-      <form>
+      <form className={styles.form} onSubmit={handleOnFormSubmit}>
         <EmailInput
           onChange={handleFormChange}
           value={formValue.email}
@@ -64,17 +63,18 @@ const Login = () => {
           extraClass={`mt-6`}
           error={error}
         />
+        <Button htmlType="submit" type="primary" size="medium" extraClass={`mt-6`}>
+          Войти
+        </Button>
       </form>
-      <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`} onClick={handleLoginClick}>
-        Войти
-      </Button>
+
       <p className="text text_type_main-small mt-20">
         Вы новый пользователь? <a className={styles.link} href="/" onClick={handleRegisterClick}>Зарегистрироваться</a>
       </p>
       <p className="text text_type_main-small mt-4">
         Забыли пароль? <a className={styles.link} href="/" onClick={handleForgotPasswordClick}>Восстановить пароль</a>
       </p>
-      {loginStatus === 'loading' && <Loader />}
+      {/* {loginStatus === 'loading' && <Loader />} */}
     </div>
   );
 }

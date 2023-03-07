@@ -2,13 +2,12 @@ import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-comp
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import { LOGIN_ROUTE, RESET_PASSWORD_ROUTE } from "../../route";
 import { fetchForgotPasswordAsync } from "../../services/authSlice";
-import { Link } from 'react-router-dom'
 import styles from './forgot-password.module.css';
 
 const INITIAL_STATE = {
   email: '',
-  password: ''
 }
 
 const ForgotPassword = () => {
@@ -21,13 +20,14 @@ const ForgotPassword = () => {
 
   const handleLoginClick = e => {
     e.preventDefault()
-    navigate('/login')
+    navigate(LOGIN_ROUTE)
   }
 
-  const handleForgotPasswordClick = e => {
+  const handleOnFormSubmit = e => {
+    e.preventDefault()
     dispatch(fetchForgotPasswordAsync(formValue)).then((data) => {
       if (data?.payload?.success) {
-        navigate('/reset-password', { state: { reset: true } })
+        navigate(RESET_PASSWORD_ROUTE, { state: { reset: true } })
       } else {
         setError(true)
       }
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
   return (
     <div className={styles.container}>
       <h2 className={'text_type_main-medium'}>Восстановление пароля</h2>
-      <form>
+      <form onSubmit={handleOnFormSubmit} className={styles.form}>
         <EmailInput
           placeholder={'Укажите e-mail'}
           onChange={handleFormChange}
@@ -47,12 +47,11 @@ const ForgotPassword = () => {
           extraClass={`mt-6`}
           error={error}
         />
-      </form>
-      <Link to={{ pathname: '/reset-password', state: {} }}>
-        <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`} onClick={handleForgotPasswordClick}>
+        <Button htmlType="submit" type="primary" size="medium" extraClass={`mt-6`}>
           Восстановить
         </Button>
-      </Link>
+      </form>
+
       <p className="text text_type_main-small mt-20">
         Вспомнили пароль? <a className={styles.link} href="/" onClick={handleLoginClick}>Войти</a>
       </p>

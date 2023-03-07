@@ -2,6 +2,7 @@ import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-de
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { LOGIN_ROUTE } from "../../route";
 import { fetchRegisterAsync } from "../../services/authSlice";
 import styles from './register.module.css';
 
@@ -19,17 +20,18 @@ const Register = () => {
 
   const handleLoginClick = e => {
     e.preventDefault()
-    navigate('/login')
+    navigate(LOGIN_ROUTE)
   }
 
-  const handleRegisterClick = e => {
+  const handleOnFormSubmit = e => {
+    e.preventDefault()
     dispatch(fetchRegisterAsync(formValue))
   }
 
   return (
     <div className={styles.container}>
       <h2 className={'text_type_main-medium'}>Регистрация</h2>
-      <form>
+      <form onSubmit={handleOnFormSubmit} className={styles.form}>
         <Input
           type={'text'}
           placeholder={'Имя'}
@@ -53,10 +55,10 @@ const Register = () => {
           name={'password'}
           extraClass={`mt-6`}
         />
+        <Button htmlType="submit" type="primary" size="medium" extraClass={`mt-6`}>
+          Зарегистрироваться
+        </Button>
       </form>
-      <Button htmlType="button" type="primary" size="medium" extraClass={`mt-6`} onClick={() => handleRegisterClick()}>
-        Зарегистрироваться
-      </Button>
       <p className="text text_type_main-small mt-20">
         Уже зарегистрированы? <a className={styles.link} href="/" onClick={handleLoginClick}>Войти</a>
       </p>

@@ -148,11 +148,31 @@ export const userSlice = createSlice({
                     state.user.name = action.payload.user.name;
                 }
             })
+            // forgot password
+            .addCase(fetchForgotPasswordAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchForgotPasswordAsync.rejected, (state) => {
+                state.status = 'idle';
+            })
+            .addCase(fetchForgotPasswordAsync.fulfilled, (state, action) => {
+                state.status = 'idle';
+            })
+            // reset password
+            .addCase(fetchResetPasswordAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchResetPasswordAsync.rejected, (state) => {
+                state.status = 'idle';
+            })
+            .addCase(fetchResetPasswordAsync.fulfilled, (state, action) => {
+                state.status = 'idle';
+            })
             ;
     },
 })
 
 export const getUser = (state) => state.auth.user;
-export const getLoginStatus = (state) => state.auth.status;
+export const getLoadStatus = (state) => state.auth.status;
 
 export default userSlice.reducer

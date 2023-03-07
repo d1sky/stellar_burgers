@@ -30,6 +30,7 @@ export function updateToken(token) {
 // user
 
 export async function getUserData() {
+    console.log('getUserData');
     return await request({ url: AUTH_API + '/user', options: { method: 'GET', headers: { authorization: 'Bearer ' + getCookie('accessToken') } } })
         .catch((err) => {
             if (err.message === 'jwt expired' && getCookie('refreshToken')) {
@@ -62,5 +63,5 @@ export function passwordReset(data) {
 }
 
 export function passwordResetConfirm(data) {
-    return request({ url: '/password-reset/reset', options: { method: 'POST', body: JSON.stringify({ ...data, token: data.code }) } })
+    return request({ url: '/password-reset/reset', options: { method: 'POST', body: JSON.stringify({ ...data }) } })
 }

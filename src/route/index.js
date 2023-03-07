@@ -14,39 +14,12 @@
     /ingredients/:id — страница ингредиента. 
 */
 
-import App from "../components/app/app"
-
-
-export const authRoutes = [
-    {
-        path: '/profile',
-        Component: App
-    },
-]
-
-export const publicRoutes = [
-    {
-        path: '/',
-        Component: App
-    },
-    {
-        path: '/login',
-        Component: Main
-    },
-    {
-        path: '/register',
-        Component: Auth
-    },
-    {
-        path: '/forgot-password',
-        Component: Auth
-    },
-    {
-        path: '/reset-password',
-        Component: Auth
-    },
-    {
-        path: '/ingredients/:id',
-        Component: Auth
-    }
-]
+export const MAIN_ROUTE = '/'
+export const LOGIN_ROUTE = '/login'
+export const REGISTER_ROUTE = '/register'
+export const FORGOT_PASSWORD_ROUTE = '/forgot-password'
+export const RESET_PASSWORD_ROUTE = '/reset-password'
+export const PROFILE_ROUTE = '/profile'
+export const PROFILE_ORDERS_ROUTE = PROFILE_ROUTE + '/orders'
+export const INGREDIENTS_ROUTE = '/ingredients'
+export const INGREDIENT_ID_ROUTE = INGREDIENTS_ROUTE + '/:ingredientId'
