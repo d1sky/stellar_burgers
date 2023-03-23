@@ -19,21 +19,24 @@ export function logout() {
     return request({ url: AUTH_API + '/logout', options: { method: 'POST', body: JSON.stringify({ token: getCookie('refreshToken') }) } })
 }
 
-export function updateToken(token) {
-    request({ url: AUTH_API + '/token', options: { method: 'POST', body: JSON.stringify({ token }) } }).then(data => {
-        setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
-        setCookie('refreshToken', data.refreshToken)
-    })
+export function updateToken() {
+    return request({ url: AUTH_API + '/token', options: { method: 'POST', body: JSON.stringify({ token: getCookie('refreshToken') }) } })
+        .then(data => {
+            setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
+            setCookie('refreshToken', data.refreshToken)
+        })
 }
 
 
 // user
 
 export async function getUserData() {
+
     return await request({ url: AUTH_API + '/user', options: { method: 'GET', headers: { authorization: 'Bearer ' + getCookie('accessToken') } } })
         .catch((err) => {
+
             if (err.message === 'jwt expired' && getCookie('refreshToken')) {
-                return updateToken(getCookie('refreshToken')).then(() => getUserData())
+                return updateToken().then(() => getUserData())
             }
 
             return err
@@ -53,8 +56,7 @@ export async function updateUserData(userData) {
         }
     }).catch((err) => {
         if (err.message === 'jwt expired' && getCookie('refreshToken')) {
-
-            return updateToken(getCookie('refreshToken')).then(() => updateUserData(userData))
+            return updateToken().then(() => getUserData())
         }
 
         return err

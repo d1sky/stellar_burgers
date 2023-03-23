@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getUserData, updateUserData, login, logout, passwordReset, passwordResetConfirm, register, updateToken } from '../api/auth-api';
-import { deleteCookie, getCookie, setCookie } from '../utils/coockie';
+import { getUserData, login, logout, passwordReset, passwordResetConfirm, register, updateToken, updateUserData } from '../api/auth-api';
+import { deleteCookie, setCookie } from '../utils/coockie';
 
 
 export const fetchLoginAsync = createAsyncThunk(
@@ -38,10 +38,6 @@ export const fetchUpdateUserDataAsync = createAsyncThunk(
     updateUserData
 );
 
-// export const fetchUpdateTokenAsync = createAsyncThunk(
-//     "auth/fetchUpdateTokenAsync",
-//     updateToken
-// );
 
 const userInitialState = {
     user: {
@@ -53,8 +49,6 @@ const userInitialState = {
 export const userSlice = createSlice({
     name: 'auth',
     initialState: userInitialState,
-    reducers: {
-    },
     extraReducers: (builder) => {
         builder
             // register
@@ -123,14 +117,6 @@ export const userSlice = createSlice({
                 if (action.payload.success) {
                     state.user.email = action.payload.user.email;
                     state.user.name = action.payload.user.name;
-                } else {
-                    if (getCookie('refreshToken')) {
-                        updateToken(getCookie('refreshToken')).then(data => {
-                            setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
-
-                        })
-                    }
-                    state.user = userInitialState
                 }
             })
             // update user data
@@ -167,11 +153,10 @@ export const userSlice = createSlice({
             })
             .addCase(fetchResetPasswordAsync.fulfilled, (state, action) => {
                 state.status = 'idle';
-            })
-            ;
+            });
     },
 })
-
+export const { refresh } = userSlice.actions;
 export const getUser = (state) => state.auth.user;
 export const getLoadStatus = (state) => state.auth.status;
 
