@@ -2,13 +2,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import App from './components/app/app';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
+import activeIngredientSlice from './services/activeIngredientSlice';
+import authSlice from './services/authSlice';
+import burgerIngredientListSlice from './services/burgerIngredientListSlice';
 import ingredientListSlice from './services/ingredientListSlice';
 import orderDetailsSlice from './services/orderDetailsSlice';
-import activeIngredientSlice from './services/activeIngredientSlice';
-import burgerIngredientListSlice from './services/burgerIngredientListSlice';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,7 +21,8 @@ const store = configureStore({
     ingredientList: ingredientListSlice,
     orderDetails: orderDetailsSlice,
     activeIngredient: activeIngredientSlice,
-    burgerIngredientList: burgerIngredientListSlice
+    burgerIngredientList: burgerIngredientListSlice,
+    auth: authSlice
   },
   devTools: process.env.NODE_ENV !== 'production',
 })
@@ -27,10 +30,12 @@ const store = configureStore({
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
-reportWebVitals();
+// reportWebVitals();

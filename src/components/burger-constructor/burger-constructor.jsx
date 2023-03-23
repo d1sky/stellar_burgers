@@ -2,6 +2,9 @@ import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger
 import { useCallback, useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { LOGIN_ROUTE } from '../../route';
+import { getUser } from '../../services/authSlice';
 import { getBurgerIngredientList, removeIndgredient, resetIndgredient, swapIngredients } from '../../services/burgerIngredientListSlice';
 import { fetchPlaceOrderAsync, getOrderDetailsStatus, getOrderTotalPrice, setTotalPrice } from '../../services/orderDetailsSlice';
 import ConstructorIngredient from '../constructor-ingredient/constructor-ingredient';
@@ -14,11 +17,13 @@ import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
+    const user = useSelector(getUser)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const totalPrice = useSelector(getOrderTotalPrice);
     const orderStatus = useSelector(getOrderDetailsStatus);
     const burgerIngredientList = useSelector(getBurgerIngredientList);
     const [bun, setBun] = useState(null)
+    const navigate = useNavigate()
 
     const [, drop] = useDrop(() => ({
         accept: 'ingredient',
@@ -48,12 +53,17 @@ const BurgerConstructor = () => {
     const handleCloseModal = () => setIsModalOpen(false)
 
     const handlePlaceOrder = () => {
-        dispatch(fetchPlaceOrderAsync(burgerIngredientList.map(ingredient => ingredient._id)))
-            .then(() => {
-                handleOpenModal()
-                dispatch(resetIndgredient())
-                setBun(null)
-            })
+        if (user.email) {
+            dispatch(fetchPlaceOrderAsync(burgerIngredientList.map(ingredient => ingredient._id)))
+                .then(() => {
+                    handleOpenModal()
+                    dispatch(resetIndgredient())
+                    setBun(null)
+                })
+        } else {
+            navigate(LOGIN_ROUTE)
+        }
+
     }
 
     const moveElement = ({ dragIndex, hoverIndex }) => {

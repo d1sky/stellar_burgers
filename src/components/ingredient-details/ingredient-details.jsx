@@ -3,10 +3,24 @@ import { useSelector } from 'react-redux';
 import { getActiveIngredient } from '../../services/activeIngredientSlice';
 import styles from './ingredient-details.module.css';
 
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { setActiveIngredient } from '../../services/activeIngredientSlice';
+import { getIngredientList } from '../../services/ingredientListSlice';
+
+
 
 const IngredientDetails = () => {
-  const ingredient = useSelector(getActiveIngredient)
+  const dispatch = useDispatch();
+  let { ingredientId } = useParams();
+  const burgerIngredientList = useSelector(getIngredientList);
 
+  useEffect(() => {
+    dispatch(setActiveIngredient(burgerIngredientList.find(ingredient => ingredient._id === ingredientId)))
+  }, [dispatch, burgerIngredientList, ingredientId])
+
+  const ingredient = useSelector(getActiveIngredient)
 
   return (
     <div className={`${styles.modal}`}>
