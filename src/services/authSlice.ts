@@ -73,7 +73,7 @@ export const userSlice = createSlice({
                 state.status = 'idle';
 
                 if (action.payload.success) {
-                    setCookie('accessToken', action.payload.accessToken.split('Bearer ')[1]);
+                    setCookie('accessToken', action.payload.accessToken!.split('Bearer ')[1]);
                     setCookie('refreshToken', action.payload.refreshToken)
 
                     state.user.email = action.payload.user.email;
@@ -91,7 +91,7 @@ export const userSlice = createSlice({
                 state.status = 'idle';
 
                 if (action.payload.success) {
-                    setCookie('accessToken', action.payload.accessToken.split('Bearer ')[1]);
+                    setCookie('accessToken', action.payload.accessToken!.split('Bearer ')[1]);
                     setCookie('refreshToken', action.payload.refreshToken)
 
                     state.user.email = action.payload.user.email;
@@ -168,7 +168,7 @@ export const userSlice = createSlice({
     },
     reducers: {}
 })
-// export const { refresh } = userSlice.actions;
+
 export const getUser = (state: RootState) => state.auth.user;
 export const getLoadStatus = (state: RootState) => state.auth.status;
 

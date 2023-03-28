@@ -8,7 +8,7 @@ export const fetchPlaceOrderAsync = createAsyncThunk(
     placeOrder
 );
 
-type TOrderDetails = {
+export type TOrderDetails = {
     name: string;
     number: number | null
     totalPrice: number;

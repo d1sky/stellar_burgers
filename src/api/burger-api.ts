@@ -1,8 +1,10 @@
 import { TIngredientTypes } from '../model/ingrediaents';
-import { request } from './index'
+import { request, TResponse } from './index'
 
-export function getIngredients() {
-    return request({ url: '/ingredients' }).then(ingredients  => ingredients.data.map((ingredient: TIngredientTypes) => ({ ...ingredient, count: 0 })));
+
+export function getIngredients(): Promise<TResponse> | Promise<Array<TIngredientTypes>> {
+    return request({ url: '/ingredients' })
+        .then(res => res.data!.map((ingredient: TIngredientTypes) => ({ ...ingredient, count: 0 })));
 }
 
 export function placeOrder(ingredients: Array<string>) {

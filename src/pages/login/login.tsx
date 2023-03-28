@@ -28,10 +28,8 @@ const Login = () => {
 
   const handleOnFormSubmit = (event: FormEvent) => {
     event.preventDefault()
-    dispatch(fetchLoginAsync(formValue)).then((data) => {
-      if (data?.payload?.success) {
+    dispatch(fetchLoginAsync(formValue)).then(() => {
         navigate('/')
-      }
     })
   }
 

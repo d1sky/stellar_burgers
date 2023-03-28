@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 
-const ESC_KEYCODE = 27;
+const ESC_KEY = 'Escape';
 
 const modalRoot = document.getElementById('modal');
 
@@ -18,7 +18,7 @@ type TModal = {
 const Modal: FC<TModal> = ({ title, children, handleClose }) => {
 
   useEffect(() => {
-    const handleESCclose = (key: KeyboardEvent) => key.keyCode === ESC_KEYCODE && handleClose();
+    const handleESCclose = (event: KeyboardEvent) => event.key === ESC_KEY && handleClose();
     document.addEventListener("keydown", handleESCclose);
 
     return () => document.removeEventListener("keydown", handleESCclose);

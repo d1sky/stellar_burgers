@@ -1,6 +1,10 @@
+import { TUserData } from "../components/profile-form/profile-form";
+import { TIngredientTypes } from "../model/ingrediaents";
+import { TOrderDetails } from "../services/orderDetailsSlice";
+
 const NORMA_API = 'https://norma.nomoreparties.space/api'
 
-const config: {headers: {'Accept': string; 'Content-Type': string;}} = {
+const config: { headers: { 'Accept': string; 'Content-Type': string; } } = {
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -8,7 +12,7 @@ const config: {headers: {'Accept': string; 'Content-Type': string;}} = {
 }
 
 type TRequest = {
-    url: string; 
+    url: string;
     options?: {
         method?: string;
         body?: string;
@@ -20,10 +24,26 @@ type TRequest = {
     }
 }
 
-export function request({ url, options }: TRequest): Promise<any> {
-    return fetch(NORMA_API + url, { ...config, ...options }).then(checkResponse);
-}
+export type TResponse = Response & Array<TIngredientTypes> & {
+    data?: Array<TIngredientTypes>
+    payload: {
+        success: boolean;
+    };
+    success: boolean;
+    accessToken?: string | undefined;
+    refreshToken?: string | undefined;
+    order: {
+        number: number;
+    };
+    user: TUserData;
+    ok: boolean;
+} & TOrderDetails
 
-const checkResponse = (res: Response  ) => {
-    return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
-};
+export function request({ url, options }: TRequest): Promise<TResponse> {
+    return fetch(NORMA_API + url, { ...config, ...options }).then(res => {
+        if (!res.ok) {
+            throw new Error(res.statusText)
+        }
+        return res.json()
+    });
+}

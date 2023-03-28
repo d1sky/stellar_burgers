@@ -1,9 +1,9 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import { AppDispatch } from "../../services";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../../route";
+import { AppDispatch } from "../../services";
 import { fetchResetPasswordAsync } from "../../services/authSlice";
 import styles from './reset-password.module.css';
 
@@ -35,10 +35,8 @@ const ResetPassword: FC = () => {
 
   const handleOnFormSubmit = (event: FormEvent) => {
     event.preventDefault()
-    dispatch(fetchResetPasswordAsync(formValue)).then((data) => {
-      if (data.payload.success) {
+    dispatch(fetchResetPasswordAsync(formValue)).then(() => {
         navigate(LOGIN_ROUTE)
-      }
     })
   }
 

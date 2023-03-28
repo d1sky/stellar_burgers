@@ -6,8 +6,9 @@ import { setActiveIngredient } from "../../services/activeIngredientSlice";
 import Card from '../card/card';
 import styles from './ingredient-block.module.css';
 
+type TProps = { name: string; ingredientList: Array<TIngredientTypes> };
 
-const IngredientBlock = forwardRef((props: { name: string; ingredientList: Array<TIngredientTypes> }, ref: any) => {
+const IngredientBlock = forwardRef<HTMLHeadingElement, TProps>((props, ref) => {
     const dispatch = useDispatch();
     const { name, ingredientList } = props;
 

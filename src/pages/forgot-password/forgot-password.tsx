@@ -6,8 +6,9 @@ import { AppDispatch } from "../../services";
 import { LOGIN_ROUTE, RESET_PASSWORD_ROUTE } from "../../route";
 import { fetchForgotPasswordAsync } from "../../services/authSlice";
 import styles from './forgot-password.module.css';
+import { TResponse } from '../../api'
 
-export type TPasswordResetData = {
+export type TPasswordResetData =  {
   email: string;
 }
 
@@ -24,10 +25,10 @@ const ForgotPassword: FC = () => {
 
   const handleOnFormSubmit = (event: FormEvent) => {
     event.preventDefault()
-    dispatch(fetchForgotPasswordAsync(formValue)).then((data) => {
-      if (data?.payload?.success) {
-        navigate(RESET_PASSWORD_ROUTE, { state: { reset: true } })
-      }
+    dispatch(fetchForgotPasswordAsync(formValue)).then((data: TPasswordResetData & TResponse | {payload : any}) => {
+        if (data.payload.success) {
+          navigate(RESET_PASSWORD_ROUTE, { state: { reset: true } })
+        }
     })
   }
 

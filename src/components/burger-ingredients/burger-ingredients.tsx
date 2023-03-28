@@ -27,9 +27,9 @@ const BurgerIngredients: FC = () => {
     const [currentCategory, setCurrentCategory] = useState<TCategoryType | undefined>(CATEGORY_LIST[0]);
     const ingredientList = useSelector(getIngredientList);
 
-    const bunSetRef = useRef<any>(null);
-    const sauceSetRef = useRef<any>(null);
-    const mainSetRef = useRef<any>(null);
+    const bunSetRef = useRef<HTMLHeadingElement>(null!);
+    const sauceSetRef = useRef<HTMLHeadingElement>(null!);
+    const mainSetRef = useRef<HTMLHeadingElement>(null!);
 
     const bunIngredientsList = useMemo<Array<TIngredientTypes>>(() => ingredientList?.filter((ingredient: TIngredientTypes) =>
         ingredient.type === 'bun'), [ingredientList]);
