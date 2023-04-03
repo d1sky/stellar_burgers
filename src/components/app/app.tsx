@@ -9,7 +9,7 @@ import Login from '../../pages/login/login';
 import Profile from '../../pages/profile/profile';
 import Register from '../../pages/register/register';
 import ResetPassword from '../../pages/reset-password/reset-password';
-import { FORGOT_PASSWORD_ROUTE, INGREDIENT_ID_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ORDERS_ROUTE, PROFILE_ROUTE, REGISTER_ROUTE, RESET_PASSWORD_ROUTE } from '../../route';
+import { FORGOT_PASSWORD_ROUTE, INGREDIENT_ID_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ORDERS_ROUTE, PROFILE_ROUTE, REGISTER_ROUTE, RESET_PASSWORD_ROUTE, FEED_ROUTE, FEED_ID_ROUTE } from '../../route';
 import { remove } from '../../services/activeIngredientSlice';
 import { fetchGetUserDataAsync, getLoadStatus } from '../../services/authSlice';
 import { fetchIngredientListAsync } from '../../services/ingredientListSlice';
@@ -21,6 +21,8 @@ import Orders from '../orders/orders';
 import ProfileForm from '../profile-form/profile-form';
 import { ProtectedRouteElement } from '../protected-route';
 import { UnauthorizedUserRouteElement } from '../unauthorized-user-route';
+import Feed from '../../pages/feed/feed';
+import styles from './app.module.css';
 
 
 const App: FC = () => {
@@ -46,9 +48,11 @@ const App: FC = () => {
     <div className="App">
       <AppHeader />
       {loadStatus === 'idle' ?
-        <>
+        <div className={styles.content}>
           <Routes location={background || location}>
             <Route path={MAIN_ROUTE} element={<Home />} />
+            <Route path={FEED_ROUTE} element={<Feed />} />
+            <Route path={FEED_ID_ROUTE} element={<Home />} />
             <Route path={LOGIN_ROUTE} element={<UnauthorizedUserRouteElement element={<Login />} />} />
             <Route path={REGISTER_ROUTE} element={<UnauthorizedUserRouteElement element={<Register />} />} />
             <Route path={FORGOT_PASSWORD_ROUTE} element={<UnauthorizedUserRouteElement element={<ForgotPassword />} />} />
@@ -69,7 +73,7 @@ const App: FC = () => {
               } />
             </Routes>
           )}
-        </>
+        </div>
         :
         <Loader />
       }

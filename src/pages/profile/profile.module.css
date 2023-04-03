@@ -1,21 +1,20 @@
 .container {
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
-  /* flex-direction: column; */
-  width: 1280px;
-  margin: 0 auto;
-  margin-top: 120px;
+
   color: #8585ad;
+  width: 100%;
 }
 
 .menu {
+  margin-top: 80px;
   width: 320px;
 }
 
 .menu ul {
-  margin-left: 0; /* Отступ слева в браузере IE и Opera */
-  padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+  margin-left: 0;
+  /* Отступ слева в браузере IE и Opera */
+  padding-left: 0;
+  /* Отступ слева в браузере Firefox, Safari, Chrome */
 }
 
 .menuItem {
@@ -30,7 +29,7 @@
 
 
 .menuItemActive {
-    color: #F2F2F3;
+  color: #F2F2F3;
 }
 
 .link {

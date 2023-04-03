@@ -41,9 +41,6 @@ export type TResponse = Response & Array<TIngredientTypes> & {
 
 export function request({ url, options }: TRequest): Promise<TResponse> {
     return fetch(NORMA_API + url, { ...config, ...options }).then(res => {
-        if (!res.ok) {
-            throw new Error(res.statusText)
-        }
-        return res.json()
+        return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
     });
 }

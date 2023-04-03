@@ -1,7 +1,7 @@
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { MAIN_ROUTE, PROFILE_ROUTE } from '../../route';
+import { FEED_ROUTE, MAIN_ROUTE, PROFILE_ROUTE } from '../../route';
 import styles from './app-header.module.css';
 
 const AppHeader: FC = () => {
@@ -15,12 +15,10 @@ const AppHeader: FC = () => {
                         <BurgerIcon type="primary" />
                         <span className={styles.name}>Конструктор</span>
                     </NavLink>
-                    <a href="/#" className={styles.navigation_link}>
-                        <div className={styles.icon}>
-                            <ListIcon type="primary" />
-                        </div>
+                    <NavLink to={FEED_ROUTE} className={` ${styles.navigation_link} ${pathname === FEED_ROUTE && styles.navigation_link_active}`}>
+                        <ListIcon type="primary" />
                         <span className={styles.name}>Лента заказов</span>
-                    </a>
+                    </NavLink>
                 </div>
                 <NavLink to={PROFILE_ROUTE} className={`${styles.navigation} ${styles.navigation_link} ${pathname.includes(PROFILE_ROUTE) && styles.navigation_link_active}`}>
                     <div className={styles.icon}>

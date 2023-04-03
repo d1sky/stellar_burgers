@@ -32,10 +32,10 @@ export const burgerIngredientListSlice = createSlice({
             let array = state.entities.slice()
             array[action.payload.dragIndex] = array.splice(action.payload.hoverIndex, 1, array[action.payload.dragIndex])[0];
             state.entities = array
-        }, resetIndgredient: (state) => {
+        },
+        resetIndgredient: (state) => {
             state.entities = []
         },
-
     }
 })
 
