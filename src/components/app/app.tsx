@@ -23,6 +23,7 @@ import { ProtectedRouteElement } from '../protected-route';
 import { UnauthorizedUserRouteElement } from '../unauthorized-user-route';
 import Feed from '../../pages/feed/feed';
 import styles from './app.module.css';
+import FeedOrder from '../../pages/feed-order/feed-order';
 
 
 const App: FC = () => {
@@ -52,7 +53,7 @@ const App: FC = () => {
           <Routes location={background || location}>
             <Route path={MAIN_ROUTE} element={<Home />} />
             <Route path={FEED_ROUTE} element={<Feed />} />
-            <Route path={FEED_ID_ROUTE} element={<Home />} />
+            <Route path={FEED_ID_ROUTE} element={<FeedOrder />} />
             <Route path={LOGIN_ROUTE} element={<UnauthorizedUserRouteElement element={<Login />} />} />
             <Route path={REGISTER_ROUTE} element={<UnauthorizedUserRouteElement element={<Register />} />} />
             <Route path={FORGOT_PASSWORD_ROUTE} element={<UnauthorizedUserRouteElement element={<ForgotPassword />} />} />
