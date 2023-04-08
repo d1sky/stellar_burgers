@@ -18,14 +18,15 @@ const order =
 }
 
 
-const FeedOrder: FC = () => {
+const Order: FC = () => {
   let { id } = useParams();
 
   console.log(id);
+  
 
   return (
     <OrderInfo order={order} />
   );
 }
 
-export default FeedOrder;
+export default Order;

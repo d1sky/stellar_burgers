@@ -1,0 +1,43 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.block {
+    width: 640px;
+    margin-top: 122px;
+}
+
+.number {
+    width: 100%;
+    text-align: center;
+}
+
+.status {
+    color: #00CCCC;
+}
+
+.product {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.productName {
+    width: 100%;
+}
+
+.productPrice {}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date {
+    color: #8585AD;
+}

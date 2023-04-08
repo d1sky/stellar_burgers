@@ -1,9 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import activeIngredientSlice from './activeIngredientSlice';
 import authSlice from './authSlice';
 import burgerIngredientListSlice from './burgerIngredientListSlice';
 import ingredientListSlice from './ingredientListSlice';
 import orderDetailsSlice from './orderDetailsSlice';
+import {api} from './orders'
+
 
 export const store = configureStore({
     reducer: {
@@ -11,8 +13,10 @@ export const store = configureStore({
       orderDetails: orderDetailsSlice,
       activeIngredient: activeIngredientSlice,
       burgerIngredientList: burgerIngredientListSlice,
-      auth: authSlice
+      auth: authSlice,
+      [api.reducerPath]: api.reducer
     },
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
     devTools: process.env.NODE_ENV !== 'production',
   })
   
