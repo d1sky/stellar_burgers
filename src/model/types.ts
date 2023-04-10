@@ -8,7 +8,16 @@ export type TOrder = {
     name?: string;
 }
 
-export enum OrderStatus  {
+export enum OrderStatus {
     "done" = "Готов",
     "create" = "Выполнен"
-  }
+}
+
+export type TOrdersResponse = {
+    orders: Array<TOrder>,
+    total: number,
+    totalToday: number,
+    status: string,
+    isEstablishingConnection: boolean,
+    isConnected: boolean,
+}

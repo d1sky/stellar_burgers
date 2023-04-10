@@ -1,40 +1,35 @@
-import { createEntityAdapter } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TOrder } from '../model/types';
 
-let wsUrl = 'wss://norma.nomoreparties.space/orders'
-// let socket: WebSocket | null = null;
-// let socket = new WebSocket(wsUrl);
-
-export type Channel = 'redux' | 'general'
-
 
 let ws: WebSocket;
-function getSocket() {
+
+function getSocket(url: string) {
     if (!ws) {
-        ws = new WebSocket('wss://norma.nomoreparties.space/orders/all')
+        ws = new WebSocket(url)
     };
 
     return ws;
 }
 
-const orderAdapter = createEntityAdapter<TOrder>();
 export const api = createApi({
-    reducerPath: 'orderApi',
+    reducerPath: 'order',
     baseQuery: fetchBaseQuery({
         baseUrl: '/'
     }),
     tagTypes: ['order'],
     endpoints: (builder) => ({
-        getOrders: builder.query<TOrder | any, number>({
+        getAllOrders: builder.query<TOrder | any, number>({
             queryFn: (arg, queryApi, extraOptions, baseQuery) => {
-                return { data: {}}
+                return { data: {} }
+                // return { data: [] }
             },
             async onCacheEntryAdded(
                 arg,
                 { cacheDataLoaded, cacheEntryRemoved, updateCachedData },
             ) {
-                ws = getSocket()
+                ws = getSocket('wss://norma.nomoreparties.space/orders/all')
+
                 try {
                     await cacheDataLoaded;
                     // the /chat-messages endpoint responded already
@@ -44,14 +39,16 @@ export const api = createApi({
                     }
 
                     const listener = (event: MessageEvent) => {
+                        console.log('New message...');
+
                         const data = JSON.parse(event.data)
-                        console.log('event -> ', event)
+                        console.log('event -> ', data)
 
                         updateCachedData((draft) => {
-                            draft = data
+                            console.log('updateCachedData', draft, data);
+                            draft.push({ ...data, orders: data.orders.map((order: TOrder) => ({ ...order })) })
                         })
                     }
-
 
                     const onOpenWs = () => {
                         console.log('Opening a connection...');
@@ -86,4 +83,4 @@ export const api = createApi({
     }),
 });
 
-export const { useGetOrdersQuery } = api
+export const { useGetAllOrdersQuery } = api

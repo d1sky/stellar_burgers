@@ -1,10 +1,10 @@
-const datediff = (first: Date, second: Date) : number => {
+const datediff = (first: Date, second: Date): number => {
     return Math.round((dateToTimeshtamp(first.toDateString()) - dateToTimeshtamp(second.toDateString())) / (60 * 60 * 24));
 }
 
-const dateToTimeshtamp = (date: string) : number => Math.floor(new Date(date).getTime() / 1000)
+const dateToTimeshtamp = (date: string): number => Math.floor(new Date(date).getTime() / 1000)
 
-export const getDate = (dateString: string) : string => {
+export const getDate = (dateString: string): string => {
     let date: Date = new Date(dateString)
     let today: Date = new Date()
     let prefix: string = ''
@@ -43,5 +43,5 @@ export const getDate = (dateString: string) : string => {
             break;
     }
 
-    return prefix + ' ' + date.getHours() + ':' + date.getMinutes()
+    return prefix + ' ' + (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
 }

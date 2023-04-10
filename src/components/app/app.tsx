@@ -2,6 +2,8 @@ import { useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { AppDispatch } from "../../services";
+import styles from './app.module.css';
+
 import ForgotPassword from '../../pages/forgot-password/forgot-password';
 import Home from '../../pages/home/home';
 import Ingredient from '../../pages/ingredient/ingredient';
@@ -17,12 +19,12 @@ import AppHeader from '../app-header/app-header';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Loader from '../loader/loader';
 import Modal from '../modal/modal';
-import Orders from '../orders/orders';
+import OrderHistory from '../order-history/order-history';
 import ProfileForm from '../profile-form/profile-form';
 import { ProtectedRouteElement } from '../protected-route';
 import { UnauthorizedUserRouteElement } from '../unauthorized-user-route';
 import Feed from '../../pages/feed/feed';
-import styles from './app.module.css';
+
 import FeedOrder from '../../pages/feed-order/feed-order';
 import Order from '../../pages/order/order';
 
@@ -61,7 +63,7 @@ const App: FC = () => {
             <Route path={RESET_PASSWORD_ROUTE} element={<UnauthorizedUserRouteElement element={<ResetPassword />} />} />
             <Route path={MAIN_ROUTE} element={<ProtectedRouteElement element={<Profile />} />}>
               <Route path={PROFILE_ROUTE} element={<ProtectedRouteElement element={<ProfileForm />} />} />
-              <Route path={PROFILE_ORDERS_ROUTE} element={<ProtectedRouteElement element={<Orders />} />} />
+              <Route path={PROFILE_ORDERS_ROUTE} element={<ProtectedRouteElement element={<OrderHistory />} />} />
             </Route>
             <Route path={PROFILE_ORDER_ID_ROUTE} element={<ProtectedRouteElement element={<Order />} />} />
             <Route path={INGREDIENT_ID_ROUTE} element={<Ingredient />} />

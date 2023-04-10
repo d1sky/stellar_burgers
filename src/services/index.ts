@@ -4,22 +4,26 @@ import authSlice from './authSlice';
 import burgerIngredientListSlice from './burgerIngredientListSlice';
 import ingredientListSlice from './ingredientListSlice';
 import orderDetailsSlice from './orderDetailsSlice';
-import {api} from './orders'
+import orderFeedSlice from './order-feed/index';
+import orderHistorySlice from './order-history/index';
+import orderFeedMiddleware from './order-feed/orderFeedMiddleware';
+import orderHistoryMiddleware from './order-history/orderHistoryMiddleware';
 
 
 export const store = configureStore({
-    reducer: {
-      ingredientList: ingredientListSlice,
-      orderDetails: orderDetailsSlice,
-      activeIngredient: activeIngredientSlice,
-      burgerIngredientList: burgerIngredientListSlice,
-      auth: authSlice,
-      [api.reducerPath]: api.reducer
-    },
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
-    devTools: process.env.NODE_ENV !== 'production',
-  })
-  
-  export type RootState = ReturnType<typeof store.getState>
-  
-  export type AppDispatch = typeof store.dispatch
+  reducer: {
+    ingredientList: ingredientListSlice,
+    orderDetails: orderDetailsSlice,
+    activeIngredient: activeIngredientSlice,
+    burgerIngredientList: burgerIngredientListSlice,
+    auth: authSlice,
+    orderFeed: orderFeedSlice,
+    orderHistory: orderHistorySlice,
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(orderFeedMiddleware, orderHistoryMiddleware),
+  devTools: process.env.NODE_ENV !== 'production',
+})
+
+export type RootState = ReturnType<typeof store.getState>
+
+export type AppDispatch = typeof store.dispatch

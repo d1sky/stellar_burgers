@@ -1,0 +1,45 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { RootState } from '.';
+import { placeOrder } from '../api/burger-api';
+import { TOrder } from '../model/types';
+
+
+export const fetchPlaceOrderAsync = createAsyncThunk(
+    "orders/fetchPlaceOrderAsync",
+    placeOrder
+);
+
+type TOrdersInitialState = {
+    orders: Array<TOrder>,
+    total: number,
+    totalToday: number,
+    status: string
+}
+
+const ordersInitialState: TOrdersInitialState = {
+    orders: [],
+    total: 0,
+    totalToday: 0,
+    status: ''
+}
+
+export const orderSlice = createSlice({
+    name: 'orders',
+    initialState: ordersInitialState,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchPlaceOrderAsync.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchPlaceOrderAsync.fulfilled, (state, action) => {
+                state.status = 'idle';
+                state.name = action.payload.name;
+                state.number = action.payload.order?.number;
+            });
+    },
+})
+
+export const { } = orderSlice.actions;
+
+export default orderSlice.reducer

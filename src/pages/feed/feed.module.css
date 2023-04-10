@@ -12,6 +12,7 @@
 .orders {
     flex: 1 1 0;
     margin: 0 30px;
+    width: 50%;
 }
 
 .orderLink {
@@ -42,6 +43,10 @@
 .readyOrdersList {
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 321px;
 }
 
 
@@ -54,6 +59,10 @@
 .inWork {
     flex: 1 1 0;
     margin: 0 18px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 321px;
 }
 
 .inWorkList {

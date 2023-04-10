@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { IngredientIcon } from '../../components/ingredient-icon/ingredient-icon';
 import Price from '../../components/price/price';
 import { TIngredientTypes } from '../../model/ingrediaents';
-import { OrderStatus, TOrder } from '../../model/types';
+import { TOrder } from '../../model/types';
 import { getIngredientList } from '../../services/ingredientListSlice';
 import { getDate } from '../../utils/date';
 import { getCirilicStatus } from '../../utils/order-status';

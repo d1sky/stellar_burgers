@@ -1,45 +1,31 @@
-import { FC, Key } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import OrderBlock from '../../components/order-block/order-block';
 import { FEED_ROUTE } from '../../route';
 import styles from './feed.module.css';
-import { useGetOrdersQuery } from '../../services/orders';
+// import { useGetAllOrdersQuery } from '../../services/orders';
+import { useDispatch, useSelector } from 'react-redux';
 import { TOrder } from '../../model/types';
+import { AppDispatch } from '../../services';
+import { closeConnection, getAllOrders, getTotal, getTotalToday } from '../../services/order-feed';
+import { startConnecting } from '../../services/order-feed';
 
-
-const orders_response = {
-  "success": true,
-  "orders": [
-    {
-      "ingredients": [
-        "60d3b41abdacab0026a733c6",
-        "60d3b41abdacab0026a733cd",
-        "60d3b41abdacab0026a733d2",
-        "60d3b41abdacab0026a733d3"
-      ],
-      "_id": "1",
-      "status": "done",
-      "number": 0,
-      "createdAt": "2021-06-23T14:43:22.587Z",
-      "updatedAt": "2021-06-23T14:43:22.603Z"
-    }
-  ],
-  "total": 1,
-  "totalToday": 1
-}
 
 const Feed: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const orders = useSelector(getAllOrders);
+  const total = useSelector(getTotal);
+  const totalToday = useSelector(getTotalToday);
 
-  const { data } = useGetOrdersQuery(0);
+  useEffect(
+    () => {
+      dispatch(startConnecting());
 
-  console.log('useGetOrdersQuery', data);
+      return () => { dispatch(closeConnection()) }
+    }, []
+  );
 
-
-  // getOrders;
-
-  // let arr = getOrders();
-
-  if (!data) return <></>
+  if (!orders) return <></>
 
   return (
     <div className={styles.container}>
@@ -48,12 +34,11 @@ const Feed: FC = () => {
       </div>
       <div className={`${styles.block} mt-6`}>
         <div className={`${styles.orders}`}>
-          {data[0]?.orders?.map((order: TOrder) =>
+          {orders?.map((order: TOrder) =>
             <Link className={styles.orderLink} key={order._id} to={FEED_ROUTE + '/' + order._id}>
               <div className={styles.orderContaier}>
-              <OrderBlock order={order} />
+                <OrderBlock order={order} />
               </div>
-             
             </Link>)}
         </div>
         <div className={`${styles.info}`}>
@@ -63,6 +48,14 @@ const Feed: FC = () => {
               <ul className={`${styles.readyOrdersList} text text_type_digits-default`}>
                 <li>034533</li>
                 <li>034531</li>
+                <li>034532</li>
+                <li>034530</li>
+                <li>034534</li>
+                <li>034533</li>
+                <li>034531</li>
+                <li>034532</li>
+                <li>034530</li>
+                <li>034534</li>
                 <li>034532</li>
                 <li>034530</li>
                 <li>034534</li>
@@ -80,12 +73,12 @@ const Feed: FC = () => {
 
           <div className="allOrders mt-15">
             <p className={`text text_type_main-medium pb-1`}>Выполнено за все время:</p>
-            <p className="text text_type_digits-large">{data[0]?.total}</p>
+            <p className="text text_type_digits-large">{total}</p>
           </div>
 
           <div className="todayOrders mt-15">
             <p className={`text text_type_main-medium pb-1`}>Выполнено за сегодня:</p>
-            <p className="text text_type_digits-large">{data[0]?.totalToday}</p>
+            <p className="text text_type_digits-large">{totalToday}</p>
           </div>
         </div>
       </div>

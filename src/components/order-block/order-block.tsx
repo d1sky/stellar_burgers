@@ -33,8 +33,8 @@ const OrderBlock: FC<{ order: TOrder }> = ({ order }) => {
             <div className={`${styles.details}  mt-6`}>
                 <ul className={`${styles.ingredients} text text_type_main-small`}>
                     {order.ingredients.slice().reverse().map((ingredient, id) =>
-                        <li className={`${styles.icon}`}>
-                            <IngredientIcon key={id} image={ingredientList.find(item => item._id === ingredient)?.image_mobile!} />
+                        <li key={id} className={`${styles.icon}`}>
+                            <IngredientIcon image={ingredientList.find(item => item._id === ingredient)?.image_mobile!} />
                         </li>
                     )}
                 </ul>
