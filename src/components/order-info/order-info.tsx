@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { IngredientIcon } from '../../components/ingredient-icon/ingredient-icon';
 import Price from '../../components/price/price';
 import { TIngredientTypes } from '../../model/ingrediaents';
@@ -8,6 +8,9 @@ import { getIngredientList } from '../../services/ingredientListSlice';
 import { getDate } from '../../utils/date';
 import { getCirilicStatus } from '../../utils/order-status';
 import styles from './order-info.module.css';
+import { fetchGetOrderAsync, getOrderInfo } from '../../services/orderInfoSlice';
+import { AppDispatch } from '../../services';
+import { useParams } from 'react-router-dom';
 
 
 const OrderRaw: FC<{ product: TIngredientTypes }> = ({ product }) => {
@@ -20,17 +23,28 @@ const OrderRaw: FC<{ product: TIngredientTypes }> = ({ product }) => {
     </div>
 }
 
-
-
-
-const OrderInfo: FC<{ order: TOrder }> = ({ order }) => {
+const OrderInfo: FC = () => {
+    let { id } = useParams();
+    const dispatch = useDispatch<AppDispatch>();
     const ingredientList: Array<TIngredientTypes> = useSelector(getIngredientList);
+    const order = useSelector(getOrderInfo);
+
+    console.log('OrderInfo', order);
+
+
+    useEffect(() => {
+        dispatch(fetchGetOrderAsync(id!))
+    }, [])
+
+    if (!order) {
+        return <></>
+    }
 
     return (
         <div className={styles.container}>
             <div className={styles.block}>
                 <div className={`${styles.number} text text_type_main-medium`}>{order.number}</div>
-                <div className={`${styles.name} text text_type_main-medium mt-10`}>Black Hole Singularity острый бургер</div>
+                <div className={`${styles.name} text text_type_main-medium mt-10`}>{order.name}</div>
                 <div className={`${styles.status} text text_type_main-small mt-3`}>{getCirilicStatus(order.status)}</div>
                 <div className={`${styles.compositionTitle} text text_type_main-medium mt-15`}>Состав:</div>
                 <div className={`${styles.productList}  mt-6`} >

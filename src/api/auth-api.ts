@@ -57,6 +57,10 @@ export async function getUserData(): Promise<{ user: TUserData, success: boolean
 
     return await request({ url: AUTH_API + '/user', options: { method: 'GET', headers: { authorization: 'Bearer ' + getCookie('accessToken') } } })
         .catch((err) => {
+
+            console.log(getCookie('accessToken'), getCookie('refreshToken'));
+
+
             if (err.message === 'jwt expired' && getCookie('refreshToken')) {
                 return updateToken().then(() => getUserData())
             }

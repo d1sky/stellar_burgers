@@ -1,5 +1,6 @@
 import { TUserData } from "../components/profile-form/profile-form";
 import { TIngredientTypes } from "../model/ingrediaents";
+import { TOrder } from "../model/types";
 import { TOrderDetails } from "../services/orderDetailsSlice";
 
 const NORMA_API = 'https://norma.nomoreparties.space/api'
@@ -24,7 +25,8 @@ type TRequest = {
     }
 }
 
-export type TResponse = Response & Array<TIngredientTypes> & {
+export type TResponse = Response & Array<TIngredientTypes> & TOrder & {
+    orders: Array<TOrder>;
     data?: Array<TIngredientTypes>
     payload: {
         success: boolean;

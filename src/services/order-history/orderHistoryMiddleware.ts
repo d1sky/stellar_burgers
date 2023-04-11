@@ -7,19 +7,6 @@ import { getCookie } from '../../utils/coockie';
 const OrderHistoryMiddleware: Middleware = store => {
     let socket: WebSocket
 
-    console.log('OrderHistoryMiddleware');
-
-
-    // socket.onopen = (event: any) => {
-    //     console.log('Connection open...', event, event.data);
-    //     store.dispatch(connectionEstablished());
-    // }
-
-    // socket.onmessage = (event: any) => {
-    //     console.log('onopen get message...', event);
-    //     store.dispatch(receiveAllOrders(JSON.parse(event.data)));
-    // }
-
     return next => action => {
 
         const isConnectionEstablished = socket && store.getState().orderHistory.isConnected;
@@ -39,15 +26,6 @@ const OrderHistoryMiddleware: Middleware = store => {
                 store.dispatch(receiveAllOrders(JSON.parse(event.data)));
             }
         }
-
-        // if (requestAllOrders.match(action) && isConnectionEstablished) {
-        //     console.log('ordersMiddleware requestAllOrders');
-
-        //     socket.onmessage = (event: any) => {
-        //         console.log('Get message...');
-        //         store.dispatch(receiveAllOrders(JSON.parse(event.data)));
-        //     }
-        // }
 
         if (requestAllOrders.match(action) && isConnectionEstablished) {
             console.log('ordersMiddleware requestAllOrders');

@@ -24,7 +24,7 @@ const FeedOrder: FC = () => {
   console.log(id);
 
   return (
-    <OrderInfo order={order} />
+    <OrderInfo />
   );
 }
 

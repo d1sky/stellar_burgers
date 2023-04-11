@@ -35,7 +35,7 @@ const Feed: FC = () => {
       <div className={`${styles.block} mt-6`}>
         <div className={`${styles.orders}`}>
           {orders?.map((order: TOrder) =>
-            <Link className={styles.orderLink} key={order._id} to={FEED_ROUTE + '/' + order._id}>
+            <Link className={styles.orderLink} key={order._id} to={FEED_ROUTE + '/' + order.number}>
               <div className={styles.orderContaier}>
                 <OrderBlock order={order} />
               </div>

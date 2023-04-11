@@ -14,9 +14,6 @@ const OrderHistory: FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const orders = useSelector(getAllOrders);
 
-    console.log('tut', orders);
-
-
     useEffect(
         () => {
             dispatch(startConnecting());

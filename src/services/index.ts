@@ -8,6 +8,7 @@ import orderFeedSlice from './order-feed/index';
 import orderHistorySlice from './order-history/index';
 import orderFeedMiddleware from './order-feed/orderFeedMiddleware';
 import orderHistoryMiddleware from './order-history/orderHistoryMiddleware';
+import orderInfoSlice from './orderInfoSlice';
 
 
 export const store = configureStore({
@@ -19,6 +20,7 @@ export const store = configureStore({
     auth: authSlice,
     orderFeed: orderFeedSlice,
     orderHistory: orderHistorySlice,
+    orderInfo: orderInfoSlice
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(orderFeedMiddleware, orderHistoryMiddleware),
   devTools: process.env.NODE_ENV !== 'production',
