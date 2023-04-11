@@ -33,8 +33,6 @@ export const orderInfoSlice = createSlice({
             })
             .addCase(fetchGetOrderAsync.fulfilled, (state, action) => {
                 state.status = 'idle';
-                console.log('fetchGetOrderAsync', action.payload.orders[0]);
-
                 state.order = action.payload.orders[0]
             });
     },

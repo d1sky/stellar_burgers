@@ -14,6 +14,7 @@ import styles from './order-block.module.css';
 const OrderBlock: FC<{ order: TOrder }> = ({ order }) => {
     const ingredientList: Array<TIngredientTypes> = useSelector(getIngredientList);
 
+
     return (
         <div className={`${styles.container} p-6`}>
             <div className={`${styles.header} text text_type_main-medium`}>
@@ -39,7 +40,7 @@ const OrderBlock: FC<{ order: TOrder }> = ({ order }) => {
                     )}
                 </ul>
                 <div className={`${styles.price}`}>
-                    <Price price={480} />
+                    <Price price={order.ingredients.reduce((p,n) => p + ingredientList.find(ingredient => ingredient._id === n)?.price!, 0)} />
                 </div>
             </div>
         </div>

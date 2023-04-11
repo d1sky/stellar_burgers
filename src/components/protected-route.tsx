@@ -6,9 +6,6 @@ import { getUser } from '../services/authSlice';
 export const ProtectedRouteElement: FC<{ element: ReactElement }> = ({ element }) => {
     const user = useSelector(getUser);
 
-    console.log('ProtectedRouteElement', user);
-
-
     if (!user) {
         return null;
     }

@@ -1,14 +1,12 @@
 import { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import OrderBlock from '../../components/order-block/order-block';
-import { FEED_ROUTE } from '../../route';
-import styles from './feed.module.css';
-// import { useGetAllOrdersQuery } from '../../services/orders';
-import { useDispatch, useSelector } from 'react-redux';
 import { TOrder } from '../../model/types';
+import { FEED_ROUTE } from '../../route';
 import { AppDispatch } from '../../services';
-import { closeConnection, getAllOrders, getTotal, getTotalToday } from '../../services/order-feed';
-import { startConnecting } from '../../services/order-feed';
+import { closeConnection, getAllOrders, getTotal, getTotalToday, startConnecting } from '../../services/order-feed';
+import styles from './feed.module.css';
 
 
 const Feed: FC = () => {
@@ -22,7 +20,7 @@ const Feed: FC = () => {
       dispatch(startConnecting());
 
       return () => { dispatch(closeConnection()) }
-    }, []
+    }, [dispatch]
   );
 
   if (!orders) return <></>

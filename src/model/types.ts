@@ -6,6 +6,7 @@ export type TOrder = {
     createdAt: string;
     updatedAt: string;
     name?: string;
+    price?: number;
 }
 
 export enum OrderStatus {

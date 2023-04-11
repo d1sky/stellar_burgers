@@ -1,4 +1,3 @@
-
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -17,21 +16,17 @@ const OrderHistory: FC = () => {
     useEffect(
         () => {
             dispatch(startConnecting());
-            console.log('tut', orders);
 
             return () => { dispatch(closeConnection()) }
-        }, []
+        }, [dispatch]
     );
 
-    console.log(orders);
-
-
-    if (!orders) return <></>
+    if (!orders) return  <></>
 
     return (
         <div className={styles.container}>
             {orders?.map((order: TOrder) =>
-                <Link className={styles.orderLink} key={order._id} to={PROFILE_ORDERS_ROUTE + '/' + order._id}>
+                <Link className={styles.orderLink} key={order._id} to={PROFILE_ORDERS_ROUTE + '/' + order.number}>
                     <div className={styles.orderContaier}>
                         <OrderBlock order={order} />
                     </div>

@@ -1,6 +1,6 @@
 
 import { Middleware } from 'redux';
-import { startConnecting, connectionEstablished, receiveAllOrders, requestAllOrders, closeConnection } from '.';
+import { startConnecting, connectionEstablished, receiveAllOrders, closeConnection } from '.';
 import { getCookie } from '../../utils/coockie';
 
 
@@ -13,27 +13,17 @@ const OrderHistoryMiddleware: Middleware = store => {
 
         if (startConnecting.match(action)) {
             socket = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`)
-            console.log('match action', action);
 
             socket.onopen = (event: any) => {
-                console.log('Connection open...', event, event.data);
-
                 store.dispatch(connectionEstablished());
             }
 
             socket.onmessage = (event: any) => {
-                console.log('Get message...', JSON.parse(event.data));
                 store.dispatch(receiveAllOrders(JSON.parse(event.data)));
             }
         }
 
-        if (requestAllOrders.match(action) && isConnectionEstablished) {
-            console.log('ordersMiddleware requestAllOrders');
-            socket.send(JSON.stringify({}))
-        }
-
         if (closeConnection.match(action) && isConnectionEstablished) {
-            console.log('ordersMiddleware requestAllOrders');
             socket.close();
         }
 

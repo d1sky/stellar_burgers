@@ -1,16 +1,15 @@
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { IngredientIcon } from '../../components/ingredient-icon/ingredient-icon';
 import Price from '../../components/price/price';
 import { TIngredientTypes } from '../../model/ingrediaents';
-import { TOrder } from '../../model/types';
+import { AppDispatch } from '../../services';
 import { getIngredientList } from '../../services/ingredientListSlice';
+import { fetchGetOrderAsync, getOrderInfo } from '../../services/orderInfoSlice';
 import { getDate } from '../../utils/date';
 import { getCirilicStatus } from '../../utils/order-status';
 import styles from './order-info.module.css';
-import { fetchGetOrderAsync, getOrderInfo } from '../../services/orderInfoSlice';
-import { AppDispatch } from '../../services';
-import { useParams } from 'react-router-dom';
 
 
 const OrderRaw: FC<{ product: TIngredientTypes }> = ({ product }) => {
@@ -29,12 +28,10 @@ const OrderInfo: FC = () => {
     const ingredientList: Array<TIngredientTypes> = useSelector(getIngredientList);
     const order = useSelector(getOrderInfo);
 
-    console.log('OrderInfo', order);
-
 
     useEffect(() => {
-        dispatch(fetchGetOrderAsync(id!))
-    }, [])
+        dispatch(fetchGetOrderAsync(id!))        
+    }, [dispatch, id])
 
     if (!order) {
         return <></>
@@ -54,7 +51,7 @@ const OrderInfo: FC = () => {
                     <div className={`${styles.date} text text_type_main-small`}>
                         {getDate(order.createdAt)}
                     </div>
-                    <div className={`${styles.price}`}><Price price={510} /></div>
+                    <div className={`${styles.price}`}><Price price={order.ingredients.reduce((p,n) => p + ingredientList.find(ingredient => ingredient._id === n)?.price!, 0)} /></div>
                 </div>
             </div>
         </div>

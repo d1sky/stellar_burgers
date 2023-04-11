@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { AppDispatch } from "../../services";
 import styles from './app.module.css';
-
 import ForgotPassword from '../../pages/forgot-password/forgot-password';
 import Home from '../../pages/home/home';
 import Ingredient from '../../pages/ingredient/ingredient';
@@ -24,9 +23,7 @@ import ProfileForm from '../profile-form/profile-form';
 import { ProtectedRouteElement } from '../protected-route';
 import { UnauthorizedUserRouteElement } from '../unauthorized-user-route';
 import Feed from '../../pages/feed/feed';
-
-import FeedOrder from '../../pages/feed-order/feed-order';
-import Order from '../../pages/order/order';
+import OrderInfo from '../order-info/order-info';
 
 
 const App: FC = () => {
@@ -56,7 +53,7 @@ const App: FC = () => {
           <Routes location={background || location}>
             <Route path={MAIN_ROUTE} element={<Home />} />
             <Route path={FEED_ROUTE} element={<Feed />} />
-            <Route path={FEED_ID_ROUTE} element={<FeedOrder />} />
+            <Route path={FEED_ID_ROUTE} element={<OrderInfo />} />
             <Route path={LOGIN_ROUTE} element={<UnauthorizedUserRouteElement element={<Login />} />} />
             <Route path={REGISTER_ROUTE} element={<UnauthorizedUserRouteElement element={<Register />} />} />
             <Route path={FORGOT_PASSWORD_ROUTE} element={<UnauthorizedUserRouteElement element={<ForgotPassword />} />} />
@@ -65,7 +62,7 @@ const App: FC = () => {
               <Route path={PROFILE_ROUTE} element={<ProtectedRouteElement element={<ProfileForm />} />} />
               <Route path={PROFILE_ORDERS_ROUTE} element={<ProtectedRouteElement element={<OrderHistory />} />} />
             </Route>
-            <Route path={PROFILE_ORDER_ID_ROUTE} element={<ProtectedRouteElement element={<Order />} />} />
+            <Route path={PROFILE_ORDER_ID_ROUTE} element={<ProtectedRouteElement element={<OrderInfo />} />} />
             <Route path={INGREDIENT_ID_ROUTE} element={<Ingredient />} />
             {/* {<Route path="*" element={<NotFound404 />} /> */}
           </Routes>
