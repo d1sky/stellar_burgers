@@ -1,6 +1,6 @@
 
 import { forwardRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../hooks/hooks';
 import { TIngredientTypes } from '../../model/ingrediaents';
 import { setActiveIngredient } from "../../services/activeIngredientSlice";
 import Card from '../card/card';

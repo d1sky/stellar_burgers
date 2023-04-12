@@ -1,14 +1,13 @@
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { FC, useState, ChangeEvent, FormEvent } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, Link } from 'react-router-dom';
-import { AppDispatch } from "../../services";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { TResponse } from '../../api';
+import { useDispatch } from '../../hooks/hooks';
 import { LOGIN_ROUTE, RESET_PASSWORD_ROUTE } from "../../route";
 import { fetchForgotPasswordAsync } from "../../services/authSlice";
 import styles from './forgot-password.module.css';
-import { TResponse } from '../../api'
 
-export type TPasswordResetData =  {
+export type TPasswordResetData = {
   email: string;
 }
 
@@ -18,17 +17,17 @@ const INITIAL_STATE: TPasswordResetData = {
 
 const ForgotPassword: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const [formValue, setFormValue] = useState<TPasswordResetData>(INITIAL_STATE)
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => setFormValue({ ...formValue, [event.target.name]: event.target.value })
 
   const handleOnFormSubmit = (event: FormEvent) => {
     event.preventDefault()
-    dispatch(fetchForgotPasswordAsync(formValue)).then((data: TPasswordResetData & TResponse | {payload : any}) => {
-        if (data.payload.success) {
-          navigate(RESET_PASSWORD_ROUTE, { state: { reset: true } })
-        }
+    dispatch(fetchForgotPasswordAsync(formValue)).then((data: TPasswordResetData & TResponse | { payload: any }) => {
+      if (data.payload.success) {
+        navigate(RESET_PASSWORD_ROUTE, { state: { reset: true } })
+      }
     })
   }
 

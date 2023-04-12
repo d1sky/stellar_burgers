@@ -1,13 +1,12 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { AppDispatch } from "../../services";
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from '../../hooks/hooks';
 import { LOGIN_ROUTE, PROFILE_ORDERS_ROUTE, PROFILE_ROUTE } from '../../route';
 import { fetchLogoutAsync } from "../../services/authSlice";
 import styles from './profile.module.css';
 
 const Profile: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 

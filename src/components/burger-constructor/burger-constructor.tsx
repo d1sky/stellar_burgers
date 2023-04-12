@@ -1,9 +1,8 @@
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, ReactNode, useCallback, useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AppDispatch } from "../../services";
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { TIngredientTypes } from '../../model/ingrediaents';
 import { LOGIN_ROUTE } from '../../route';
 import { getUser } from '../../services/authSlice';
@@ -25,7 +24,7 @@ const BurgerConstructor: FC = () => {
     const burgerIngredientList: Array<TIngredientTypes> = useSelector(getBurgerIngredientList);
     const [bun, setBun] = useState<TIngredientTypes | null>(null)
     const navigate = useNavigate()
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch();
 
     const [, drop] = useDrop(() => ({
         accept: 'ingredient',

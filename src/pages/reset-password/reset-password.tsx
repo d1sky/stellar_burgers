@@ -1,6 +1,6 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../hooks/hooks';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../../route";
 import { AppDispatch } from "../../services";
@@ -19,7 +19,7 @@ const INITIAL_STATE: TPasswordConfirmData = {
 
 const ResetPassword: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const location = useLocation()
   const [formValue, setFormValue] = useState<TPasswordConfirmData>(INITIAL_STATE)
   const reset = location.state?.reset
@@ -36,7 +36,7 @@ const ResetPassword: FC = () => {
   const handleOnFormSubmit = (event: FormEvent) => {
     event.preventDefault()
     dispatch(fetchResetPasswordAsync(formValue)).then(() => {
-        navigate(LOGIN_ROUTE)
+      navigate(LOGIN_ROUTE)
     })
   }
 

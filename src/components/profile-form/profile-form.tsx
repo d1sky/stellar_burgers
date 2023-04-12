@@ -1,8 +1,7 @@
 
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState, ChangeEvent, FormEvent } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from "../../services";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { fetchUpdateUserDataAsync, getUser } from "../../services/authSlice";
 import styles from './profile-form.module.css';
 
@@ -19,7 +18,7 @@ const INITIAL_STATE: TUserData = {
 }
 
 const ProfileForm = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch();
     const user = useSelector(getUser);
     const [formValue, setFormValue] = useState<TUserData>(INITIAL_STATE)
     const [isEdit, setEdit] = useState(false)

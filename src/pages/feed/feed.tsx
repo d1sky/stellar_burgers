@@ -1,16 +1,16 @@
 import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import OrderBlock from '../../components/order-block/order-block';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { TOrder } from '../../model/types';
 import { FEED_ROUTE } from '../../route';
-import { AppDispatch } from '../../services';
 import { closeConnection, getAllOrders, getTotal, getTotalToday, startConnecting } from '../../services/order-feed';
 import styles from './feed.module.css';
 
 
 const Feed: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
+  const dispatch = useDispatch();
   const orders = useSelector(getAllOrders);
   const total = useSelector(getTotal);
   const totalToday = useSelector(getTotalToday);
@@ -33,7 +33,7 @@ const Feed: FC = () => {
       <div className={`${styles.block} mt-6`}>
         <div className={`${styles.orders}`}>
           {orders?.map((order: TOrder) =>
-            <Link className={styles.orderLink} key={order._id} to={FEED_ROUTE + '/' + order.number}>
+            <Link className={styles.orderLink} key={order._id} to={FEED_ROUTE + '/' + order.number} state={{ background: location }}>
               <div className={styles.orderContaier}>
                 <OrderBlock order={order} />
               </div>

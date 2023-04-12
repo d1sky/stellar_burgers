@@ -1,16 +1,15 @@
 import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { TOrder } from '../../model/types';
 import { PROFILE_ORDERS_ROUTE } from '../../route';
-import { AppDispatch } from '../../services';
 import { closeConnection, getAllOrders, startConnecting } from '../../services/order-history';
 import OrderBlock from '../order-block/order-block';
 import styles from './order-history.module.css';
 
 
 const OrderHistory: FC = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch();
     const orders = useSelector(getAllOrders);
 
     useEffect(
@@ -21,7 +20,7 @@ const OrderHistory: FC = () => {
         }, [dispatch]
     );
 
-    if (!orders) return  <></>
+    if (!orders) return <></>
 
     return (
         <div className={styles.container}>
