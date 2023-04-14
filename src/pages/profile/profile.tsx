@@ -24,7 +24,9 @@ const Profile: FC = () => {
           <li className={`${styles.menuItem} ${pathname === (PROFILE_ORDERS_ROUTE) && styles.menuItemActive}`} onClick={() => { navigate(PROFILE_ORDERS_ROUTE) }}>История заказов</li>
           <li className={`${styles.menuItem}`} onClick={handleLogoutClick}>Выход</li>
         </ul>
-        <p className={`mt-20 ${styles.info}`}>В этом разделе вы можете изменить свои персональные данные</p>
+        {pathname === (PROFILE_ROUTE) &&
+          <p className={`mt-20 ${styles.info}`}>В этом разделе вы можете изменить свои персональные данные</p>
+        }
       </div>
       <Outlet />
     </div>

@@ -33,9 +33,9 @@ const App: FC = () => {
   const dispatch = useDispatch();
 
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (route: string = '/') => {
     dispatch(remove())
-    navigate('/')
+    navigate(route)
   }
 
   useEffect(() => {
@@ -68,12 +68,12 @@ const App: FC = () => {
           {background && (
             <Routes>
               <Route path={INGREDIENT_ID_ROUTE} element={
-                <Modal handleClose={handleCloseModal}>
+                <Modal handleClose={() => handleCloseModal()}>
                   <IngredientDetails />
                 </Modal>
               } />
               <Route path={FEED_ID_ROUTE} element={
-                <Modal handleClose={handleCloseModal}>
+                <Modal handleClose={() => handleCloseModal(FEED_ROUTE)}>
                   <OrderInfo />
                 </Modal>
               } />

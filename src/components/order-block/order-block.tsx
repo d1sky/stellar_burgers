@@ -1,5 +1,4 @@
-
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { TIngredientTypes } from '../../model/ingrediaents';
 import { TOrder } from '../../model/types';
@@ -12,7 +11,12 @@ import styles from './order-block.module.css';
 
 
 const OrderBlock: FC<{ order: TOrder }> = ({ order }) => {
+    const [price, setPrice] = useState<number | null>(null)
     const ingredientList: Array<TIngredientTypes> = useSelector(getIngredientList);
+
+    useEffect(() => {
+        setPrice(order?.ingredients.reduce((p, n) => p + ingredientList.find(ingredient => ingredient._id === n)?.price!, 0))
+    }, [order, ingredientList])
 
 
     return (
@@ -33,14 +37,16 @@ const OrderBlock: FC<{ order: TOrder }> = ({ order }) => {
             </div>
             <div className={`${styles.details}  mt-6`}>
                 <ul className={`${styles.ingredients} text text_type_main-small`}>
-                    {order.ingredients.slice().reverse().map((ingredient, id) =>
+                    {order.accumIngredients!.slice().reverse().map((ingredient, id) =>
                         <li key={id} className={`${styles.icon}`}>
-                            <IngredientIcon image={ingredientList.find(item => item._id === ingredient)?.image_mobile!} />
+                            <IngredientIcon image={ingredientList.find(item => item._id === ingredient._id)?.image_mobile!} />
                         </li>
                     )}
                 </ul>
                 <div className={`${styles.price}`}>
-                    <Price price={order.ingredients.reduce((p,n) => p + ingredientList.find(ingredient => ingredient._id === n)?.price!, 0)} />
+                    <Price
+                        price={price || null}
+                    />
                 </div>
             </div>
         </div>

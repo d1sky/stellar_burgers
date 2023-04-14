@@ -3,11 +3,16 @@
     display: flex;
     justify-content: center;
     margin: 0 auto;
+
+    margin-top: 10%;
+    margin-bottom: 10%;
+    max-height: 80%;
+
+    overflow: scroll;
 }
 
 .block {
     width: 640px;
-    margin-top: 122px;
 }
 
 .number {
@@ -17,6 +22,10 @@
 
 .status {
     color: #00CCCC;
+}
+
+.productList {
+    overflow: auto;
 }
 
 .product {

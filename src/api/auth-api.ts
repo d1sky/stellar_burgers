@@ -45,8 +45,8 @@ export function logout(): Promise<TResponse> {
 export function updateToken(): Promise<void | TResponse> {
     return request({ url: AUTH_API + '/token', options: { method: 'POST', body: JSON.stringify({ token: getCookie('refreshToken') }) } })
         .then((data) => {
-            setCookie('accessToken', data.accessToken?.split('Bearer ')[1]);
-            setCookie('refreshToken', data.refreshToken)
+            setCookie('accessToken', data.accessToken?.split('Bearer ')[1], { path: '/' });
+            setCookie('refreshToken', data.refreshToken, { path: '/' })
         })
 }
 
@@ -54,10 +54,8 @@ export function updateToken(): Promise<void | TResponse> {
 // user
 
 export async function getUserData(): Promise<{ user: TUserData, success: boolean }> {
-
     return await request({ url: AUTH_API + '/user', options: { method: 'GET', headers: { authorization: 'Bearer ' + getCookie('accessToken') } } })
         .catch((err) => {
-
             if (err.message === 'jwt expired' && getCookie('refreshToken')) {
                 return updateToken().then(() => getUserData())
             }
