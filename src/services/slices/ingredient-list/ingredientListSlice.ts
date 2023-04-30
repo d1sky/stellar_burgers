@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '.';
-import { getIngredients } from '../api/burger-api';
-import { TIngredientTypes } from '../model/ingrediaents';
-import { addIngredient, removeIndgredient, resetIndgredient } from './burgerIngredientListSlice';
+import { RootState } from '../..';
+import { getIngredients } from '../../../api/burger-api';
+import { TIngredientTypes } from '../../../model/ingrediaents';
+import { addIngredient, removeIndgredient, resetIndgredient } from '../burger-ingredient-list/burgerIngredientListSlice';
 
 
 export const fetchIngredientListAsync = createAsyncThunk(

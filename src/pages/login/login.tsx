@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from '../../hooks/hooks';
 import { FORGOT_PASSWORD_ROUTE, REGISTER_ROUTE } from "../../route";
-import { fetchLoginAsync } from "../../services/authSlice";
+import { fetchLoginAsync } from "../../services/slices/auth/authSlice";
 import styles from './login.module.css';
 
 export type TLoginData = {

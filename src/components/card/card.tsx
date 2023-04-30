@@ -5,7 +5,7 @@ import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from '../../hooks/hooks';
 import { TIngredientTypes } from '../../model/ingrediaents';
-import { addIngredient } from '../../services/burgerIngredientListSlice';
+import { addIngredient } from '../../services/slices/burger-ingredient-list/burgerIngredientListSlice';
 import Price from '../price/price';
 import styles from './card.module.css';
 

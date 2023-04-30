@@ -1,10 +1,9 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import { useDispatch } from '../../hooks/hooks';
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from '../../hooks/hooks';
 import { LOGIN_ROUTE } from "../../route";
-import { AppDispatch } from "../../services";
-import { fetchResetPasswordAsync } from "../../services/authSlice";
+import { fetchResetPasswordAsync } from "../../services/slices/auth/authSlice";
 import styles from './reset-password.module.css';
 
 export type TPasswordConfirmData = {

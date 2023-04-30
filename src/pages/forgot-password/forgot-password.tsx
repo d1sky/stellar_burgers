@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { TResponse } from '../../api';
 import { useDispatch } from '../../hooks/hooks';
 import { LOGIN_ROUTE, RESET_PASSWORD_ROUTE } from "../../route";
-import { fetchForgotPasswordAsync } from "../../services/authSlice";
+import { fetchForgotPasswordAsync } from "../../services/slices/auth/authSlice";
 import styles from './forgot-password.module.css';
 
 export type TPasswordResetData = {

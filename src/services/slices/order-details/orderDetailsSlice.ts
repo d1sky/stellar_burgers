@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '.';
-import { placeOrder } from '../api/burger-api';
+import { RootState } from '../..';
+import { placeOrder } from '../../../api/burger-api';
 
 
 export const fetchPlaceOrderAsync = createAsyncThunk(

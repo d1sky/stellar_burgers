@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { ReactComponent as Vector1 } from '../../images/Vector1.svg';
 import { ReactComponent as Vector2 } from '../../images/Vector2.svg';
 import { ReactComponent as Vector3 } from '../../images/Vector3.svg';
-import { getOrderDetailsList } from '../../services/orderDetailsSlice';
+import { getOrderDetailsList } from '../../services/slices/order-details/orderDetailsSlice';
 import styles from './order-details.module.css';
 
 const OrderDetails: FC = () => {

@@ -1,7 +1,7 @@
 import { TUserData } from "../components/profile-form/profile-form";
 import { TIngredientTypes } from "../model/ingrediaents";
 import { TOrder } from "../model/types";
-import { TOrderDetails } from "../services/orderDetailsSlice";
+import { TOrderDetails } from "../services/slices/order-details/orderDetailsSlice";
 
 const NORMA_API = 'https://norma.nomoreparties.space/api'
 

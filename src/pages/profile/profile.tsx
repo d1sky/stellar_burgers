@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from '../../hooks/hooks';
 import { LOGIN_ROUTE, PROFILE_ORDERS_ROUTE, PROFILE_ROUTE } from '../../route';
-import { fetchLogoutAsync } from "../../services/authSlice";
+import { fetchLogoutAsync } from "../../services/slices/auth/authSlice";
 import styles from './profile.module.css';
 
 const Profile: FC = () => {

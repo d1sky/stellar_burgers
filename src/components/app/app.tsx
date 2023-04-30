@@ -10,9 +10,9 @@ import Profile from '../../pages/profile/profile';
 import Register from '../../pages/register/register';
 import ResetPassword from '../../pages/reset-password/reset-password';
 import { FEED_ID_ROUTE, FEED_ROUTE, FORGOT_PASSWORD_ROUTE, INGREDIENT_ID_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ORDERS_ROUTE, PROFILE_ORDER_ID_ROUTE, PROFILE_ROUTE, REGISTER_ROUTE, RESET_PASSWORD_ROUTE } from '../../route';
-import { remove } from '../../services/activeIngredientSlice';
-import { fetchGetUserDataAsync, getLoadStatus } from '../../services/authSlice';
-import { fetchIngredientListAsync } from '../../services/ingredientListSlice';
+import { clearActiveIngredient } from '../../services/slices/active-ingredient/activeIngredientSlice';
+import { fetchGetUserDataAsync, getLoadStatus } from '../../services/slices/auth/authSlice';
+import { fetchIngredientListAsync } from '../../services/slices/ingredient-list/ingredientListSlice';
 import AppHeader from '../app-header/app-header';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Loader from '../loader/loader';
@@ -34,7 +34,7 @@ const App: FC = () => {
 
 
   const handleCloseModal = (route: string = '/') => {
-    dispatch(remove())
+    dispatch(clearActiveIngredient())
     navigate(route)
   }
 

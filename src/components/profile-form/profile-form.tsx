@@ -2,7 +2,7 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from '../../hooks/hooks';
-import { fetchUpdateUserDataAsync, getUser } from "../../services/authSlice";
+import { fetchUpdateUserDataAsync, getUser } from "../../services/slices/auth/authSlice";
 import styles from './profile-form.module.css';
 
 export type TUserData = {
