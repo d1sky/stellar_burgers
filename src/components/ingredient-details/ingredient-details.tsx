@@ -2,9 +2,8 @@
 import { useSelector } from 'react-redux';
 import { getActiveIngredient } from '../../services/activeIngredientSlice';
 import styles from './ingredient-details.module.css';
-
 import { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks/hooks';
 import { useParams } from 'react-router-dom';
 import { setActiveIngredient } from '../../services/activeIngredientSlice';
 import { getIngredientList } from '../../services/ingredientListSlice';

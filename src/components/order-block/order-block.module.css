@@ -1,0 +1,32 @@
+.container {
+    color: white;
+    background-color: #1c1c21;
+    border-radius: 30px;
+
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.date {
+    color: #8585ad;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.icon {
+    position: relative;
+    width: 48px;
+    list-style-type: none;
+}

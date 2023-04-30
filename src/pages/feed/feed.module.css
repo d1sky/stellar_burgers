@@ -1,0 +1,77 @@
+.container {
+    width: 100%;
+}
+
+.block {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -30px;
+}
+
+.orders {
+    flex: 1 1 0;
+    margin: 0 30px;
+    width: 50%;
+}
+
+.orderLink {
+    text-decoration: none !important;
+}
+
+.orderContaier {
+    margin-bottom: 16px;
+}
+
+.info {
+    flex: 1 1 0;
+    margin: 0 30px;
+}
+
+.orderList {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -18px;
+}
+
+.readyOrders {
+    flex: 1 1 0;
+    margin: 0 18px;
+}
+
+.readyOrdersList {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 321px;
+}
+
+
+.readyOrdersList li {
+    list-style-type: none;
+    margin-bottom: 8px;
+    color: #00CCCC;
+}
+
+.inWork {
+    flex: 1 1 0;
+    margin: 0 18px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 321px;
+}
+
+.inWorkList {
+    margin: 0;
+    padding: 0;
+}
+
+.inWorkList li {
+    list-style-type: none;
+    margin-bottom: 8px;
+    color: #F2F2F3;
+}

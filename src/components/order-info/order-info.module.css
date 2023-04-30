@@ -1,0 +1,52 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+
+    margin-top: 10%;
+    margin-bottom: 10%;
+    max-height: 80%;
+
+    overflow: scroll;
+}
+
+.block {
+    width: 640px;
+}
+
+.number {
+    width: 100%;
+    text-align: center;
+}
+
+.status {
+    color: #00CCCC;
+}
+
+.productList {
+    overflow: auto;
+}
+
+.product {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.productName {
+    width: 100%;
+}
+
+.productPrice {}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date {
+    color: #8585AD;
+}

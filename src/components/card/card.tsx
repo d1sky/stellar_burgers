@@ -2,15 +2,15 @@
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC } from 'react';
 import { useDrag } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from '../../hooks/hooks';
 import { TIngredientTypes } from '../../model/ingrediaents';
 import { addIngredient } from '../../services/burgerIngredientListSlice';
 import Price from '../price/price';
 import styles from './card.module.css';
 
 
-const Card: FC<{ingredient: TIngredientTypes; onClick: Function}>  = ({ ingredient, onClick }) => {
+const Card: FC<{ ingredient: TIngredientTypes; onClick: Function }> = ({ ingredient, onClick }) => {
     const location = useLocation();
     const dispatch = useDispatch();
 

@@ -1,9 +1,9 @@
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AppDispatch } from "../../services";
+import { useDispatch } from '../../hooks/hooks';
 import { LOGIN_ROUTE } from "../../route";
+import { AppDispatch } from "../../services";
 import { fetchRegisterAsync } from "../../services/authSlice";
 import styles from './register.module.css';
 
@@ -21,7 +21,7 @@ const INITIAL_STATE: TRegisterData = {
 
 const Register = () => {
   const [formValue, setFormValue] = useState<TRegisterData>(INITIAL_STATE)
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => setFormValue({ ...formValue, [event.target.name]: event.target.value })
 

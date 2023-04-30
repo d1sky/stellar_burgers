@@ -1,4 +1,5 @@
 import { TIngredientTypes } from '../model/ingrediaents';
+import { getCookie } from '../utils/coockie';
 import { request, TResponse } from './index'
 
 
@@ -8,5 +9,13 @@ export function getIngredients(): Promise<TResponse> | Promise<Array<TIngredient
 }
 
 export function placeOrder(ingredients: Array<string>) {
-    return request({ url: '/orders', options: { method: 'POST', body: JSON.stringify({ ingredients }) } })
+    return request({
+        url: '/orders', options: {
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                authorization: 'Bearer ' + getCookie('accessToken')
+            },
+            method: 'POST', body: JSON.stringify({ ingredients })
+        }
+    })
 }

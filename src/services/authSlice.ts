@@ -39,20 +39,20 @@ export const fetchUpdateUserDataAsync = createAsyncThunk(
     updateUserData
 );
 
-type TUser =  {
-        email: string;
-        name: string;
-        password: string;
-    }
+type TUser = {
+    email: string;
+    name: string;
+    password: string;
+}
 
 
-const userInitialState: TUser =  {
-        email: '',
-        name: '',
-        password: ''
-    }
+const userInitialState: TUser = {
+    email: '',
+    name: '',
+    password: ''
+}
 
-const initialState: {user: TUser, status: string} = {
+const initialState: { user: TUser, status: string } = {
     user: userInitialState,
     status: ''
 }
@@ -73,8 +73,8 @@ export const userSlice = createSlice({
                 state.status = 'idle';
 
                 if (action.payload.success) {
-                    setCookie('accessToken', action.payload.accessToken!.split('Bearer ')[1]);
-                    setCookie('refreshToken', action.payload.refreshToken)
+                    setCookie('accessToken', action.payload.accessToken!.split('Bearer ')[1], { path: '/' });
+                    setCookie('refreshToken', action.payload.refreshToken, { path: '/' })
 
                     state.user.email = action.payload.user.email;
                     state.user.name = action.payload.user.name;
@@ -91,8 +91,8 @@ export const userSlice = createSlice({
                 state.status = 'idle';
 
                 if (action.payload.success) {
-                    setCookie('accessToken', action.payload.accessToken!.split('Bearer ')[1]);
-                    setCookie('refreshToken', action.payload.refreshToken)
+                    setCookie('accessToken', action.payload.accessToken!.split('Bearer ')[1], { path: '/' });
+                    setCookie('refreshToken', action.payload.refreshToken, { path: '/' })
 
                     state.user.email = action.payload.user.email;
                     state.user.name = action.payload.user.name;

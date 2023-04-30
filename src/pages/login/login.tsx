@@ -1,8 +1,7 @@
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, FormEvent, ChangeEvent } from "react";
-import { useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
-import { AppDispatch } from "../../services";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from '../../hooks/hooks';
 import { FORGOT_PASSWORD_ROUTE, REGISTER_ROUTE } from "../../route";
 import { fetchLoginAsync } from "../../services/authSlice";
 import styles from './login.module.css';
@@ -19,7 +18,7 @@ const INITIAL_STATE: TLoginData = {
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const [formValue, setFormValue] = useState<TLoginData>(INITIAL_STATE);
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +28,7 @@ const Login = () => {
   const handleOnFormSubmit = (event: FormEvent) => {
     event.preventDefault()
     dispatch(fetchLoginAsync(formValue)).then(() => {
-        navigate('/')
+      navigate('/')
     })
   }
 
