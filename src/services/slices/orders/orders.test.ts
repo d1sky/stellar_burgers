@@ -1,5 +1,5 @@
 import { store } from '../../index';
-import { startConnecting, connectionEstablished, receiveAllOrders, closeConnection, getTotal, getTotalToday, getAllOrders } from './ordersSlice';
+import { startConnecting, connectionEstablished, receiveAllOrders, closeConnection, getTotal, getTotalToday, getAllOrders, orderFeedInitialState } from './ordersSlice';
 
 
 describe('Order slice', () => {
@@ -75,12 +75,15 @@ describe('Order slice', () => {
         store.dispatch(closeConnection());
 
         expect({
-            isConnected: false,
-            isEstablishingConnection: false
+            ...orderFeedInitialState
         })
             .toEqual({
+                ...orderFeedInitialState,
                 isConnected: store.getState().orders.isConnected,
-                isEstablishingConnection: store.getState().orders.isEstablishingConnection
+                isEstablishingConnection: store.getState().orders.isEstablishingConnection,
+                total: getTotal(store.getState()),
+                totalToday: getTotalToday(store.getState()),
+                orders: getAllOrders(store.getState())
             });
     });
 });

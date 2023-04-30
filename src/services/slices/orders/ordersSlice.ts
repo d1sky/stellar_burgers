@@ -5,10 +5,10 @@ import { TOrdersResponse } from '../../../model/types';
 import { accumIngredients } from '../../../utils/accum';
 
 
-const orderFeedInitialState: TOrdersResponse & { status: string, isEstablishingConnection: boolean, isConnected: boolean, success: boolean } = {
+export const orderFeedInitialState: TOrdersResponse & { status: string, isEstablishingConnection: boolean, isConnected: boolean, success: boolean } = {
     orders: [],
-    total: 0,
-    totalToday: 0,
+    total: null,
+    totalToday: null,
     status: '',
     isEstablishingConnection: false,
     isConnected: false,
