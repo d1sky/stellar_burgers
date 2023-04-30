@@ -1,6 +1,5 @@
-import { log } from 'console';
 import { store } from '../../index';
-import { swapIngredients, addIngredient, removeIndgredient, resetIndgredient, getBurgerIngredientList } from './burgerIngredientListSlice';
+import { addIngredient, getBurgerIngredientList, removeIndgredient, resetIndgredient, swapIngredients } from './burgerIngredientListSlice';
 
 
 describe('Burger ingredient list slice', () => {
