@@ -3,8 +3,8 @@ import activeIngredientSlice from './slices/active-ingredient/activeIngredientSl
 import authSlice from './slices/auth/authSlice';
 import burgerIngredientListSlice from './slices/burger-ingredient-list/burgerIngredientListSlice';
 import ingredientListSlice from './slices/ingredient-list/ingredientListSlice';
-import orderslice from './orders';
-import ordersleware from './orders/socket-middleware';
+import orderslice from './slices/orders/ordersSlice';
+import ordersleware from './middlewares/socket-middleware';
 import orderDetailsSlice from './slices/order-details/orderDetailsSlice';
 import orderInfoSlice from './slices/order-info/orderInfoSlice';
 

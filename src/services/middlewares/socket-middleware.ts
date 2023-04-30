@@ -1,11 +1,11 @@
 
 import { Middleware } from 'redux';
-import { startConnecting, connectionEstablished, receiveAllOrders, closeConnection } from '.';
+import { startConnecting, connectionEstablished, receiveAllOrders, closeConnection } from '../slices/orders/ordersSlice';
 import { updateToken } from '../../api/auth-api';
 import { TOrdersResponse } from '../../model/types';
 
 
-const ordersMiddleware: Middleware = store => {
+const SocketMiddleware: Middleware = store => {
     let socket: WebSocket | null = null
     let url = ''
     let isConnected = false
@@ -70,4 +70,4 @@ const ordersMiddleware: Middleware = store => {
 
 
 
-export default ordersMiddleware;
+export default SocketMiddleware;

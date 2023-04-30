@@ -1,11 +1,11 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '..';
-import { TOrdersResponse } from '../../model/types';
-import { accumIngredients } from '../../utils/accum';
+import { RootState } from '../..';
+import { TOrdersResponse } from '../../../model/types';
+import { accumIngredients } from '../../../utils/accum';
 
 
-const orderFeedInitialState: TOrdersResponse = {
+const orderFeedInitialState: TOrdersResponse & { status: string, isEstablishingConnection: boolean, isConnected: boolean, success: boolean } = {
     orders: [],
     total: 0,
     totalToday: 0,
@@ -29,6 +29,9 @@ const orderslice = createSlice({
         closeConnection: (state => {
             state.isConnected = false;
             state.isEstablishingConnection = false;
+            state.total = null;
+            state.totalToday = null;
+            state.orders = [];
         }),
         receiveAllOrders: ((state, action: PayloadAction<TOrdersResponse>) => {
             state.orders = action.payload.orders.map(order => ({ ...order, accumIngredients: accumIngredients(order.ingredients) }))
@@ -38,10 +41,7 @@ const orderslice = createSlice({
     },
 });
 
-
-
 export const { startConnecting, connectionEstablished, receiveAllOrders, closeConnection } = orderslice.actions;
-
 
 export const getAllOrders = (state: RootState) => state.orders.orders;
 export const getTotal = (state: RootState) => state.orders.total;

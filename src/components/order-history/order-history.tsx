@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 import { TOrder } from '../../model/types';
 import { PROFILE_ORDERS_ROUTE } from '../../route';
-import { closeConnection, getAllOrders, startConnecting } from '../../services/orders';
+import { closeConnection, getAllOrders, startConnecting } from '../../services/slices/orders/ordersSlice';
 import { getCookie } from '../../utils/coockie';
 import Loader from '../loader/loader';
 import OrderBlock from '../order-block/order-block';

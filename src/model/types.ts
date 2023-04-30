@@ -18,11 +18,11 @@ export enum OrderStatus {
 
 export type TOrdersResponse = {
     orders: Array<TOrder>;
-    total: number;
-    totalToday: number;
-    status: string;
-    isEstablishingConnection: boolean;
-    isConnected: boolean;
-    message?: string;
-    success: boolean;
+    total: number | null;
+    totalToday: number | null;
+    // status: string;
+    // isEstablishingConnection: boolean;
+    // isConnected: boolean;
+    // message?: string;
+    // success: boolean;
 }
