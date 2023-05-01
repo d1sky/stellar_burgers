@@ -1,10 +1,11 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, useMemo, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+
 import { TIngredientTypes } from '../../model/ingrediaents';
 import { getIngredientList } from '../../services/slices/ingredient-list/ingredientListSlice';
 import IngredientBlock from '../ingredient-block/ingredient-block';
 import styles from './burger-ingredients.module.css';
+import { useSelector } from '../../hooks/hooks';
 
 type TCategoryType = { name: string; type: string; }
 
