@@ -1,7 +1,7 @@
 import { ReactElement, FC } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { getUser } from '../services/slices/auth/authSlice';
+import { useSelector } from '../hooks/hooks';
 
 export const UnauthorizedUserRouteElement: FC<{ element: ReactElement }> = ({ element }) => {
     const user = useSelector(getUser);
