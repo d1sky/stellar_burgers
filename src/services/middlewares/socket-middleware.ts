@@ -3,6 +3,7 @@ import { Middleware } from 'redux';
 import { startConnecting, connectionEstablished, receiveAllOrders, closeConnection } from '../slices/orders/ordersSlice';
 import { updateToken } from '../../api/auth-api';
 import { TOrdersResponse } from '../../model/types';
+import { getCookie } from '../../utils/coockie';
 
 
 const SocketMiddleware: Middleware = store => {
@@ -29,7 +30,8 @@ const SocketMiddleware: Middleware = store => {
             socket.onmessage = (event: MessageEvent) => {
                 const { data } = event
                 const parsedData: TOrdersResponse = JSON.parse(data)
-                if (!data.success) {
+
+                if (!data.success && getCookie('refreshToken')) {
                     updateToken().then(() => {
                         store.dispatch(receiveAllOrders(parsedData));
                     })
