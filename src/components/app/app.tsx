@@ -77,6 +77,11 @@ const App: FC = () => {
                   <OrderInfo />
                 </Modal>
               } />
+              <Route path={PROFILE_ORDER_ID_ROUTE} element={
+                <Modal handleClose={() => handleCloseModal(PROFILE_ORDERS_ROUTE)}>
+                  <OrderInfo />
+                </Modal>
+              } />
             </Routes>
           )}
         </div>

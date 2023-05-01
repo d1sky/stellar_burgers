@@ -44,6 +44,7 @@ const Feed: FC = () => {
                 </div>
               </Link>)}
 
+
           </div>
           <div className={`${styles.info}`}>
             <div className={`${styles.orderList}`}>

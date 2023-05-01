@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 import { TOrder } from '../../model/types';
 import { PROFILE_ORDERS_ROUTE } from '../../route';
@@ -11,6 +11,7 @@ import styles from './order-history.module.css';
 
 
 const OrderHistory: FC = () => {
+    const location = useLocation();
     const dispatch = useDispatch();
     const orders = useSelector(getAllOrders);
 
@@ -28,7 +29,7 @@ const OrderHistory: FC = () => {
         <div className={styles.container}>
             {orders.length > 0 ?
                 orders?.map((order: TOrder) =>
-                    <Link className={styles.orderLink} key={order._id} to={PROFILE_ORDERS_ROUTE + '/' + order.number}>
+                    <Link className={styles.orderLink} key={order._id} to={PROFILE_ORDERS_ROUTE + '/' + order.number} state={{ background: location }}>
                         <div className={styles.orderContaier}>
                             <OrderBlock order={order} />
                         </div>
