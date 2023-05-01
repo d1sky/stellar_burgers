@@ -4,7 +4,7 @@ import authSlice from './slices/auth/authSlice';
 import burgerIngredientListSlice from './slices/burger-ingredient-list/burgerIngredientListSlice';
 import ingredientListSlice from './slices/ingredient-list/ingredientListSlice';
 import orderslice from './slices/orders/ordersSlice';
-import ordersleware from './middlewares/socket-middleware';
+import ordersMiddleware from './middlewares/socket-middleware';
 import orderDetailsSlice from './slices/order-details/orderDetailsSlice';
 import orderInfoSlice from './slices/order-info/orderInfoSlice';
 
@@ -19,7 +19,7 @@ export const store = configureStore({
     orderInfo: orderInfoSlice,
     orderDetails: orderDetailsSlice,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(ordersleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(ordersMiddleware),
   devTools: process.env.NODE_ENV !== 'production',
 })
 
