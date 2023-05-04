@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-
 import { TIngredientTypes } from '../../model/ingrediaents';
 import { TOrder } from '../../model/types';
 import { getIngredientList } from '../../services/slices/ingredient-list/ingredientListSlice';
@@ -8,7 +7,8 @@ import { getCirilicStatus } from '../../utils/order-status';
 import { IngredientIcon } from '../ingredient-icon/ingredient-icon';
 import Price from '../price/price';
 import styles from './order-block.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/hooks';
+
 
 
 const OrderBlock: FC<{ order: TOrder }> = ({ order }) => {

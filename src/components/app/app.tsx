@@ -45,7 +45,7 @@ const App: FC = () => {
 
 
   return (
-    <div className="App">
+    <div className={styles.app}>
       <AppHeader />
       {loadStatus === 'idle' ?
         <div className={styles.content}>

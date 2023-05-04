@@ -34,7 +34,8 @@ const orderslice = createSlice({
             state.orders = [];
         }),
         receiveAllOrders: ((state, action: PayloadAction<TOrdersResponse>) => {
-            state.orders = action.payload.orders.map(order => ({ ...order, accumIngredients: accumIngredients(order.ingredients) }))
+            state.orders = action.payload.orders
+                .map(order => ({ ...order, accumIngredients: accumIngredients(order.ingredients) }))
             state.total = action.payload.total;
             state.totalToday = action.payload.totalToday;
         }),
