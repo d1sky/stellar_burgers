@@ -24,7 +24,7 @@ const OrderRaw: FC<{ product: TIngredientTypes, count: number }> = ({ product, c
 const OrderInfo: FC = () => {
     let { id } = useParams();
     const dispatch = useDispatch();
-    const ingredientList: Array<TIngredientTypes> = useSelector(getIngredientList);
+    const ingredientList = useSelector(getIngredientList);
     const order = useSelector(getOrderInfo);
 
     useEffect(() => {

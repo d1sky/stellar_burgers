@@ -13,7 +13,7 @@ import { TIngredientTypes } from '../../model/ingrediaents';
 const IngredientDetails: FC = () => {
   const dispatch = useDispatch();
   let { ingredientId } = useParams();
-  const burgerIngredientList: Array<TIngredientTypes> = useSelector(getIngredientList);
+  const burgerIngredientList = useSelector(getIngredientList);
 
   useEffect(() => {
     dispatch(setActiveIngredient(burgerIngredientList.find(ingredient => ingredient._id === ingredientId)))

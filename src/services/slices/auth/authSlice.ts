@@ -45,7 +45,6 @@ type TUser = {
     password: string;
 }
 
-
 const userInitialState: TUser = {
     email: '',
     name: '',
