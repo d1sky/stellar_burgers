@@ -5,7 +5,6 @@ import {
     fetchLogoutAsync,
     fetchRegisterAsync,
     fetchForgotPasswordAsync,
-    fetchResetPasswordAsync,
     fetchGetUserDataAsync,
     fetchUpdateUserDataAsync
 } from './authSlice';
@@ -87,5 +86,29 @@ describe('auth slice', () => {
 
         expect(getCookie('accessToken')).toBeUndefined();
         expect(getCookie('refreshToken')).toBeUndefined();
+    });
+
+    it('Should confirm email when forgot  password', async () => {
+        const mockUserData = {
+            email: 'godasin@gmail.com'
+        };
+
+        let res = await store.dispatch(fetchForgotPasswordAsync(mockUserData));
+
+        expect(res.payload)
+            .toEqual({
+                success: true,
+                message: "Reset email sent"
+            });
+
+        expect(store.getState().auth)
+            .toEqual({
+                status: 'idle',
+                user: {
+                    name: '',
+                    email: '',
+                    password: ''
+                }
+            });
     });
 });
