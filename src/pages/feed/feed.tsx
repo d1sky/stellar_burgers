@@ -5,7 +5,7 @@ import OrderBlock from '../../components/order-block/order-block';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 import { TOrder } from '../../model/types';
 import { FEED_ROUTE } from '../../route';
-import { closeConnection, getAllOrders, getTotal, getTotalToday, startConnecting } from '../../services/orders';
+import { closeConnection, getAllOrders, getTotal, getTotalToday, startConnecting } from '../../services/slices/orders/ordersSlice';
 import styles from './feed.module.css';
 
 
@@ -43,6 +43,7 @@ const Feed: FC = () => {
                   <OrderBlock order={order} />
                 </div>
               </Link>)}
+
 
           </div>
           <div className={`${styles.info}`}>

@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '.';
-import { TIngredientTypes } from '../model/ingrediaents';
+import { RootState } from '../..';
+import { TIngredientTypes } from '../../../model/ingrediaents';
 
-const ingredientInitialState: TIngredientTypes = {
+export const ingredientInitialState: TIngredientTypes = {
     "name": '',
     "type": '',
     "proteins": null,
@@ -19,13 +19,14 @@ export const activeIngredientSlice = createSlice({
         setActiveIngredient: (state, action) => {
             state.ingredient = action.payload
         },
-        remove: (state) => {
+        clearActiveIngredient: (state) => {
             state.ingredient = ingredientInitialState
         }
     },
 })
 
 export const getActiveIngredient = (state: RootState) => state.activeIngredient.ingredient;
-export const { setActiveIngredient, remove } = activeIngredientSlice.actions
+export const { setActiveIngredient, clearActiveIngredient } = activeIngredientSlice.actions
 
 export default activeIngredientSlice.reducer
+

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '.';
-import { getUserData, login, logout, passwordReset, passwordResetConfirm, register, updateUserData } from '../api/auth-api';
-import { deleteCookie, setCookie } from '../utils/coockie';
+import { RootState } from '../..';
+import { getUserData, login, logout, passwordReset, passwordResetConfirm, register, updateUserData } from '../../../api/auth-api';
+import { deleteCookie, setCookie } from '../../../utils/coockie';
 
 
 export const fetchLoginAsync = createAsyncThunk(
@@ -44,7 +44,6 @@ type TUser = {
     name: string;
     password: string;
 }
-
 
 const userInitialState: TUser = {
     email: '',

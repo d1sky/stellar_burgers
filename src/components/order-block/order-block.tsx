@@ -1,13 +1,14 @@
 import { FC, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { TIngredientTypes } from '../../model/ingrediaents';
 import { TOrder } from '../../model/types';
-import { getIngredientList } from '../../services/ingredientListSlice';
+import { getIngredientList } from '../../services/slices/ingredient-list/ingredientListSlice';
 import { getDate } from '../../utils/date';
 import { getCirilicStatus } from '../../utils/order-status';
 import { IngredientIcon } from '../ingredient-icon/ingredient-icon';
 import Price from '../price/price';
 import styles from './order-block.module.css';
+import { useSelector } from '../../hooks/hooks';
+
 
 
 const OrderBlock: FC<{ order: TOrder }> = ({ order }) => {

@@ -1,11 +1,12 @@
 
 import { Middleware } from 'redux';
-import { startConnecting, connectionEstablished, receiveAllOrders, closeConnection } from '.';
+import { startConnecting, connectionEstablished, receiveAllOrders, closeConnection } from '../slices/orders/ordersSlice';
 import { updateToken } from '../../api/auth-api';
 import { TOrdersResponse } from '../../model/types';
+import { getCookie } from '../../utils/coockie';
 
 
-const ordersMiddleware: Middleware = store => {
+const SocketMiddleware: Middleware = store => {
     let socket: WebSocket | null = null
     let url = ''
     let isConnected = false
@@ -15,7 +16,6 @@ const ordersMiddleware: Middleware = store => {
         const { dispatch } = store
 
         if (startConnecting.match(action)) {
-            // console.log('Websocket connecting')
             url = action.payload!
             socket = new WebSocket(url)
             isConnected = true
@@ -23,14 +23,15 @@ const ordersMiddleware: Middleware = store => {
             reconnectTimer = 0
             socket = new WebSocket(action.payload!)
 
-            socket.onopen = (event: Event) => {
+            socket.onopen = () => {
                 store.dispatch(connectionEstablished());
             }
 
             socket.onmessage = (event: MessageEvent) => {
                 const { data } = event
                 const parsedData: TOrdersResponse = JSON.parse(data)
-                if (!data.success) {
+
+                if (!data.success && getCookie('refreshToken')) {
                     updateToken().then(() => {
                         store.dispatch(receiveAllOrders(parsedData));
                     })
@@ -41,12 +42,12 @@ const ordersMiddleware: Middleware = store => {
             }
 
             socket.onerror = () => {
-                // console.log('Websocket error');
+                console.log('Websocket error');
             }
 
             socket.onclose = (event: CloseEvent) => {
                 if (event.code !== 1000) {
-                    // console.log('Websocket error', event.code.toString());
+                    console.log('Websocket error', event.code.toString());
                 }
 
                 if (isConnected) {
@@ -59,7 +60,6 @@ const ordersMiddleware: Middleware = store => {
         }
 
         if (socket && closeConnection.match(action)) {
-            // console.log('Websocket disconnect')
             window.clearTimeout(reconnectTimer)
             isConnected = false
             reconnectTimer = 0
@@ -72,4 +72,4 @@ const ordersMiddleware: Middleware = store => {
 
 
 
-export default ordersMiddleware;
+export default SocketMiddleware;

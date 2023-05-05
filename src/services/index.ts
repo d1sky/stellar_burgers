@@ -1,25 +1,25 @@
 import { configureStore } from '@reduxjs/toolkit';
-import activeIngredientSlice from './activeIngredientSlice';
-import authSlice from './authSlice';
-import burgerIngredientListSlice from './burgerIngredientListSlice';
-import ingredientListSlice from './ingredientListSlice';
-import orderslice from './orders';
-import ordersleware from './orders/socket-middleware';
-import orderDetailsSlice from './orderDetailsSlice';
-import orderInfoSlice from './orderInfoSlice';
+import activeIngredientSlice from './slices/active-ingredient/activeIngredientSlice';
+import authSlice from './slices/auth/authSlice';
+import burgerIngredientListSlice from './slices/burger-ingredient-list/burgerIngredientListSlice';
+import ingredientListSlice from './slices/ingredient-list/ingredientListSlice';
+import orderslice from './slices/orders/ordersSlice';
+import ordersMiddleware from './middlewares/socket-middleware';
+import orderDetailsSlice from './slices/order-details/orderDetailsSlice';
+import orderInfoSlice from './slices/order-info/orderInfoSlice';
 
 
 export const store = configureStore({
   reducer: {
+    auth: authSlice,
     ingredientList: ingredientListSlice,
-    orderDetails: orderDetailsSlice,
     activeIngredient: activeIngredientSlice,
     burgerIngredientList: burgerIngredientListSlice,
-    auth: authSlice,
     orders: orderslice,
     orderInfo: orderInfoSlice,
+    orderDetails: orderDetailsSlice,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(ordersleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(ordersMiddleware),
   devTools: process.env.NODE_ENV !== 'production',
 })
 

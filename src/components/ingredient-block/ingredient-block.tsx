@@ -2,7 +2,7 @@
 import { forwardRef } from "react";
 import { useDispatch } from '../../hooks/hooks';
 import { TIngredientTypes } from '../../model/ingrediaents';
-import { setActiveIngredient } from "../../services/activeIngredientSlice";
+import { setActiveIngredient } from "../../services/slices/active-ingredient/activeIngredientSlice";
 import Card from '../card/card';
 import styles from './ingredient-block.module.css';
 

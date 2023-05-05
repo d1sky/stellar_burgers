@@ -1,7 +1,12 @@
+.app {
+    padding: 40px 40px 0 40px;
+}
+
 .content {
     padding-top: 40px;
     width: 1280px;
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
+    height: 100%;
 }

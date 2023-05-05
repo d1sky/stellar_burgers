@@ -4,8 +4,8 @@ import { IngredientIcon } from '../../components/ingredient-icon/ingredient-icon
 import Price from '../../components/price/price';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 import { TIngredientTypes } from '../../model/ingrediaents';
-import { getIngredientList } from '../../services/ingredientListSlice';
-import { cleanOrder, fetchGetOrderAsync, getOrderInfo } from '../../services/orderInfoSlice';
+import { getIngredientList } from '../../services/slices/ingredient-list/ingredientListSlice';
+import { cleanOrder, fetchGetOrderAsync, getOrderInfo } from '../../services/slices/order-info/orderInfoSlice';
 import { getDate } from '../../utils/date';
 import { getCirilicStatus } from '../../utils/order-status';
 import styles from './order-info.module.css';
@@ -24,7 +24,7 @@ const OrderRaw: FC<{ product: TIngredientTypes, count: number }> = ({ product, c
 const OrderInfo: FC = () => {
     let { id } = useParams();
     const dispatch = useDispatch();
-    const ingredientList: Array<TIngredientTypes> = useSelector(getIngredientList);
+    const ingredientList = useSelector(getIngredientList);
     const order = useSelector(getOrderInfo);
 
     useEffect(() => {

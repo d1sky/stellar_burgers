@@ -1,6 +1,6 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
-import { RootState } from '.';
-import { TIngredientTypes } from '../model/ingrediaents';
+import { RootState } from '../..';
+import { TIngredientTypes } from '../../../model/ingrediaents';
 
 type TOrderIngredientList = {
     entities: Array<TIngredientTypes>,

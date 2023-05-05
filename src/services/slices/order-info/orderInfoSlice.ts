@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '.';
-import { getOrderById } from '../api/orders-api';
-import { TOrder } from '../model/types';
-import { accumIngredients } from '../utils/accum';
+import { RootState } from '../..';
+import { getOrderById } from '../../../api/orders-api';
+import { TOrder } from '../../../model/types';
+import { accumIngredients } from '../../../utils/accum';
 
 
 export const fetchGetOrderAsync = createAsyncThunk(
@@ -10,7 +10,7 @@ export const fetchGetOrderAsync = createAsyncThunk(
     getOrderById
 );
 
-const orderDetailsInitialState: { status: string, order: TOrder } = {
+export const orderDetailsInitialState: { status: string, order: TOrder } = {
     status: '',
     order: {
         _id: '',
@@ -27,7 +27,7 @@ export const orderInfoSlice = createSlice({
     name: 'orderInfo',
     initialState: orderDetailsInitialState,
     reducers: {
-        cleanOrder: (state, action) => {
+        cleanOrder: (state) => {
             state.order = orderDetailsInitialState.order
         }
     },

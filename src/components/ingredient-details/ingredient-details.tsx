@@ -1,19 +1,19 @@
 
-import { useSelector } from 'react-redux';
-import { getActiveIngredient } from '../../services/activeIngredientSlice';
+
+import { getActiveIngredient } from '../../services/slices/active-ingredient/activeIngredientSlice';
 import styles from './ingredient-details.module.css';
 import { FC, useEffect } from 'react';
-import { useDispatch } from '../../hooks/hooks';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { useParams } from 'react-router-dom';
-import { setActiveIngredient } from '../../services/activeIngredientSlice';
-import { getIngredientList } from '../../services/ingredientListSlice';
+import { setActiveIngredient } from '../../services/slices/active-ingredient/activeIngredientSlice';
+import { getIngredientList } from '../../services/slices/ingredient-list/ingredientListSlice';
 import { TIngredientTypes } from '../../model/ingrediaents';
 
 
 const IngredientDetails: FC = () => {
   const dispatch = useDispatch();
   let { ingredientId } = useParams();
-  const burgerIngredientList: Array<TIngredientTypes> = useSelector(getIngredientList);
+  const burgerIngredientList = useSelector(getIngredientList);
 
   useEffect(() => {
     dispatch(setActiveIngredient(burgerIngredientList.find(ingredient => ingredient._id === ingredientId)))
@@ -23,6 +23,7 @@ const IngredientDetails: FC = () => {
 
   return (
     <div className={`${styles.modal}`}>
+      <p className={`text  text_type_main-medium text_type_main-medium mt-4 ${styles.title}`}>Детали ингредиента</p>
       <p className={` ${styles.image}`}><img src={ingredient?.image_large} alt={ingredient?.name} /></p>
       <p className={`text  text_type_main-medium text_type_main-medium mt-4 ${styles.title}`}>{ingredient?.name}</p>
       <div className={`text  text_type_main-default text_color_inactive mt-8 mb-15 ${styles?.composition}`}>

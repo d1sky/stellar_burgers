@@ -3,8 +3,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useDispatch } from '../../hooks/hooks';
 import { LOGIN_ROUTE } from "../../route";
-import { AppDispatch } from "../../services";
-import { fetchRegisterAsync } from "../../services/authSlice";
+import { fetchRegisterAsync } from "../../services/slices/auth/authSlice";
 import styles from './register.module.css';
 
 export type TRegisterData = {
